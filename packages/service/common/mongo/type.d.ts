@@ -1,6 +1,6 @@
-import type { Mongoose } from 'mongoose';
 import type { Logger } from 'winston';
+import Database from 'better-sqlite3';
 
 declare global {
-  var mongodb: Mongoose | undefined;
+  var sqliteDB: Database | undefined;
 }
