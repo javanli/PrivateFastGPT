@@ -1,102 +1,93 @@
-import { connectionMongo, type Model } from '../../common/mongo';
-const { Schema, model, models } = connectionMongo;
-import { DatasetSchemaType } from '@fastgpt/global/core/dataset/type.d';
+import { sqlite3, DataTypes } from '../../common/mongo';
 import {
   DatasetStatusEnum,
   DatasetStatusMap,
   DatasetTypeMap
 } from '@fastgpt/global/core/dataset/constants';
-import {
-  TeamCollectionName,
-  TeamMemberCollectionName
-} from '@fastgpt/global/support/user/team/constant';
 import { PermissionTypeEnum, PermissionTypeMap } from '@fastgpt/global/support/permission/constant';
 
 export const DatasetCollectionName = 'datasets';
 
-const DatasetSchema = new Schema({
-  parentId: {
-    type: Schema.Types.ObjectId,
-    ref: DatasetCollectionName,
-    default: null
-  },
-  userId: {
-    //abandon
-    type: Schema.Types.ObjectId,
-    ref: 'user'
-  },
-  teamId: {
-    type: Schema.Types.ObjectId,
-    ref: TeamCollectionName,
-    required: true
-  },
-  tmbId: {
-    type: Schema.Types.ObjectId,
-    ref: TeamMemberCollectionName,
-    required: true
-  },
-  type: {
-    type: String,
-    enum: Object.keys(DatasetTypeMap),
-    required: true,
-    default: 'dataset'
-  },
-  status: {
-    type: String,
-    enum: Object.keys(DatasetStatusMap),
-    default: DatasetStatusEnum.active
-  },
-  avatar: {
-    type: String,
-    default: '/icon/logo.svg'
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  updateTime: {
-    type: Date,
-    default: () => new Date()
-  },
-  vectorModel: {
-    type: String,
-    required: true,
-    default: 'text-embedding-ada-002'
-  },
-  agentModel: {
-    type: String,
-    required: true,
-    default: 'gpt-3.5-turbo-16k'
-  },
-  intro: {
-    type: String,
-    default: ''
-  },
-  permission: {
-    type: String,
-    enum: Object.keys(PermissionTypeMap),
-    default: PermissionTypeEnum.private
-  },
-  websiteConfig: {
+const DatasetSchema = sqlite3.define(
+  DatasetCollectionName,
+  {
+    parentId: {
+      type: DataTypes.STRING,
+      // references: DatasetCollectionName,
+      defaultValue: null
+    },
+    // teamId: {
+    //   type: DataTypes.STRING,
+    //   ref: TeamCollectionName,
+    //   allowNull: false
+    // },
+    // tmbId: {
+    //   type: DataTypes.STRING,
+    //   ref: TeamMemberCollectionName,
+    //   allowNull: false
+    // },
     type: {
-      url: {
-        type: String,
-        required: true
-      },
-      selector: {
-        type: String,
-        default: 'body'
-      }
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'dataset'
+    },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: DatasetStatusEnum.active
+    },
+    avatar: {
+      type: DataTypes.STRING,
+      defaultValue: '/icon/logo.svg'
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    updateTime: {
+      type: DataTypes.DATE,
+      defaultValue: () => new Date()
+    },
+    vectorModel: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'text-embedding-ada-002'
+    },
+    agentModel: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'gpt-3.5-turbo-16k'
+    },
+    intro: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+    permission: {
+      type: DataTypes.STRING,
+      // enum: Object.keys(PermissionTypeMap),
+      defaultValue: PermissionTypeEnum.private
+    },
+    websiteConfig: {
+      type: DataTypes.JSON
+      // type: {
+      //   url: {
+      //     type: DataTypes.STRING,
+      //     allowNull: false
+      //   },
+      //   selector: {
+      //     type: DataTypes.STRING,
+      //     defaultValue: 'body'
+      //   }
+      // }
     }
+  },
+  {
+    indexes: [
+      {
+        unique: false,
+        fields: ['teamId']
+      }
+    ]
   }
-});
+);
 
-try {
-  DatasetSchema.index({ teamId: 1 });
-} catch (error) {
-  console.log(error);
-}
-
-export const MongoDataset: Model<DatasetSchemaType> =
-  models[DatasetCollectionName] || model(DatasetCollectionName, DatasetSchema);
-MongoDataset.syncIndexes();
+export const MongoDataset = DatasetSchema;

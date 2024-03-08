@@ -72,7 +72,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
   } catch (error) {
     if (fileId) {
       try {
-        await delFileByFileIdList({
+        delFileByFileIdList({
           fileIdList: [fileId],
           bucketName: BucketNameEnum.dataset
         });

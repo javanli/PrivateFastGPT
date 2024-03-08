@@ -9,7 +9,7 @@ import {
   TrainingModeEnum
 } from '@fastgpt/global/core/dataset/constants';
 import { hashStr } from '@fastgpt/global/common/string/tools';
-import { ClientSession } from '../../../common/mongo';
+import { MongoDataset } from '../schema';
 
 /**
  * get all collection by top collectionId
@@ -27,10 +27,11 @@ export async function findCollectionAndChild({
 }) {
   async function find(id: string) {
     // find children
-    const children = await MongoDatasetCollection.find(
-      { teamId, datasetId, parentId: id },
-      fields
-    ).lean();
+    const children = (
+      await MongoDatasetCollection.findAll({
+        where: { teamId, datasetId, parentId: id }
+      })
+    ).map((value) => value.dataValues);
 
     let collections = children;
 
@@ -42,7 +43,11 @@ export async function findCollectionAndChild({
     return collections;
   }
   const [collection, childCollections] = await Promise.all([
-    MongoDatasetCollection.findById(collectionId, fields),
+    MongoDatasetCollection.findOne({
+      where: {
+        _id: collectionId
+      }
+    }).then((value) => value?.dataValues),
     find(collectionId)
   ]);
 
@@ -63,12 +68,12 @@ export async function getDatasetCollectionPaths({
       return [];
     }
 
-    const parent = await MongoDatasetCollection.findOne({ _id: parentId }, 'name parentId');
+    const parent = await MongoDatasetCollection.findOne({ where: { _id: parentId } });
 
     if (!parent) return [];
 
-    const paths = await find(parent.parentId);
-    paths.push({ parentId, parentName: parent.name });
+    const paths = await find(parent.dataValues.parentId);
+    paths.push({ parentId, parentName: parent.dataValues.name });
 
     return paths;
   }
@@ -97,9 +102,14 @@ export const getCollectionAndRawText = async ({
   const col = await (async () => {
     if (collection) return collection;
     if (collectionId) {
-      return (await MongoDatasetCollection.findById(collectionId).populate(
-        'datasetId'
-      )) as CollectionWithDatasetType;
+      return (
+        await MongoDatasetCollection.findOne({
+          where: {
+            _id: collectionId
+          },
+          include: MongoDataset
+        })
+      )?.dataValues as CollectionWithDatasetType;
     }
 
     return null;
@@ -153,14 +163,12 @@ export const reloadCollectionChunks = async ({
   collection,
   tmbId,
   billId,
-  rawText,
-  session
+  rawText
 }: {
   collection: CollectionWithDatasetType;
   tmbId: string;
   billId?: string;
   rawText?: string;
-  session: ClientSession;
 }) => {
   const {
     title,
@@ -205,13 +213,16 @@ export const reloadCollectionChunks = async ({
   );
 
   // update raw text
-  await MongoDatasetCollection.findByIdAndUpdate(
-    col._id,
+  await MongoDatasetCollection.update(
     {
       ...(title && { name: title }),
       rawTextLength: newRawText.length,
       hashRawText: hashStr(newRawText)
     },
-    { session }
+    {
+      where: {
+        _id: col._id
+      }
+    }
   );
 };

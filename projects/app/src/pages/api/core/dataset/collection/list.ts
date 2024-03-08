@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { jsonRes } from '@fastgpt/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import { DatasetTrainingCollectionName } from '@fastgpt/service/core/dataset/training/schema';
-import { Types } from '@fastgpt/service/common/mongo';
 import type { DatasetCollectionsListItemType } from '@/global/core/dataset/type.d';
 import type { GetDatasetCollectionsProps } from '@/global/core/api/datasetReq';
 import { PagingData } from '@/types';
@@ -38,9 +37,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     });
 
     const match = {
-      teamId: new Types.ObjectId(teamId),
-      datasetId: new Types.ObjectId(datasetId),
-      parentId: parentId ? new Types.ObjectId(parentId) : null,
+      teamId,
+      datasetId,
+      parentId,
       ...(selectFolder ? { type: DatasetCollectionTypeEnum.folder } : {}),
       ...(searchText
         ? {
@@ -51,11 +50,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     // not count data amount
     if (simple) {
-      const collections = await MongoDatasetCollection.find(match, '_id parentId type name')
-        .sort({
-          updateTime: -1
+      const collections = (
+        await MongoDatasetCollection.findAll({
+          where: match,
+          limit: pageSize,
+          offset: (pageNum - 1) * pageSize
         })
-        .lean();
+      )
+        .map((value) => value.dataValues)
+        .sort((a, b) => a.updateTime - b.updateTime);
       return jsonRes<PagingData<DatasetCollectionsListItemType>>(res, {
         data: {
           pageNum,
@@ -68,9 +71,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
               canWrite // admin or team owner can write
             }))
           ),
-          total: await MongoDatasetCollection.countDocuments(match)
+          total: collections.length
         }
       });
+    }
+    const collections = (
+      await MongoDatasetCollection.findAll({
+        where: match,
+        limit: pageSize,
+        offset: (pageNum - 1) * pageSize
+      })
+    )
+      .map((value) => value.dataValues)
+      .sort((a, b) => a.updateTime - b.updateTime);
+    for (const collection of collections) {
     }
 
     const [collections, total]: [DatasetCollectionsListItemType[], number] = await Promise.all([

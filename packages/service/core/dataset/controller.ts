@@ -2,7 +2,7 @@ import { CollectionWithDatasetType, DatasetSchemaType } from '@fastgpt/global/co
 import { MongoDatasetCollection } from './collection/schema';
 import { MongoDataset } from './schema';
 import { delCollectionAndRelatedSources } from './collection/controller';
-import { ClientSession } from '../../common/mongo';
+import { Model } from 'Sequelize';
 
 /* ============= dataset ========== */
 /* find all datasetId by top datasetId */
@@ -16,13 +16,13 @@ export async function findDatasetAndAllChildren({
   fields?: string;
 }): Promise<DatasetSchemaType[]> {
   const find = async (id: string) => {
-    const children = await MongoDataset.find(
-      {
-        teamId,
-        parentId: id
-      },
-      fields
-    ).lean();
+    const children = (
+      await MongoDataset.findAll<Model<DatasetSchemaType>>({
+        where: {
+          parentId: id
+        }
+      })
+    ).map((value) => value.dataValues);
 
     let datasets = children;
 
@@ -34,7 +34,11 @@ export async function findDatasetAndAllChildren({
     return datasets;
   };
   const [dataset, childDatasets] = await Promise.all([
-    MongoDataset.findById(datasetId),
+    MongoDataset.findOne({
+      where: {
+        _id: datasetId
+      }
+    }).then((value) => value?.dataValues),
     find(datasetId)
   ]);
 
@@ -46,9 +50,14 @@ export async function findDatasetAndAllChildren({
 }
 
 export async function getCollectionWithDataset(collectionId: string) {
-  const data = (await MongoDatasetCollection.findById(collectionId)
-    .populate('datasetId')
-    .lean()) as CollectionWithDatasetType;
+  const data = (
+    await MongoDatasetCollection.findOne<Model<CollectionWithDatasetType>>({
+      where: {
+        _id: collectionId
+      },
+      include: MongoDataset
+    })
+  )?.dataValues;
   if (!data) {
     return Promise.reject('Collection is not exist');
   }
@@ -56,31 +65,19 @@ export async function getCollectionWithDataset(collectionId: string) {
 }
 
 /* delete all data by datasetIds */
-export async function delDatasetRelevantData({
-  datasets,
-  session
-}: {
-  datasets: DatasetSchemaType[];
-  session: ClientSession;
-}) {
-  if (!datasets.length) return;
-
-  const teamId = datasets[0].teamId;
-
-  if (!teamId) {
-    return Promise.reject('teamId is required');
-  }
-
-  const datasetIds = datasets.map((item) => String(item._id));
-
-  // Get _id, teamId, fileId, metadata.relatedImgId for all collections
-  const collections = await MongoDatasetCollection.find(
-    {
-      teamId,
-      datasetId: { $in: datasetIds }
-    },
-    '_id teamId fileId metadata'
-  ).lean();
-
-  await delCollectionAndRelatedSources({ collections, session });
+export async function delDatasetRelevantData({ datasets }: { datasets: DatasetSchemaType[] }) {
+  // if (!datasets.length) return;
+  // const teamId = datasets[0].teamId;
+  // if (!teamId) {
+  //   return Promise.reject('teamId is required');
+  // }
+  // const datasetIds = datasets.map((item) => String(item._id));
+  // // Get _id, teamId, fileId, metadata.relatedImgId for all collections
+  // const collections = await MongoDatasetCollection.find(
+  //   {
+  //     teamId,
+  //     datasetId: { $in: datasetIds }
+  //   },
+  // )
+  // await delCollectionAndRelatedSources({ collections, session });
 }

@@ -1,112 +1,102 @@
-import { connectionMongo, type Model } from '../../../common/mongo';
-const { Schema, model, models } = connectionMongo;
+import { sqlite3, DataTypes } from '../../../common/mongo';
 import { DatasetCollectionSchemaType } from '@fastgpt/global/core/dataset/type.d';
 import { TrainingTypeMap, DatasetCollectionTypeMap } from '@fastgpt/global/core/dataset/constants';
-import { DatasetCollectionName } from '../schema';
-import {
-  TeamCollectionName,
-  TeamMemberCollectionName
-} from '@fastgpt/global/support/user/team/constant';
+import { DatasetCollectionName, MongoDataset } from '../schema';
 
 export const DatasetColCollectionName = 'dataset.collections';
 
-const DatasetCollectionSchema = new Schema({
-  parentId: {
-    type: Schema.Types.ObjectId,
-    ref: DatasetColCollectionName,
-    default: null
-  },
-  userId: {
-    // abandoned
-    type: Schema.Types.ObjectId,
-    ref: 'user'
-  },
-  teamId: {
-    type: Schema.Types.ObjectId,
-    ref: TeamCollectionName,
-    required: true
-  },
-  tmbId: {
-    type: Schema.Types.ObjectId,
-    ref: TeamMemberCollectionName,
-    required: true
-  },
-  datasetId: {
-    type: Schema.Types.ObjectId,
-    ref: DatasetCollectionName,
-    required: true
-  },
-  type: {
-    type: String,
-    enum: Object.keys(DatasetCollectionTypeMap),
-    required: true
-  },
-  name: {
-    type: String,
-    required: true
-  },
-  createTime: {
-    type: Date,
-    default: () => new Date()
-  },
-  updateTime: {
-    type: Date,
-    default: () => new Date()
-  },
-
-  trainingType: {
-    type: String,
-    enum: Object.keys(TrainingTypeMap),
-    required: true
-  },
-  chunkSize: {
-    type: Number,
-    required: true
-  },
-  chunkSplitter: {
-    type: String
-  },
-  qaPrompt: {
-    type: String
-  },
-
-  fileId: {
-    type: Schema.Types.ObjectId,
-    ref: 'dataset.files'
-  },
-  rawLink: {
-    type: String
-  },
-
-  rawTextLength: {
-    type: Number
-  },
-  hashRawText: {
-    type: String
-  },
-  metadata: {
-    type: Object,
-    default: {}
-  }
-});
-
-try {
-  // auth file
-  DatasetCollectionSchema.index({ teamId: 1, fileId: 1 }, { background: true });
-
-  // list collection; deep find collections
-  DatasetCollectionSchema.index(
-    {
-      teamId: 1,
-      datasetId: 1,
-      parentId: 1,
-      updateTime: -1
+const datesetCollection = sqlite3.define(
+  DatasetColCollectionName,
+  {
+    parentId: {
+      type: DataTypes.STRING,
+      references: DatasetColCollectionName,
+      defaultValue: null
     },
-    { background: true }
-  );
-} catch (error) {
-  console.log(error);
-}
+    userId: {
+      // abandoned
+      type: DataTypes.STRING,
+      references: 'user'
+    },
+    // teamId: {
+    //   type: DataTypes.STRING,
+    //   references: TeamCollectionName,
+    //   allowNull: false
+    // },
+    // tmbId: {
+    //   type: DataTypes.STRING,
+    //   references: TeamMemberCollectionName,
+    //   allowNull: false
+    // },
+    datasetId: {
+      type: DataTypes.STRING,
+      references: {
+        model: MongoDataset,
+        key: '_id'
+      },
+      allowNull: false
+    },
+    type: {
+      type: DataTypes.STRING,
+      // enum: Object.keys(DatasetCollectionTypeMap),
+      allowNull: false
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    createTime: {
+      type: DataTypes.DATE,
+      defaultValue: () => new Date()
+    },
+    updateTime: {
+      type: DataTypes.DATE,
+      defaultValue: () => new Date()
+    },
 
-export const MongoDatasetCollection: Model<DatasetCollectionSchemaType> =
-  models[DatasetColCollectionName] || model(DatasetColCollectionName, DatasetCollectionSchema);
+    trainingType: {
+      type: DataTypes.STRING,
+      // enum: Object.keys(TrainingTypeMap),
+      allowNull: false
+    },
+    chunkSize: {
+      type: DataTypes.NUMBER,
+      allowNull: false
+    },
+    chunkSplitter: {
+      type: DataTypes.STRING
+    },
+    qaPrompt: {
+      type: DataTypes.STRING
+    },
+
+    fileId: {
+      type: DataTypes.STRING,
+      references: 'dataset.files'
+    },
+    rawLink: {
+      type: DataTypes.STRING
+    },
+
+    rawTextLength: {
+      type: DataTypes.NUMBER
+    },
+    hashRawText: {
+      type: DataTypes.STRING
+    },
+    metadata: {
+      type: DataTypes.STRING,
+      defaultValue: {}
+    }
+  },
+  {
+    indexes: [
+      {
+        unique: true,
+        fields: ['fileId']
+      }
+    ]
+  }
+);
+datesetCollection.belongsTo(MongoDataset, { foreignKey: 'userId' });
+export const MongoDatasetCollection = datesetCollection;
