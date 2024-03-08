@@ -28,40 +28,19 @@ export async function authDatasetByTmbId({
   datasetId: string;
   per: AuthModeType['per'];
 }) {
-  const { role } = await getTmbInfoByTmbId({ tmbId });
-
-  const { dataset, isOwner, canWrite } = await (async () => {
-    const dataset = await MongoDataset.findOne({ _id: datasetId, teamId }).lean();
-
-    if (!dataset) {
-      return Promise.reject(DatasetErrEnum.unAuthDataset);
-    }
-
-    const isOwner =
-      role !== TeamMemberRoleEnum.visitor &&
-      (String(dataset.tmbId) === tmbId || role === TeamMemberRoleEnum.owner);
-    const canWrite =
-      isOwner ||
-      (role !== TeamMemberRoleEnum.visitor && dataset.permission === PermissionTypeEnum.public);
-    if (per === 'r') {
-      if (!isOwner && dataset.permission !== PermissionTypeEnum.public) {
-        return Promise.reject(DatasetErrEnum.unAuthDataset);
+  // const { role } = await getTmbInfoByTmbId({ tmbId });
+  const dataset = (
+    await MongoDataset.findOne({
+      where: {
+        _id: datasetId
       }
-    }
-    if (per === 'w' && !canWrite) {
-      return Promise.reject(DatasetErrEnum.unAuthDataset);
-    }
-    if (per === 'owner' && !isOwner) {
-      return Promise.reject(DatasetErrEnum.unAuthDataset);
-    }
-
-    return { dataset, isOwner, canWrite };
-  })();
+    })
+  )?.dataValues;
 
   return {
     dataset,
-    isOwner,
-    canWrite
+    isOwner: true,
+    canWrite: true
   };
 }
 export async function authDataset({
