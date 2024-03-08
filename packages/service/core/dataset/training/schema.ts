@@ -1,6 +1,6 @@
 /* 模型的知识库 */
-import { connectionMongo, type Model } from '../../../common/mongo';
-const { Schema, model, models } = connectionMongo;
+import { connectionMongo, Model, Schema, model } from '../../../common/mongo';
+
 import { DatasetTrainingSchemaType } from '@fastgpt/global/core/dataset/type';
 import { TrainingTypeMap } from '@fastgpt/global/core/dataset/constants';
 import { DatasetColCollectionName } from '../collection/schema';

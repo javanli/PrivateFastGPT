@@ -1,5 +1,5 @@
-import { connectionMongo, type Model } from '../../../common/mongo';
-const { Schema, model, models } = connectionMongo;
+import { connectionMongo, Model, Schema, model } from '../../../common/mongo';
+
 import { TeamTagsSchema as TeamTagsSchemaType } from '@fastgpt/global/support/user/team/type.d';
 import {
   TeamCollectionName,

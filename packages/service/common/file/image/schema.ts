@@ -1,8 +1,7 @@
 import { TeamCollectionName } from '@fastgpt/global/support/user/team/constant';
-import { connectionMongo, type Model } from '../../mongo';
+import { connectionMongo, Model, Schema, model } from '../../mongo';
 import { MongoImageSchemaType } from '@fastgpt/global/common/file/image/type.d';
 import { mongoImageTypeMap } from '@fastgpt/global/common/file/image/constants';
-const { Schema, model, models } = connectionMongo;
 
 const ImageSchema = new Schema({
   teamId: {

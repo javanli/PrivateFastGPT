@@ -1,5 +1,4 @@
-import { connectionMongo, type Model } from '../../mongo';
-const { Schema, model, models } = connectionMongo;
+import { connectionMongo, Model, Schema, model } from '../../mongo';
 
 const FileSchema = new Schema({});
 
@@ -10,6 +9,6 @@ try {
   console.log(error);
 }
 
-export const MongoFileSchema = models['dataset.files'] || model('dataset.files', FileSchema);
+export const MongoFileSchema = model('dataset.files', FileSchema);
 
 MongoFileSchema.syncIndexes();

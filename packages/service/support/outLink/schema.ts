@@ -1,5 +1,5 @@
-import { connectionMongo, type Model } from '../../common/mongo';
-const { Schema, model, models } = connectionMongo;
+import { connectionMongo, Model, Schema, model } from '../../common/mongo';
+
 import { OutLinkSchema as SchemaType } from '@fastgpt/global/support/outLink/type';
 import { OutLinkTypeEnum } from '@fastgpt/global/support/outLink/constant';
 import {

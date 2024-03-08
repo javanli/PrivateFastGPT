@@ -1,5 +1,5 @@
-import { connectionMongo, type Model } from '../../common/mongo';
-const { Schema, model, models } = connectionMongo;
+import { connectionMongo, Model, Schema, model } from '../../common/mongo';
+
 import { hashStr } from '@fastgpt/global/common/string/tools';
 import { PRICE_SCALE } from '@fastgpt/global/support/wallet/constants';
 import type { UserModelSchema } from '@fastgpt/global/support/user/type';

@@ -3,8 +3,8 @@
   1. type=standard: There will only be 1, and each team will have one
   2. type=extraDatasetSize/extraPoints: Can buy multiple
 */
-import { connectionMongo, type Model } from '../../../common/mongo';
-const { Schema, model, models } = connectionMongo;
+import { connectionMongo, Model, Schema, model } from '../../../common/mongo';
+
 import { TeamCollectionName } from '@fastgpt/global/support/user/team/constant';
 import {
   standardSubLevelMap,

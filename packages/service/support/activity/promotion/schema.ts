@@ -1,5 +1,5 @@
-import { connectionMongo, type Model } from '../../../common/mongo';
-const { Schema, model, models } = connectionMongo;
+import { connectionMongo, Model, Schema, model } from '../../../common/mongo';
+
 import { PromotionRecordSchema as PromotionRecordType } from '@fastgpt/global/support/activity/type.d';
 
 const PromotionRecordSchema = new Schema({
