@@ -1,15 +1,37 @@
-import { connectionMongo, type Model } from '../../mongo';
-const { Schema, model, models } = connectionMongo;
+import { sqlite3, DataTypes } from '../../../common/mongo';
 
-const FileSchema = new Schema({});
+export const collectionName = 'fileInfo';
 
-try {
-  FileSchema.index({ 'metadata.teamId': 1 });
-  FileSchema.index({ 'metadata.uploadDate': -1 });
-} catch (error) {
-  console.log(error);
-}
-
-export const MongoFileSchema = models['dataset.files'] || model('dataset.files', FileSchema);
-
-MongoFileSchema.syncIndexes();
+export const FileInfoTable = sqlite3.define(
+  collectionName,
+  {
+    teamId: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    tmbId: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    fileId: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    fileName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    contentType: {
+      type: DataTypes.STRING,
+      allowNull: false
+    }
+  },
+  {
+    indexes: [
+      {
+        unique: true,
+        fields: ['fileId']
+      }
+    ]
+  }
+);
