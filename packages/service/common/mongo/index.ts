@@ -1,4 +1,4 @@
-import { IndexDirection, IndexOptions } from 'mongoose';
+import { IndexDirection, IndexOptions, Types, Schema as mongooseSchema } from 'mongoose';
 import {
   ModelCtor,
   Sequelize,
@@ -13,16 +13,33 @@ import { MakeNullishOptional } from 'sequelize/types/utils';
 const sequelize = new Sequelize('sqlite::memory:');
 export const connectionMongo = sequelize;
 
+declare type SchemaType =
+  | StringConstructor
+  | BufferConstructor
+  | DateConstructor
+  | NumberConstructor
+  | string
+  | object;
 interface SchemaConfig {
-  type: StringConstructor | BufferConstructor | DateConstructor;
+  type: SchemaType;
   required?: boolean;
-  default?: () => any;
+  default?: any;
+  unique?: boolean;
+  get?(val: unknown): unknown;
+  set?(val: unknown): void;
+  enum?: string[];
+  select?: boolean;
+  ref?: string;
 }
 type SchemaAttributes<T> = {
   [name in keyof T]: SchemaConfig;
 };
+
 export class Schema<T> {
   config: SchemaAttributes<T>;
+  static Types = {
+    ObjectId: 'ObjectId'
+  };
   constructor(config: SchemaAttributes<T>) {
     this.config = config;
   }
@@ -34,7 +51,7 @@ export class Model<T extends {}> {
     this.sqliteModel = sqliteModel;
   }
   syncIndexes() {}
-  async findOne(options: WhereOptions, filter: any) {
+  async findOne(options: WhereOptions, filter?: any) {
     const result = await this.sqliteModel.findOne({
       where: options
     });
@@ -43,9 +60,14 @@ export class Model<T extends {}> {
   async create(values: any) {
     await this.sqliteModel.create(values);
   }
+  async destroy(options: WhereOptions) {
+    await this.sqliteModel.destroy({
+      where: options
+    });
+  }
 }
-function convertType(type: StringConstructor | BufferConstructor | DateConstructor) {
-  if (type === String) {
+function convertType(type: SchemaType) {
+  if (type === String || type === Schema.Types.ObjectId) {
     return DataTypes.STRING;
   }
   if (type === Buffer) {
@@ -54,19 +76,41 @@ function convertType(type: StringConstructor | BufferConstructor | DateConstruct
   if (type === Date) {
     return DataTypes.DATE;
   }
+  if (type == Number) {
+    return DataTypes.NUMBER;
+  }
   console.error('error type = ', type);
-  return DataTypes.TEXT;
+  return DataTypes.JSON;
 }
 export function model<M extends {}, T>(name: string, schema?: Schema<T>): Model<M> {
   let attributes: Record<string, ModelAttributeColumnOptions> = {};
   for (const key in schema?.config) {
     if (Object.prototype.hasOwnProperty.call(schema?.config, key)) {
       const element = schema?.config[key];
-      const sqliteSchema: ModelAttributeColumnOptions = {
+      let sqliteSchema: ModelAttributeColumnOptions = {
         type: convertType(element.type),
         allowNull: !element.required,
-        defaultValue: element.default || null
+        defaultValue: element.default,
+        get() {
+          const rawValue = this.getDataValue(key);
+          if (element.get) {
+            return element.get(rawValue);
+          }
+          return rawValue;
+        },
+        set(value) {
+          if (element.set) {
+            this.setDataValue(key, element.set(value));
+          } else {
+            this.setDataValue(key, value);
+          }
+        },
+        references: element.ref
       };
+      if (element.enum) {
+        sqliteSchema.type = DataTypes.ENUM;
+        sqliteSchema.values = element.enum;
+      }
       attributes[key] = sqliteSchema;
     }
   }

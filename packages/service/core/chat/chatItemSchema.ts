@@ -98,7 +98,6 @@ try {
   console.log(error);
 }
 
-export const MongoChatItem: Model<ChatItemType> =
-  models[ChatItemCollectionName] || model(ChatItemCollectionName, ChatItemSchema);
+export const MongoChatItem: Model<ChatItemType> = model(ChatItemCollectionName, ChatItemSchema);
 
 MongoChatItem.syncIndexes();

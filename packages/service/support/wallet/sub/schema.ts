@@ -93,5 +93,4 @@ try {
   console.log(error);
 }
 
-export const MongoTeamSub: Model<TeamSubSchema> =
-  models[subCollectionName] || model(subCollectionName, SubSchema);
+export const MongoTeamSub: Model<TeamSubSchema> = model(subCollectionName, SubSchema);

@@ -32,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     for await (const chunk of encodeStream) {
       buffers = Buffer.concat([buffers, chunk]);
       if (buffers.length > 10) {
-        encodeStream.abort();
+        encodeStream.close();
         break;
       }
     }
@@ -41,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     res.setHeader('Content-Type', `${file.contentType}; charset=${encoding}`);
     res.setHeader('Cache-Control', 'public, max-age=3600');
-    res.setHeader('Content-Disposition', `inline; filename="${encodeURIComponent(file.filename)}"`);
+    res.setHeader('Content-Disposition', `inline; filename="${encodeURIComponent(file.fileName)}"`);
 
     const fileStream = await getDownloadStream({ bucketName, fileId });
 

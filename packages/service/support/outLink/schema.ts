@@ -70,7 +70,6 @@ try {
   console.log(error);
 }
 
-export const MongoOutLink: Model<SchemaType> =
-  models['outlinks'] || model('outlinks', OutLinkSchema);
+export const MongoOutLink: Model<SchemaType> = model('outlinks', OutLinkSchema);
 
 MongoOutLink.syncIndexes();

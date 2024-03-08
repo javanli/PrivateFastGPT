@@ -49,5 +49,4 @@ try {
   console.log(error);
 }
 
-export const MongoTeam: Model<TeamType> =
-  models[TeamCollectionName] || model(TeamCollectionName, TeamSchema);
+export const MongoTeam: Model<TeamType> = model(TeamCollectionName, TeamSchema);

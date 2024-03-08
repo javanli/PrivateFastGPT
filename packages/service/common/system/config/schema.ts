@@ -25,6 +25,8 @@ try {
   console.log(error);
 }
 
-export const MongoSystemConfigs: Model<SystemConfigsType> =
-  models[collectionName] || model(collectionName, systemConfigSchema);
+export const MongoSystemConfigs: Model<SystemConfigsType> = model(
+  collectionName,
+  systemConfigSchema
+);
 MongoSystemConfigs.syncIndexes();

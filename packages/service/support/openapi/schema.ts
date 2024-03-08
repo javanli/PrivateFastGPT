@@ -64,6 +64,5 @@ try {
   console.log(error);
 }
 
-export const MongoOpenApi: Model<OpenApiSchema> =
-  models['openapi'] || model('openapi', OpenApiSchema);
+export const MongoOpenApi: Model<OpenApiSchema> = model('openapi', OpenApiSchema);
 MongoOpenApi.syncIndexes();

@@ -74,7 +74,6 @@ try {
   console.log(error);
 }
 
-export const MongoApp: Model<AppType> =
-  models[appCollectionName] || model(appCollectionName, AppSchema);
+export const MongoApp: Model<AppType> = model(appCollectionName, AppSchema);
 
 MongoApp.syncIndexes();

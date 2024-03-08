@@ -156,12 +156,12 @@ export type DatasetDataItemType = {
 /* --------------- file ---------------------- */
 export type DatasetFileSchema = {
   _id: string;
-  length: number;
-  chunkSize: number;
-  uploadDate: Date;
-  filename: string;
+  length?: number;
+  chunkSize?: number;
+  uploadDate?: Date;
+  fileName: string;
   contentType: string;
-  metadata: {
+  metadata?: {
     contentType: string;
     datasetId: string;
     teamId: string;

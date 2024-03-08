@@ -64,6 +64,5 @@ try {
   console.log(error);
 }
 
-export const MongoUsage: Model<UsageSchemaType> =
-  models[UsageCollectionName] || model(UsageCollectionName, UsageSchema);
+export const MongoUsage: Model<UsageSchemaType> = model(UsageCollectionName, UsageSchema);
 MongoUsage.syncIndexes();

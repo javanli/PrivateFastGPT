@@ -93,6 +93,8 @@ try {
   console.log(error);
 }
 
-export const MongoDatasetData: Model<DatasetDataSchemaType> =
-  models[DatasetDataCollectionName] || model(DatasetDataCollectionName, DatasetDataSchema);
+export const MongoDatasetData: Model<DatasetDataSchemaType> = model(
+  DatasetDataCollectionName,
+  DatasetDataSchema
+);
 MongoDatasetData.syncIndexes();

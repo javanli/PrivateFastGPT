@@ -26,6 +26,8 @@ const PluginStoreSchema = new Schema({
   }
 });
 
-export const MongoPluginStore: Model<PluginItemSchema> =
-  models[ModuleCollectionName] || model(ModuleCollectionName, PluginStoreSchema);
+export const MongoPluginStore: Model<PluginItemSchema> = model(
+  ModuleCollectionName,
+  PluginStoreSchema
+);
 MongoPluginStore.syncIndexes();

@@ -108,5 +108,7 @@ try {
   console.log(error);
 }
 
-export const MongoDatasetCollection: Model<DatasetCollectionSchemaType> =
-  models[DatasetColCollectionName] || model(DatasetColCollectionName, DatasetCollectionSchema);
+export const MongoDatasetCollection: Model<DatasetCollectionSchemaType> = model(
+  DatasetColCollectionName,
+  DatasetCollectionSchema
+);

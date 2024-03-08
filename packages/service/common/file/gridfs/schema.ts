@@ -1,14 +1,39 @@
 import { connectionMongo, Model, Schema, model } from '../../mongo';
 
-const FileSchema = new Schema({});
+export const collectionName = 'fileInfo';
 
+const fileInfoSchema = new Schema({
+  teamId: {
+    type: String,
+    required: true
+  },
+  tmbId: {
+    type: String
+  },
+  fileId: {
+    type: String,
+    required: true
+  },
+  fileName: {
+    type: Date,
+    required: true,
+    default: () => new Date()
+  },
+  contentType: {
+    type: String,
+    required: true
+  }
+});
 try {
-  FileSchema.index({ 'metadata.teamId': 1 });
-  FileSchema.index({ 'metadata.uploadDate': -1 });
+  fileInfoSchema.index({ fileId: 1 });
 } catch (error) {
   console.log(error);
 }
 
-export const MongoFileSchema = model('dataset.files', FileSchema);
-
-MongoFileSchema.syncIndexes();
+type FileInfoSchemaType = {
+  _id: string;
+  fileId: string;
+  fileName: string;
+  contentType: string;
+};
+export const FileInfoTable: Model<FileInfoSchemaType> = model(collectionName, fileInfoSchema);

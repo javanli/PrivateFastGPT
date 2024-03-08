@@ -39,7 +39,6 @@ try {
   console.log(error);
 }
 
-export const MongoImage: Model<MongoImageSchemaType> =
-  models['image'] || model('image', ImageSchema);
+export const MongoImage: Model<MongoImageSchemaType> = model('image', ImageSchema);
 
 MongoImage.syncIndexes();

@@ -51,6 +51,5 @@ try {
   console.log(error);
 }
 
-export const MongoPlugin: Model<PluginItemSchema> =
-  models[PluginCollectionName] || model(PluginCollectionName, PluginSchema);
+export const MongoPlugin: Model<PluginItemSchema> = model(PluginCollectionName, PluginSchema);
 MongoPlugin.syncIndexes();

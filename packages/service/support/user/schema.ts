@@ -70,6 +70,5 @@ try {
   console.log(error);
 }
 
-export const MongoUser: Model<UserModelSchema> =
-  models[userCollectionName] || model(userCollectionName, UserSchema);
+export const MongoUser: Model<UserModelSchema> = model(userCollectionName, UserSchema);
 MongoUser.syncIndexes();

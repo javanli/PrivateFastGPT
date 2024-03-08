@@ -31,5 +31,7 @@ try {
   console.log(error);
 }
 
-export const MongoTeamTags: Model<TeamTagsSchemaType> =
-  models[TeamTagsCollectionName] || model(TeamTagsCollectionName, TeamTagsSchema);
+export const MongoTeamTags: Model<TeamTagsSchemaType> = model(
+  TeamTagsCollectionName,
+  TeamTagsSchema
+);

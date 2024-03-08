@@ -1,20 +1,12 @@
-import { Types, connectionMongo } from '../../mongo';
 import { BucketNameEnum } from '@fastgpt/global/common/file/constants';
 import fsp from 'fs/promises';
 import fs from 'fs';
-import { DatasetFileSchema } from '@fastgpt/global/core/dataset/type';
-import { MongoFileSchema } from './schema';
+import os from 'os';
+import pathUtil from 'path';
+import { getNanoid } from '@fastgpt/global/common/string/tools';
+import { FileInfoTable } from './schema';
 
-export function getGFSCollection(bucket: `${BucketNameEnum}`) {
-  MongoFileSchema;
-  return connectionMongo.connection.db.collection(`${bucket}.files`);
-}
-export function getGridBucket(bucket: `${BucketNameEnum}`) {
-  return new connectionMongo.mongo.GridFSBucket(connectionMongo.connection.db, {
-    bucketName: bucket
-  });
-}
-
+const gptPath = pathUtil.join(os.homedir(), '.gpt');
 /* crud  file */
 export async function uploadFile({
   bucketName,
@@ -42,23 +34,25 @@ export async function uploadFile({
   metadata.teamId = teamId;
   metadata.tmbId = tmbId;
 
-  // create a gridfs bucket
-  const bucket = getGridBucket(bucketName);
+  const bucketPath = pathUtil.join(gptPath, bucketName);
 
-  const stream = bucket.openUploadStream(filename, {
-    metadata,
-    contentType
+  try {
+    await fsp.stat(bucketPath);
+  } catch (error) {
+    fs.mkdirSync(bucketPath, { recursive: true });
+  }
+  const fileId = getNanoid(28);
+  const targetPath = pathUtil.join(bucketPath, fileId);
+  await fsp.copyFile(path, targetPath);
+  FileInfoTable.create({
+    teamId,
+    tmbId,
+    fileId,
+    fileName: filename,
+    contentType: contentType ?? ''
   });
 
-  // save to gridfs
-  await new Promise((resolve, reject) => {
-    fs.createReadStream(path)
-      .pipe(stream as any)
-      .on('finish', resolve)
-      .on('error', reject);
-  });
-
-  return String(stream.id);
+  return fileId;
 }
 
 export async function getFileById({
@@ -68,16 +62,10 @@ export async function getFileById({
   bucketName: `${BucketNameEnum}`;
   fileId: string;
 }) {
-  const db = getGFSCollection(bucketName);
-  const file = await db.findOne<DatasetFileSchema>({
-    _id: new Types.ObjectId(fileId)
+  const fileInfo = await FileInfoTable.findOne({
+    fileId
   });
-
-  // if (!file) {
-  //   return Promise.reject('File not found');
-  // }
-
-  return file || undefined;
+  return fileInfo;
 }
 
 export async function delFileByFileIdList({
@@ -88,26 +76,33 @@ export async function delFileByFileIdList({
   bucketName: `${BucketNameEnum}`;
   fileIdList: string[];
   retry?: number;
-}): Promise<any> {
+}) {
   try {
-    const bucket = getGridBucket(bucketName);
-
-    await Promise.all(fileIdList.map((id) => bucket.delete(new Types.ObjectId(id))));
+    for (const fileId of fileIdList) {
+      const targetPath = pathUtil.join(gptPath, bucketName, fileId);
+      if (fs.existsSync(targetPath)) {
+        await FileInfoTable.destroy({
+          fileId
+        });
+        fs.rmSync(targetPath);
+      }
+    }
   } catch (error) {
     if (retry > 0) {
-      return delFileByFileIdList({ bucketName, fileIdList, retry: retry - 1 });
+      await delFileByFileIdList({ bucketName, fileIdList, retry: retry - 1 });
     }
   }
 }
 
-export async function getDownloadStream({
+export function getDownloadStream({
   bucketName,
   fileId
 }: {
   bucketName: `${BucketNameEnum}`;
   fileId: string;
 }) {
-  const bucket = getGridBucket(bucketName);
+  const targetPath = pathUtil.join(gptPath, bucketName, fileId);
+  const fileStream = fs.createReadStream(targetPath);
 
-  return bucket.openDownloadStream(new Types.ObjectId(fileId));
+  return fileStream;
 }
