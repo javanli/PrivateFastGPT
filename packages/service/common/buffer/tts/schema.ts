@@ -1,36 +1,39 @@
-import { connectionMongo, type Model } from '../../../common/mongo';
-const { Schema, model, models } = connectionMongo;
-import { TTSBufferSchemaType } from './type.d';
+import { sqlite3, DataTypes } from '../../../common/mongo';
 
 export const collectionName = 'ttsbuffers';
 
-const TTSBufferSchema = new Schema({
-  bufferId: {
-    type: String,
-    required: true
+const ttsBuffersTable = sqlite3.define(
+  collectionName,
+  {
+    bufferId: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    text: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    buffer: {
+      type: DataTypes.BLOB,
+      allowNull: false
+    },
+    createTime: {
+      type: DataTypes.DATE,
+      defaultValue: () => new Date()
+    }
   },
-  text: {
-    type: String,
-    required: true
-  },
-  buffer: {
-    type: Buffer,
-    required: true
-  },
-  createTime: {
-    type: Date,
-    default: () => new Date()
+  {
+    indexes: [
+      {
+        unique: true,
+        fields: ['bufferId']
+      },
+      {
+        unique: true,
+        fields: ['createTime']
+      }
+    ]
   }
-});
+);
 
-try {
-  TTSBufferSchema.index({ bufferId: 1 });
-  //  24 hour
-  TTSBufferSchema.index({ createTime: 1 }, { expireAfterSeconds: 24 * 60 * 60 });
-} catch (error) {
-  console.log(error);
-}
-
-export const MongoTTSBuffer: Model<TTSBufferSchemaType> =
-  models[collectionName] || model(collectionName, TTSBufferSchema);
-MongoTTSBuffer.syncIndexes();
+export const MongoTTSBuffer = ttsBuffersTable;

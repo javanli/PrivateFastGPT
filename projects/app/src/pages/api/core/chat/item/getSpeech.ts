@@ -34,13 +34,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       throw new Error('voice not found');
     }
 
-    const ttsBuffer = await MongoTTSBuffer.findOne(
-      {
-        bufferId: voiceData.bufferId,
-        text: JSON.stringify({ text: input, speed: ttsConfig.speed })
-      },
-      'buffer'
-    );
+    const ttsBuffer = MongoTTSBuffer.findBuffer({
+      bufferId: voiceData.bufferId,
+      text: JSON.stringify({ text: input, speed: ttsConfig.speed })
+    });
 
     if (ttsBuffer?.buffer) {
       return res.end(new Uint8Array(ttsBuffer.buffer.buffer));
@@ -62,7 +59,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             source: authType2UsageSource({ authType })
           });
 
-          await MongoTTSBuffer.create({
+          MongoTTSBuffer.create({
             bufferId: voiceData.bufferId,
             text: JSON.stringify({ text: input, speed: ttsConfig.speed }),
             buffer
