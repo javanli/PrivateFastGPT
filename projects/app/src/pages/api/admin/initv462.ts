@@ -42,9 +42,7 @@ export async function initFullTextToken(limit = 50, endDate: Date): Promise<any>
     const dataList = await MongoDatasetData.find(
       { fullTextToken: { $exists: false }, updateTime: { $lt: endDate } },
       '_id q a'
-    )
-      .limit(limit)
-      .lean();
+    ).limit(limit);
     if (dataList.length === 0) return;
 
     const result = await Promise.allSettled(

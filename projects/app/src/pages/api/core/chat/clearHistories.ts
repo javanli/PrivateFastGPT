@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     })();
 
     // find chatIds
-    const list = await MongoChat.find(match, 'chatId').lean();
+    const list = await MongoChat.find(match, 'chatId');
     const idList = list.map((item) => item.chatId);
 
     await MongoChatItem.deleteMany({

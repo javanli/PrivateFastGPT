@@ -6,11 +6,12 @@ import {
   DataTypes,
   ModelAttributeColumnOptions,
   ModelStatic,
-  WhereOptions
+  WhereOptions,
+  Transaction
 } from 'sequelize';
 import { MakeNullishOptional } from 'sequelize/types/utils';
 
-const sequelize = new Sequelize('sqlite::memory:');
+export const sequelize = new Sequelize('sqlite::memory:');
 export const connectionMongo = sequelize;
 
 declare type SchemaType =
@@ -21,7 +22,7 @@ declare type SchemaType =
   | string
   | object;
 interface SchemaConfig {
-  type: SchemaType;
+  type?: SchemaType;
   required?: boolean;
   default?: any;
   unique?: boolean;
@@ -30,6 +31,9 @@ interface SchemaConfig {
   enum?: string[];
   select?: boolean;
   ref?: string;
+}
+interface WriteOption {
+  session?: Transaction;
 }
 type SchemaAttributes<T> = {
   [name in keyof T]: SchemaConfig;
@@ -57,16 +61,47 @@ export class Model<T extends {}> {
     });
     return result?.dataValues;
   }
-  async create(values: any) {
-    await this.sqliteModel.create(values);
-  }
-  async destroy(options: WhereOptions) {
-    await this.sqliteModel.destroy({
+  async find(options: WhereOptions, filter?: any) {
+    const result = await this.sqliteModel.findAll({
       where: options
+    });
+    return result.map((item) => item.dataValues);
+  }
+  async create(values: any, writeOption?: WriteOption) {
+    const result = await this.sqliteModel.create(values, { transaction: writeOption?.session });
+    return result.dataValues;
+  }
+  async destroy(options: WhereOptions, writeOption?: WriteOption) {
+    await this.sqliteModel.destroy({
+      where: options,
+      transaction: writeOption?.session
+    });
+  }
+  async findById(id: string, filter?: any) {
+    return this.findOne({ _id: id });
+  }
+  async findByIdAndUpdate(id: string, updateData: any) {
+    const model = await this.sqliteModel.findByPk(id);
+    if (model) {
+      const values = { ...(model!.dataValues ?? {}), ...updateData };
+      model!.dataValues = values;
+      await model!.save();
+    }
+  }
+  async deleteMany(options: WhereOptions, writeOption?: WriteOption) {
+    await this.sqliteModel.destroy({
+      where: options,
+      transaction: writeOption?.session
+    });
+  }
+  async deleteOne(options: WhereOptions, writeOption?: WriteOption) {
+    await this.sqliteModel.destroy({
+      where: options,
+      transaction: writeOption?.session
     });
   }
 }
-function convertType(type: SchemaType) {
+function convertType(type?: SchemaType) {
   if (type === String || type === Schema.Types.ObjectId) {
     return DataTypes.STRING;
   }
@@ -86,7 +121,7 @@ export function model<M extends {}, T>(name: string, schema?: Schema<T>): Model<
   let attributes: Record<string, ModelAttributeColumnOptions> = {};
   for (const key in schema?.config) {
     if (Object.prototype.hasOwnProperty.call(schema?.config, key)) {
-      const element = schema?.config[key];
+      const element = schema?.config[key] ?? {};
       let sqliteSchema: ModelAttributeColumnOptions = {
         type: convertType(element.type),
         allowNull: !element.required,
@@ -118,3 +153,5 @@ export function model<M extends {}, T>(name: string, schema?: Schema<T>): Model<
   const wrapper = new Model(modelCtor);
   return wrapper;
 }
+
+export type ClientSession = Transaction;

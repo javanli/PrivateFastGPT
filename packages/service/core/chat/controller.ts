@@ -17,10 +17,13 @@ export async function getChatItems({
     return { history: [] };
   }
 
-  const history = await MongoChatItem.find({ appId, chatId }, field)
-    .sort({ _id: -1 })
-    .limit(limit)
-    .lean();
+  const history = (
+    await MongoChatItem.sqliteModel.findAll({
+      where: { appId, chatId },
+      order: [['_id', 'DESC']],
+      limit
+    })
+  ).map((item) => item.dataValues);
 
   history.reverse();
 
@@ -39,19 +42,19 @@ export const addCustomFeedbacks = async ({
   feedbacks: string[];
 }) => {
   if (!chatId || !chatItemId) return;
-
-  try {
-    await MongoChatItem.findOneAndUpdate(
-      {
-        appId,
-        chatId,
-        dataId: chatItemId
-      },
-      {
-        $push: { customFeedbacks: { $each: feedbacks } }
-      }
-    );
-  } catch (error) {
-    addLog.error('addCustomFeedbacks error', error);
-  }
+  throw Error('not support feedback');
+  // try {
+  //   await MongoChatItem.findOneAndUpdate(
+  //     {
+  //       appId,
+  //       chatId,
+  //       dataId: chatItemId
+  //     },
+  //     {
+  //       $push: { customFeedbacks: { $each: feedbacks } }
+  //     }
+  //   );
+  // } catch (error) {
+  //   addLog.error('addCustomFeedbacks error', error);
+  // }
 };

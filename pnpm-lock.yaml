@@ -117,9 +117,12 @@ importers:
       pg:
         specifier: ^8.10.0
         version: 8.11.3
+      pg-hstore:
+        specifier: ^2.3.4
+        version: 2.3.4
       sequelize:
         specifier: ^6.37.1
-        version: 6.37.1(pg@8.11.3)(sqlite3@5.1.7)
+        version: 6.37.1(pg-hstore@2.3.4)(pg@8.11.3)(sqlite3@5.1.7)
       sqlite3:
         specifier: ^5.1.7
         version: 5.1.7
@@ -10036,6 +10039,13 @@ packages:
     resolution: {integrity: sha512-ch6OwaeaPYcova4kKZ15sbJ2hKb/VP48ZD2gE7i1J+L4MspCtBMAx8nMgz7bksc7IojCIIWuEhHibSMFH8m8oA==}
     dev: false
 
+  /pg-hstore@2.3.4:
+    resolution: {integrity: sha512-N3SGs/Rf+xA1M2/n0JBiXFDVMzdekwLZLAO0g7mpDY9ouX+fDI7jS6kTq3JujmYbtNSJ53TJ0q4G98KVZSM4EA==}
+    engines: {node: '>= 0.8.x'}
+    dependencies:
+      underscore: 1.13.6
+    dev: false
+
   /pg-int8@1.0.1:
     resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
     engines: {node: '>=4.0.0'}
@@ -10949,7 +10959,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize@6.37.1(pg@8.11.3)(sqlite3@5.1.7):
+  /sequelize@6.37.1(pg-hstore@2.3.4)(pg@8.11.3)(sqlite3@5.1.7):
     resolution: {integrity: sha512-vIKKzQ9dGp2aBOxQRD1FmUYViuQiKXSJ8yah8TsaBx4U3BokJt+Y2A0qz2C4pj08uX59qpWxRqSLEfRmVOEgQw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -10992,6 +11002,7 @@ packages:
       moment-timezone: 0.5.45
       pg: 8.11.3
       pg-connection-string: 2.6.2
+      pg-hstore: 2.3.4
       retry-as-promised: 7.0.4
       semver: 7.6.0
       sequelize-pool: 7.1.0

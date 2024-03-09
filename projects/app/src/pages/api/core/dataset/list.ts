@@ -23,10 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       ...mongoRPermission({ teamId, tmbId, role }),
       ...(parentId !== undefined && { parentId: parentId || null }),
       ...(type && { type })
-    })
-      .sort({ updateTime: -1 })
-      .lean();
-
+    }).sort({ updateTime: -1 });
     const data = await Promise.all(
       datasets.map<DatasetListItemType>((item) => ({
         _id: item._id,

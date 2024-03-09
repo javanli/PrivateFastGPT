@@ -6,13 +6,14 @@ import { FastGPTProUrl } from '../constants';
 export const getFastGPTConfigFromDB = async () => {
   if (!FastGPTProUrl) return {} as FastGPTConfigFileType;
 
-  const res = await MongoSystemConfigs.findOne({
-    type: SystemConfigsTypeEnum.fastgpt
-  }).sort({
-    createTime: -1
+  const res = await MongoSystemConfigs.sqliteModel.findOne({
+    where: {
+      type: SystemConfigsTypeEnum.fastgpt
+    },
+    order: [['createTime', 'ASC']]
   });
 
-  const config = res?.value || {};
+  const config = res?.dataValues || {};
 
   return config as FastGPTConfigFileType;
 };

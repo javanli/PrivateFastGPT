@@ -51,11 +51,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     // not count data amount
     if (simple) {
-      const collections = await MongoDatasetCollection.find(match, '_id parentId type name')
-        .sort({
-          updateTime: -1
-        })
-        .lean();
+      const collections = await MongoDatasetCollection.find(match, '_id parentId type name').sort({
+        updateTime: -1
+      });
       return jsonRes<PagingData<DatasetCollectionsListItemType>>(res, {
         data: {
           pageNum,

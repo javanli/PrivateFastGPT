@@ -39,22 +39,19 @@ export async function generateQA(): Promise<any> {
         {
           lockTime: new Date()
         }
-      )
-        .select({
-          _id: 1,
-          userId: 1,
-          teamId: 1,
-          tmbId: 1,
-          datasetId: 1,
-          collectionId: 1,
-          q: 1,
-          model: 1,
-          chunkIndex: 1,
-          billId: 1,
-          prompt: 1
-        })
-        .lean();
-
+      ).select({
+        _id: 1,
+        userId: 1,
+        teamId: 1,
+        tmbId: 1,
+        datasetId: 1,
+        collectionId: 1,
+        q: 1,
+        model: 1,
+        chunkIndex: 1,
+        billId: 1,
+        prompt: 1
+      });
       // task preemption
       if (!data) {
         return {

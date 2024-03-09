@@ -20,7 +20,7 @@ export const getStandardPlan = (level: `${StandardSubLevelEnum}`) => {
 
 export const getTeamStandPlan = async ({ teamId }: { teamId: string }) => {
   const standardPlans = global.subPlans?.standard;
-  const standard = await MongoTeamSub.findOne({ teamId, type: SubTypeEnum.standard }).lean();
+  const standard = await MongoTeamSub.findOne({ teamId, type: SubTypeEnum.standard });
 
   return {
     [SubTypeEnum.standard]: standard,
@@ -95,7 +95,7 @@ export const getTeamPlanStatus = async ({
   const standardPlans = global.subPlans?.standard;
 
   const [plans, usedDatasetSize] = await Promise.all([
-    MongoTeamSub.find({ teamId }).lean(),
+    MongoTeamSub.find({ teamId }),
     getVectorCountByTeamId(teamId)
   ]);
 

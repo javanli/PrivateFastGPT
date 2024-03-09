@@ -26,10 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     await PgClient.query(`ALTER TABLE ${PgDatasetTableName} ALTER COLUMN data_id DROP NOT NULL;`);
 
     // 重新绑定 images 和 collections
-    const images = await MongoImage.find(
-      { 'metadata.fileId': { $exists: true } },
-      '_id metadata'
-    ).lean();
+    const images = await MongoImage.find({ 'metadata.fileId': { $exists: true } }, '_id metadata');
 
     // 去除 fileId 相同的数据
     const fileIdMap = new Map<string, MongoImageSchemaType>();
@@ -68,7 +65,7 @@ export const initImages = async (image: MongoImageSchemaType, test: boolean): Pr
     if (!fileId) return;
 
     // 找到集合
-    const collection = await MongoDatasetCollection.findOne({ fileId }, '_id metadata').lean();
+    const collection = await MongoDatasetCollection.findOne({ fileId }, '_id metadata');
 
     if (!collection) {
       deleteImg++;

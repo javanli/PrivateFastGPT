@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       //     per: 'r'
       //   }),
       chatId ? MongoChat.findOne({ appId, chatId }) : undefined,
-      MongoApp.findById(appId).lean()
+      MongoApp.findById(appId)
     ]);
     if (!app) {
       throw new Error(AppErrEnum.unExist);

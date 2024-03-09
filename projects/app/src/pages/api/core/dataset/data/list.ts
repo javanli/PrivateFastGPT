@@ -45,8 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       MongoDatasetData.find(match, '_id datasetId collectionId q a chunkIndex')
         .sort({ chunkIndex: 1, updateTime: -1 })
         .skip((pageNum - 1) * pageSize)
-        .limit(pageSize)
-        .lean(),
+        .limit(pageSize),
       MongoDatasetData.countDocuments(match)
     ]);
 

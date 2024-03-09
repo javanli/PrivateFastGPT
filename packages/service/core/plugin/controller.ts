@@ -37,7 +37,7 @@ const getPluginTemplateById = async (id: string): Promise<PluginTemplateType> =>
     return item;
   }
   if (source === PluginSourceEnum.personal) {
-    const item = await MongoPlugin.findById(id).lean();
+    const item = await MongoPlugin.findById(id);
     if (!item) return Promise.reject('plugin not found');
     return {
       id: String(item._id),

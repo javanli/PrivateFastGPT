@@ -32,7 +32,7 @@ export async function autChatCrud({
   const isOutLink = Boolean((shareId || shareTeamId) && outLinkUid);
   if (!chatId) return { isOutLink, uid: outLinkUid };
 
-  const chat = await MongoChat.findOne({ appId, chatId }).lean();
+  const chat = await MongoChat.findOne({ appId, chatId });
 
   if (!chat) return { isOutLink, uid: outLinkUid };
 

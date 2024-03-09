@@ -33,9 +33,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 }
 export async function initFullTextToken(limit = 50): Promise<any> {
   try {
-    const dataList = await MongoDatasetData.find({ inited: { $exists: false } }, '_id q a')
-      .limit(limit)
-      .lean();
+    const dataList = await MongoDatasetData.find({ inited: { $exists: false } }, '_id q a').limit(
+      limit
+    );
     if (dataList.length === 0) return;
 
     const result = await Promise.allSettled(

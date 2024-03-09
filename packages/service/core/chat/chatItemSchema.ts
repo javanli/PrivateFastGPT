@@ -30,11 +30,11 @@ const ChatItemSchema = new Schema({
   },
   chatId: {
     type: String,
-    require: true
+    required: true
   },
   dataId: {
     type: String,
-    require: true,
+    required: true,
     default: () => getNanoid(22)
   },
   appId: {

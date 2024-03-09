@@ -28,7 +28,7 @@ export async function authApp({
 
   const { app, isOwner, canWrite } = await (async () => {
     // get app
-    const app = await MongoApp.findOne({ _id: appId, teamId }).lean();
+    const app = await MongoApp.findOne({ _id: appId, teamId });
     if (!app) {
       return Promise.reject(AppErrEnum.unAuthApp);
     }

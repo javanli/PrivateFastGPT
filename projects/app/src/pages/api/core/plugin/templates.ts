@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const { teamId } = await authCert({ req, authToken: true });
 
     const [userPlugins, plusPlugins] = await Promise.all([
-      MongoPlugin.find({ teamId }).lean(),
+      MongoPlugin.find({ teamId }),
       FastGPTProUrl ? GET<PluginTemplateType[]>('/core/plugin/getTemplates') : []
     ]);
 

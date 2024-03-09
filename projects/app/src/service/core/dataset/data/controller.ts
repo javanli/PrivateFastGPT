@@ -363,9 +363,7 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
         'indexes.dataId': { $in: results.map((item) => item.id?.trim()) }
       },
       'datasetId collectionId q a chunkIndex indexes'
-    )
-      .populate('collectionId', 'name fileId rawLink')
-      .lean()) as DatasetDataWithCollectionType[];
+    ).populate('collectionId', 'name fileId rawLink')) as DatasetDataWithCollectionType[];
 
     // add score to data(It's already sorted. The first one is the one with the most points)
     const concatResults = dataList.map((data) => {
@@ -448,7 +446,6 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
           )
             .sort({ score: { $meta: 'textScore' } })
             .limit(limit)
-            .lean()
         )
       )
     ).flat() as (DatasetDataSchemaType & { score: number })[];

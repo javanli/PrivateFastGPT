@@ -44,30 +44,28 @@ export async function createOneCollection({
   [key: string]: any;
   session?: ClientSession;
 }) {
-  const [collection] = await MongoDatasetCollection.create(
-    [
-      {
-        ...props,
-        teamId,
-        tmbId,
-        parentId: parentId || null,
-        datasetId,
-        name,
-        type,
+  const collection = await MongoDatasetCollection.create(
+    {
+      ...props,
+      teamId,
+      tmbId,
+      parentId: parentId || null,
+      datasetId,
+      name,
+      type,
 
-        trainingType,
-        chunkSize,
-        chunkSplitter,
-        qaPrompt,
+      trainingType,
+      chunkSize,
+      chunkSplitter,
+      qaPrompt,
 
-        fileId,
-        rawLink,
+      fileId,
+      rawLink,
 
-        rawTextLength,
-        hashRawText,
-        metadata
-      }
-    ],
+      rawTextLength,
+      hashRawText,
+      metadata
+    },
     { session }
   );
 

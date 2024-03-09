@@ -22,7 +22,7 @@ export async function findDatasetAndAllChildren({
         parentId: id
       },
       fields
-    ).lean();
+    );
 
     let datasets = children;
 
@@ -46,9 +46,9 @@ export async function findDatasetAndAllChildren({
 }
 
 export async function getCollectionWithDataset(collectionId: string) {
-  const data = (await MongoDatasetCollection.findById(collectionId)
-    .populate('datasetId')
-    .lean()) as CollectionWithDatasetType;
+  const data = (await MongoDatasetCollection.findById(collectionId).populate(
+    'datasetId'
+  )) as CollectionWithDatasetType;
   if (!data) {
     return Promise.reject('Collection is not exist');
   }
@@ -80,7 +80,7 @@ export async function delDatasetRelevantData({
       datasetId: { $in: datasetIds }
     },
     '_id teamId fileId metadata'
-  ).lean();
+  );
 
   await delCollectionAndRelatedSources({ collections, session });
 }

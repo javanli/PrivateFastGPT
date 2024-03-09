@@ -13,7 +13,7 @@ export const chatCollectionName = 'chat';
 const ChatSchema = new Schema({
   chatId: {
     type: String,
-    require: true
+    required: true
   },
   userId: {
     type: Schema.Types.ObjectId,

@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const datasets = await MongoDataset.find({
       ...mongoRPermission({ teamId, tmbId, role }),
       type: { $ne: DatasetTypeEnum.folder }
-    }).lean();
+    });
 
     const data = datasets.map((item) => ({
       _id: item._id,

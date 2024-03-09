@@ -50,9 +50,7 @@ export async function generateVector(): Promise<any> {
           indexes: 1,
           model: 1,
           billId: 1
-        })
-        .lean();
-
+        });
       // task preemption
       if (!data) {
         return {
