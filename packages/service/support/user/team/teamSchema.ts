@@ -32,13 +32,11 @@ const TeamSchema = new Schema({
   tagsUrl: {
     type: String
   },
-  limit: {
-    lastExportDatasetTime: {
-      type: Date
-    },
-    lastWebsiteSyncTime: {
-      type: Date
-    }
+  'limit.lastExportDatasetTime': {
+    type: Date
+  },
+  'limit.lastWebsiteSyncTime': {
+    type: Date
   }
 });
 

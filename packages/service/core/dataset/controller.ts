@@ -1,6 +1,6 @@
 import { CollectionWithDatasetType, DatasetSchemaType } from '@fastgpt/global/core/dataset/type';
 import { MongoDatasetCollection } from './collection/schema';
-import { MongoDataset } from './schema';
+import { DatasetCollectionName, MongoDataset } from './schema';
 import { delCollectionAndRelatedSources } from './collection/controller';
 import { ClientSession } from '../../common/mongo';
 
@@ -46,9 +46,9 @@ export async function findDatasetAndAllChildren({
 }
 
 export async function getCollectionWithDataset(collectionId: string) {
-  const data = (await MongoDatasetCollection.findById(collectionId).populate(
-    'datasetId'
-  )) as CollectionWithDatasetType;
+  const data = (await MongoDatasetCollection.sqliteModel.findByPk(collectionId, {
+    include: DatasetCollectionName
+  }))!.dataValues as unknown as CollectionWithDatasetType;
   if (!data) {
     return Promise.reject('Collection is not exist');
   }

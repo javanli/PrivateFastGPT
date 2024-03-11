@@ -4,6 +4,7 @@ import { connectToDatabase } from '@/service/mongo';
 import { MongoDatasetTraining } from '@fastgpt/service/core/dataset/training/schema';
 import { authCert } from '@fastgpt/service/support/permission/auth/common';
 import { GetTrainingQueueProps } from '@/global/core/dataset/api';
+import { Op } from '@fastgpt/service/common/mongo';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -13,23 +14,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // get queue data
     // 分别统计 model = vectorModel和agentModel的数量
-    const data = await MongoDatasetTraining.aggregate([
-      {
-        $match: {
-          lockTime: { $lt: new Date('2040/1/1') },
-          $or: [{ model: { $eq: vectorModel } }, { model: { $eq: agentModel } }]
-        }
-      },
-      {
-        $group: {
-          _id: '$model',
-          count: { $sum: 1 }
-        }
+    const vectorTrainingCount = await MongoDatasetTraining.sqliteModel.count({
+      where: {
+        model: vectorModel
       }
-    ]);
-
-    const vectorTrainingCount = data.find((item) => item._id === vectorModel)?.count || 0;
-    const agentTrainingCount = data.find((item) => item._id === agentModel)?.count || 0;
+    });
+    const agentTrainingCount = await MongoDatasetTraining.sqliteModel.count({
+      where: {
+        model: agentModel
+      }
+    });
 
     jsonRes(res, {
       data: {

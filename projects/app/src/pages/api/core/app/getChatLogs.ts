@@ -4,11 +4,11 @@ import { connectToDatabase } from '@/service/mongo';
 import { MongoChat } from '@fastgpt/service/core/chat/chatSchema';
 import type { PagingData } from '@/types';
 import { AppLogsListItemType } from '@/types/app';
-import { Types } from '@fastgpt/service/common/mongo';
 import { addDays } from 'date-fns';
 import type { GetAppChatLogsParams } from '@/global/core/api/appReq.d';
 import { authApp } from '@fastgpt/service/support/permission/auth/app';
-import { ChatItemCollectionName } from '@fastgpt/service/core/chat/chatItemSchema';
+import { ChatItemCollectionName, MongoChatItem } from '@fastgpt/service/core/chat/chatItemSchema';
+import { Op } from '@fastgpt/service/common/mongo';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -29,111 +29,110 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { teamId } = await authApp({ req, authToken: true, appId, per: 'w' });
 
     const where = {
-      teamId: new Types.ObjectId(teamId),
-      appId: new Types.ObjectId(appId),
+      teamId: teamId,
+      appId: appId,
       updateTime: {
         $gte: new Date(dateStart),
         $lte: new Date(dateEnd)
       }
     };
+    // export type AppLogsListItemType = {
+    //   _id: string;
+    //   id: string;
+    //   source: ChatSchema['source'];
+    //   time: Date;
+    //   title: string;
+    //   messageCount: number;
+    //   userGoodFeedbackCount: number;
+    //   userBadFeedbackCount: number;
+    //   customFeedbacksCount: number;
+    //   markCount: number;
+    // };
 
-    const [data, total] = await Promise.all([
-      MongoChat.aggregate([
-        { $match: where },
-        {
-          $sort: {
-            userBadFeedbackCount: -1,
-            userGoodFeedbackCount: -1,
-            customFeedbacksCount: -1,
-            updateTime: -1
-          }
-        },
-        { $skip: (pageNum - 1) * pageSize },
-        { $limit: pageSize },
-        {
-          $lookup: {
-            from: ChatItemCollectionName,
-            let: { chatId: '$chatId' },
-            pipeline: [
-              {
-                $match: {
-                  $expr: {
-                    $and: [
-                      { $eq: ['$appId', new Types.ObjectId(appId)] },
-                      { $eq: ['$chatId', '$$chatId'] }
-                    ]
-                  }
-                }
-              },
-              {
-                $project: {
-                  userGoodFeedback: 1,
-                  userBadFeedback: 1,
-                  customFeedbacks: 1,
-                  adminFeedback: 1
-                }
-              }
-            ],
-            as: 'chatitems'
-          }
-        },
-        {
-          $addFields: {
-            userGoodFeedbackCount: {
-              $size: {
-                $filter: {
-                  input: '$chatitems',
-                  as: 'item',
-                  cond: { $ifNull: ['$$item.userGoodFeedback', false] }
-                }
-              }
-            },
-            userBadFeedbackCount: {
-              $size: {
-                $filter: {
-                  input: '$chatitems',
-                  as: 'item',
-                  cond: { $ifNull: ['$$item.userBadFeedback', false] }
-                }
-              }
-            },
-            customFeedbacksCount: {
-              $size: {
-                $filter: {
-                  input: '$chatitems',
-                  as: 'item',
-                  cond: { $gt: [{ $size: { $ifNull: ['$$item.customFeedbacks', []] } }, 0] }
-                }
-              }
-            },
-            markCount: {
-              $size: {
-                $filter: {
-                  input: '$chatitems',
-                  as: 'item',
-                  cond: { $ifNull: ['$$item.adminFeedback', false] }
-                }
-              }
-            }
-          }
-        },
-        {
-          $project: {
-            _id: 1,
-            id: '$chatId',
-            title: 1,
-            source: 1,
-            time: '$updateTime',
-            messageCount: { $size: '$chatitems' },
-            userGoodFeedbackCount: 1,
-            userBadFeedbackCount: 1,
-            customFeedbacksCount: 1,
-            markCount: 1
-          }
+    const total = await MongoChat.sqliteModel.count({
+      where: {
+        teamId: teamId,
+        appId: appId,
+        updateTime: {
+          [Op.between]: [new Date(dateStart), new Date(dateEnd)]
         }
-      ]),
-      MongoChat.countDocuments(where)
-    ]);
+      }
+    });
+    const chats = (
+      await MongoChat.sqliteModel.findAll({
+        where: {
+          teamId: teamId,
+          appId: appId,
+          updateTime: {
+            [Op.between]: [new Date(dateStart), new Date(dateEnd)]
+          }
+        },
+        order: [
+          ['userBadFeedbackCount', 'DESC'],
+          ['userGoodFeedbackCount', 'DESC'],
+          ['customFeedbacksCount', 'DESC'],
+          ['updateTime', 'DESC']
+        ],
+        offset: (pageNum - 1) * pageSize,
+        limit: pageSize
+      })
+    ).map((item) => item.dataValues);
+    const data: AppLogsListItemType[] = chats.map((chat) => {
+      return {
+        ...chat,
+        id: chat.chatId,
+        time: chat.updateTime,
+        messageCount: 0,
+        userGoodFeedbackCount: 0,
+        userBadFeedbackCount: 0,
+        customFeedbacksCount: 0,
+        markCount: 0
+      };
+    });
+    for (const item of data) {
+      item.messageCount = await MongoChatItem.sqliteModel.count({
+        where: {
+          appId,
+          chatId: item.id
+        }
+      });
+      item.userGoodFeedbackCount = await MongoChatItem.sqliteModel.count({
+        where: {
+          appId,
+          chatId: item.id,
+          userGoodFeedback: {
+            [Op.not]: null
+          }
+        } as any
+      });
+      item.userBadFeedbackCount = await MongoChatItem.sqliteModel.count({
+        where: {
+          appId,
+          chatId: item.id,
+          userBadFeedback: {
+            [Op.not]: null
+          }
+        } as any
+      });
+      item.customFeedbacksCount = await MongoChatItem.sqliteModel.count({
+        where: {
+          appId,
+          chatId: item.id,
+          customFeedbacks: {
+            [Op.not]: null
+          }
+        } as any
+      });
+      item.markCount = await MongoChatItem.sqliteModel.count({
+        where: {
+          appId,
+          chatId: item.id,
+          adminFeedback: {
+            [Op.not]: null
+          }
+        } as any
+      });
+    }
 
     jsonRes<PagingData<AppLogsListItemType>>(res, {
       data: {

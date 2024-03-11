@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes, responseWriteController } from '@fastgpt/service/common/response';
+import { jsonRes, responseWrite, responseWriteController } from '@fastgpt/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import { addLog } from '@fastgpt/service/common/system/log';
 import { authDataset } from '@fastgpt/service/support/permission/auth/dataset';
@@ -10,6 +10,7 @@ import {
   checkExportDatasetLimit,
   updateExportDatasetLimit
 } from '@fastgpt/service/support/user/utils';
+import { sseResponseEventEnum } from '@fastgpt/service/common/response/constant';
 
 export default withNextCors(async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
@@ -39,46 +40,28 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
     res.setHeader('Content-Type', 'text/csv; charset=utf-8;');
     res.setHeader('Content-Disposition', 'attachment; filename=dataset.csv; ');
 
-    const cursor = MongoDatasetData.find<{
-      _id: string;
-      collectionId: { name: string };
-      q: string;
-      a: string;
-    }>(
-      {
-        teamId,
-        datasetId: { $in: datasets.map((d) => d._id) }
-      },
-      'q a'
-    )
-      .limit(50000)
-      .cursor();
-
-    const write = responseWriteController({
-      res,
-      readStream: cursor
-    });
-
-    write(`\uFEFFindex,content`);
-
-    cursor.on('data', (doc) => {
+    const results = (
+      await MongoDatasetData.sqliteModel.findAll({
+        where: {
+          teamId,
+          datasetId: { $in: datasets.map((d) => d._id) }
+        },
+        limit: 5000
+      })
+    ).map((item) => item.dataValues);
+    let strResult = `\uFEFFindex,content`;
+    for (const doc of results) {
       const q = doc.q.replace(/"/g, '""') || '';
       const a = doc.a.replace(/"/g, '""') || '';
-
-      write(`\n"${q}","${a}"`);
+      strResult += `\n"${q}","${a}"`;
+    }
+    responseWrite({
+      res,
+      event: sseResponseEventEnum.response,
+      data: strResult
     });
 
-    cursor.on('end', () => {
-      cursor.close();
-      res.end();
-      updateExportDatasetLimit(teamId);
-    });
-
-    cursor.on('error', (err) => {
-      addLog.error(`export dataset error`, err);
-      res.status(500);
-      res.end();
-    });
+    updateExportDatasetLimit(teamId);
   } catch (err) {
     res.status(500);
     addLog.error(`export dataset error`, err);

@@ -1,8 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { jsonRes } from '@fastgpt/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { DatasetTrainingCollectionName } from '@fastgpt/service/core/dataset/training/schema';
-import { Types } from '@fastgpt/service/common/mongo';
+import {
+  DatasetTrainingCollectionName,
+  MongoDatasetTraining
+} from '@fastgpt/service/core/dataset/training/schema';
 import type { DatasetCollectionsListItemType } from '@/global/core/dataset/type.d';
 import type { GetDatasetCollectionsProps } from '@/global/core/api/datasetReq';
 import { PagingData } from '@/types';
@@ -11,6 +13,7 @@ import { DatasetCollectionTypeEnum } from '@fastgpt/global/core/dataset/constant
 import { startQueue } from '@/service/utils/tools';
 import { authDataset } from '@fastgpt/service/support/permission/auth/dataset';
 import { DatasetDataCollectionName } from '@fastgpt/service/core/dataset/data/schema';
+import { Op } from '@fastgpt/service/common/mongo';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
@@ -38,122 +41,78 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     });
 
     const match = {
-      teamId: new Types.ObjectId(teamId),
-      datasetId: new Types.ObjectId(datasetId),
-      parentId: parentId ? new Types.ObjectId(parentId) : null,
+      teamId: teamId,
+      datasetId: datasetId,
+      parentId: parentId ? parentId : undefined,
       ...(selectFolder ? { type: DatasetCollectionTypeEnum.folder } : {}),
       ...(searchText
         ? {
-            name: new RegExp(searchText, 'i')
+            name: {
+              [Op.iRegexp]: searchText
+            }
           }
         : {})
     };
 
     // not count data amount
     if (simple) {
-      const collections = await MongoDatasetCollection.find(match, '_id parentId type name').sort({
-        updateTime: -1
-      });
+      const collections = (
+        await MongoDatasetCollection.sqliteModel.findAll({
+          where: match,
+          order: ['updateTime', 'DESC']
+        })
+      ).map((item) => item.dataValues);
+
       return jsonRes<PagingData<DatasetCollectionsListItemType>>(res, {
         data: {
           pageNum,
           pageSize,
-          data: await Promise.all(
-            collections.map(async (item) => ({
-              ...item,
-              dataAmount: 0,
-              trainingAmount: 0,
-              canWrite // admin or team owner can write
-            }))
-          ),
-          total: await MongoDatasetCollection.countDocuments(match)
+          data: collections.map((item) => ({
+            ...item,
+            dataAmount: 0,
+            trainingAmount: 0,
+            canWrite // admin or team owner can write
+          })),
+          total: collections.length ?? 0
         }
       });
     }
+    const total = await MongoDatasetCollection.sqliteModel.count({
+      where: match
+    });
+    const datas = (
+      await MongoDatasetCollection.sqliteModel.findAll({
+        where: match,
+        order: [['updateTime', 'DESC']],
+        offset: (pageNum - 1) * pageSize,
+        limit: pageSize
+      })
+    ).map((item) => item.dataValues);
 
-    const [collections, total]: [DatasetCollectionsListItemType[], number] = await Promise.all([
-      MongoDatasetCollection.aggregate([
-        {
-          $match: match
-        },
-        {
-          $sort: { updateTime: -1 }
-        },
-        {
-          $skip: (pageNum - 1) * pageSize
-        },
-        {
-          $limit: pageSize
-        },
-        // count training data
-        {
-          $lookup: {
-            from: DatasetTrainingCollectionName,
-            let: { id: '$_id', team_id: match.teamId, dataset_id: match.datasetId },
-            pipeline: [
-              {
-                $match: {
-                  $expr: {
-                    $and: [{ $eq: ['$teamId', '$$team_id'] }, { $eq: ['$collectionId', '$$id'] }]
-                  }
-                }
-              },
-              { $count: 'count' }
-            ],
-            as: 'trainingCount'
-          }
-        },
-        // count collection total data
-        {
-          $lookup: {
-            from: DatasetDataCollectionName,
-            let: { id: '$_id', team_id: match.teamId, dataset_id: match.datasetId },
-            pipeline: [
-              {
-                $match: {
-                  $expr: {
-                    $and: [
-                      { $eq: ['$teamId', '$$team_id'] },
-                      { $eq: ['$datasetId', '$$dataset_id'] },
-                      { $eq: ['$collectionId', '$$id'] }
-                    ]
-                  }
-                }
-              },
-              { $count: 'count' }
-            ],
-            as: 'dataCount'
-          }
-        },
-        {
-          $project: {
-            _id: 1,
-            parentId: 1,
-            tmbId: 1,
-            name: 1,
-            type: 1,
-            status: 1,
-            updateTime: 1,
-            fileId: 1,
-            rawLink: 1,
-            dataAmount: {
-              $ifNull: [{ $arrayElemAt: ['$dataCount.count', 0] }, 0]
-            },
-            trainingAmount: {
-              $ifNull: [{ $arrayElemAt: ['$trainingCount.count', 0] }, 0]
-            }
-          }
+    const data: DatasetCollectionsListItemType[] = datas.map((collection) => {
+      return {
+        ...collection,
+        dataAmount: 0,
+        trainingAmount: 0,
+        canWrite
+      };
+    });
+    for (const item of data) {
+      item.trainingAmount = await MongoDatasetTraining.sqliteModel.count({
+        where: {
+          teamId,
+          collectionId: item._id
         }
-      ]),
-      MongoDatasetCollection.countDocuments(match)
-    ]);
-
-    const data = await Promise.all(
-      collections.map(async (item, i) => ({
-        ...item,
-        canWrite: String(item.tmbId) === tmbId || canWrite
-      }))
-    );
+      });
+      item.dataAmount = await MongoDatasetTraining.sqliteModel.count({
+        where: {
+          teamId,
+          collectionId: item._id,
+          datasetId
+        }
+      });
+      item.canWrite = item.tmbId === tmbId || canWrite;
+    }
 
     if (data.find((item) => item.trainingAmount > 0)) {
       startQueue();

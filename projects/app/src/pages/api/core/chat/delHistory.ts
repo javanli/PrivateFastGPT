@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         },
         { session }
       );
-      await MongoChat.findOneAndRemove(
+      await MongoChat.destroy(
         {
           appId,
           chatId

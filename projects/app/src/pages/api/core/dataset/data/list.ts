@@ -40,14 +40,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           }
         : {})
     };
-
-    const [data, total] = await Promise.all([
-      MongoDatasetData.find(match, '_id datasetId collectionId q a chunkIndex')
-        .sort({ chunkIndex: 1, updateTime: -1 })
-        .skip((pageNum - 1) * pageSize)
-        .limit(pageSize),
-      MongoDatasetData.countDocuments(match)
-    ]);
+    const data = (
+      await MongoDatasetData.sqliteModel.findAll({
+        where: match,
+        order: [
+          ['chunkIndex', 'ASEC'],
+          ['updateTime', 'DESC']
+        ],
+        offset: (pageNum - 1) * pageSize,
+        limit: pageSize
+      })
+    ).map((item) => item.dataValues);
+    const total = await MongoDatasetData.countDocuments(match);
 
     jsonRes<PagingData<DatasetDataListItemType>>(res, {
       data: {

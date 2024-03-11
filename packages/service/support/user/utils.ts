@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { MongoTeam } from './team/teamSchema';
 
 /* export dataset limit */
@@ -21,9 +22,9 @@ export const checkExportDatasetLimit = async ({
   const authTimes = await MongoTeam.findOne(
     {
       _id: teamId,
-      $or: [
-        { 'limit.lastExportDatasetTime': { $exists: false } },
-        { 'limit.lastExportDatasetTime': { $lte: limitMinutesAgo } }
+      [Op.or]: [
+        { 'limit.lastExportDatasetTime': { [Op.eq]: null } },
+        { 'limit.lastExportDatasetTime': { [Op.gt]: limitMinutesAgo } }
       ]
     },
     '_id limit'

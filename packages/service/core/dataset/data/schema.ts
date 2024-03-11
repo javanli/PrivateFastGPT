@@ -6,7 +6,7 @@ import {
   TeamMemberCollectionName
 } from '@fastgpt/global/support/user/team/constant';
 import { DatasetCollectionName } from '../schema';
-import { DatasetColCollectionName } from '../collection/schema';
+import { DatasetColCollectionName, MongoDatasetCollection } from '../collection/schema';
 
 export const DatasetDataCollectionName = 'dataset.datas';
 
@@ -26,11 +26,11 @@ const DatasetDataSchema = new Schema({
     ref: DatasetCollectionName,
     required: true
   },
-  collectionId: {
-    type: Schema.Types.ObjectId,
-    ref: DatasetColCollectionName,
-    required: true
-  },
+  // collectionId: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: DatasetColCollectionName,
+  //   required: true
+  // },
   q: {
     type: String,
     required: true
@@ -93,8 +93,7 @@ try {
   console.log(error);
 }
 
-export const MongoDatasetData: Model<DatasetDataSchemaType> = model(
-  DatasetDataCollectionName,
-  DatasetDataSchema
-);
-MongoDatasetData.syncIndexes();
+const _model: Model<DatasetDataSchemaType> = model(DatasetDataCollectionName, DatasetDataSchema);
+_model.sqliteModel.belongsTo(MongoDatasetCollection.sqliteModel, { foreignKey: 'collectionId' });
+_model.syncIndexes();
+export const MongoDatasetData: Model<DatasetDataSchemaType> = _model;

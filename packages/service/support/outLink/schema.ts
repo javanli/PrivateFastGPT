@@ -45,23 +45,23 @@ const OutLinkSchema = new Schema({
   responseDetail: {
     type: Boolean,
     default: false
-  },
-  limit: {
-    maxUsagePoints: {
-      type: Number,
-      default: -1
-    },
-    expiredTime: {
-      type: Date
-    },
-    QPM: {
-      type: Number,
-      default: 1000
-    },
-    hookUrl: {
-      type: String
-    }
   }
+  // limit: {
+  //   maxUsagePoints: {
+  //     type: Number,
+  //     default: -1
+  //   },
+  //   expiredTime: {
+  //     type: Date
+  //   },
+  //   QPM: {
+  //     type: Number,
+  //     default: 1000
+  //   },
+  //   hookUrl: {
+  //     type: String
+  //   }
+  // }
 });
 
 try {

@@ -25,10 +25,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
     await authCert({ req, authToken: true });
 
-    await MongoChatItem.findOneAndUpdate(
-      { appId, chatId, dataId: chatItemId },
-      { $unset: { [`customFeedbacks.${index}`]: 1 } }
-    );
+    // TODO: feedback
+    // await MongoChatItem.findOneAndUpdate(
+    //   { appId, chatId, dataId: chatItemId },
+    //   { $unset: { [`customFeedbacks.${index}`]: 1 } }
+    // );
 
     jsonRes(res);
   } catch (err) {

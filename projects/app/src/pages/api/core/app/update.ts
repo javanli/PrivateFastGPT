@@ -54,7 +54,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
 
     // 更新模型
-    await MongoApp.updateOne(
+    await MongoApp.update(
       {
         _id: appId
       },

@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await authDataset({ req, authToken: true, datasetId: id, per: 'w' });
     }
 
-    await MongoDataset.findOneAndUpdate(
+    await MongoDataset.update(
       {
         _id: id
       },

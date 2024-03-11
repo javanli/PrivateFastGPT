@@ -136,11 +136,11 @@ const DataCard = () => {
       },
       {
         label: t('core.dataset.collection.metadata.source name'),
-        value: collection.file?.filename || collection?.rawLink || collection?.name
+        value: collection.file?.fileName || collection?.rawLink || collection?.name
       },
       {
         label: t('core.dataset.collection.metadata.source size'),
-        value: collection.file ? formatFileSize(collection.file.length) : '-'
+        value: collection.file ? formatFileSize(collection.file.length ?? 0) : '-'
       },
       {
         label: t('core.dataset.collection.metadata.Createtime'),

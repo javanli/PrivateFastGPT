@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     await connectToDatabase();
     await authPluginCrud({ req, authToken: true, id, per: 'owner' });
 
-    await MongoPlugin.findByIdAndRemove(id);
+    await MongoPlugin.destroy({ _id: id });
 
     jsonRes(res, {});
   } catch (err) {

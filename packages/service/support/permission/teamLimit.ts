@@ -5,6 +5,7 @@ import { MongoPlugin } from '../../core/plugin/schema';
 import { MongoDataset } from '../../core/dataset/schema';
 import { DatasetTypeEnum } from '@fastgpt/global/core/dataset/constants';
 import { TeamErrEnum } from '@fastgpt/global/common/error/code/team';
+import { Op } from 'sequelize';
 
 export const checkDatasetLimit = async ({
   teamId,
@@ -50,7 +51,7 @@ export const checkTeamDatasetLimit = async (teamId: string) => {
     getTeamStandPlan({ teamId }),
     MongoDataset.countDocuments({
       teamId,
-      type: { $ne: DatasetTypeEnum.folder }
+      type: { [Op.ne]: DatasetTypeEnum.folder }
     })
   ]);
 
@@ -61,7 +62,7 @@ export const checkTeamDatasetLimit = async (teamId: string) => {
 export const checkTeamAppLimit = async (teamId: string) => {
   const [{ standardConstants }, appCount] = await Promise.all([
     getTeamStandPlan({ teamId }),
-    MongoApp.count({ teamId })
+    MongoApp.countDocuments({ teamId })
   ]);
 
   if (standardConstants && appCount >= standardConstants.maxAppAmount) {
@@ -71,7 +72,7 @@ export const checkTeamAppLimit = async (teamId: string) => {
 export const checkTeamPluginLimit = async (teamId: string) => {
   const [{ standardConstants }, pluginCount] = await Promise.all([
     getTeamStandPlan({ teamId }),
-    MongoPlugin.count({ teamId })
+    MongoPlugin.countDocuments({ teamId })
   ]);
 
   if (standardConstants && pluginCount >= standardConstants.maxAppAmount) {

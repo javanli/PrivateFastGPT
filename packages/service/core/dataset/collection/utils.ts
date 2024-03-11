@@ -10,6 +10,7 @@ import {
 } from '@fastgpt/global/core/dataset/constants';
 import { hashStr } from '@fastgpt/global/common/string/tools';
 import { ClientSession } from '../../../common/mongo';
+import { DatasetCollectionName } from '../schema';
 
 /**
  * get all collection by top collectionId
@@ -94,9 +95,9 @@ export const getCollectionAndRawText = async ({
   const col = await (async () => {
     if (collection) return collection;
     if (collectionId) {
-      return (await MongoDatasetCollection.findById(collectionId).populate(
-        'datasetId'
-      )) as CollectionWithDatasetType;
+      return (await MongoDatasetCollection.sqliteModel.findByPk(collectionId, {
+        include: DatasetCollectionName
+      }))!.dataValues as unknown as CollectionWithDatasetType;
     }
 
     return null;

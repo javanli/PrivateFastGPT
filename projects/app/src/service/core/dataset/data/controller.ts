@@ -1,4 +1,5 @@
 import { MongoDatasetData } from '@fastgpt/service/core/dataset/data/schema';
+import { Op } from '@fastgpt/service/common/mongo';
 import {
   CreateDatasetDataProps,
   PatchIndexesProps,
@@ -18,7 +19,10 @@ import { getDefaultIndex } from '@fastgpt/global/core/dataset/utils';
 import { jiebaSplit } from '@/service/common/string/jieba';
 import { deleteDatasetDataVector } from '@fastgpt/service/common/vectorStore/controller';
 import { getVectorsByText } from '@fastgpt/service/core/ai/embedding';
-import { MongoDatasetCollection } from '@fastgpt/service/core/dataset/collection/schema';
+import {
+  DatasetColCollectionName,
+  MongoDatasetCollection
+} from '@fastgpt/service/core/dataset/collection/schema';
 import {
   DatasetDataItemType,
   DatasetDataSchemaType,
@@ -192,7 +196,7 @@ export async function updateData2Dataset({
           type: 'update',
           index: {
             //@ts-ignore
-            ...index.toObject(),
+            ...index,
             text: qaStr
           }
         });
@@ -221,7 +225,11 @@ export async function updateData2Dataset({
 
   // update mongo updateTime
   mongoData.updateTime = new Date();
-  await mongoData.save();
+  await MongoDatasetData.sqliteModel.update(mongoData, {
+    where: {
+      _id: dataId
+    }
+  });
 
   // insert vector
   const clonePatchResult2Insert: PatchIndexesProps[] = JSON.parse(JSON.stringify(patchResult));
@@ -257,7 +265,12 @@ export async function updateData2Dataset({
     mongoData.fullTextToken = jiebaSplit({ text: mongoData.q + mongoData.a });
     // @ts-ignore
     mongoData.indexes = newIndexes;
-    await mongoData.save({ session });
+    await MongoDatasetData.sqliteModel.update(mongoData, {
+      where: {
+        _id: dataId
+      },
+      transaction: session
+    });
 
     // delete vector
     const deleteIdList = patchResult
@@ -356,14 +369,16 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
     });
 
     // get q and a
-    const dataList = (await MongoDatasetData.find(
-      {
-        teamId,
-        datasetId: { $in: datasetIds },
-        'indexes.dataId': { $in: results.map((item) => item.id?.trim()) }
-      },
-      'datasetId collectionId q a chunkIndex indexes'
-    ).populate('collectionId', 'name fileId rawLink')) as DatasetDataWithCollectionType[];
+    const dataList = (
+      await MongoDatasetData.sqliteModel.findAll({
+        where: {
+          teamId,
+          datasetId: { $in: datasetIds },
+          'indexes.dataId': results.map((item) => item.id?.trim())
+        },
+        include: DatasetColCollectionName
+      })
+    ).map((item) => item.dataValues) as unknown as DatasetDataWithCollectionType[];
 
     // add score to data(It's already sorted. The first one is the one with the most points)
     const concatResults = dataList.map((data) => {
@@ -425,28 +440,39 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
       };
     }
 
+    // TODO: support fulltext search
     let searchResults = (
       await Promise.all(
         datasetIds.map((id) =>
-          MongoDatasetData.find(
-            {
-              teamId,
-              datasetId: id,
-              $text: { $search: jiebaSplit({ text: query }) }
-            },
-            {
-              score: { $meta: 'textScore' },
-              _id: 1,
-              datasetId: 1,
-              collectionId: 1,
-              q: 1,
-              a: 1,
-              chunkIndex: 1
-            }
-          )
-            .sort({ score: { $meta: 'textScore' } })
-            .limit(limit)
+          MongoDatasetData.sqliteModel
+            .findAll({
+              where: {
+                teamId,
+                datasetId: id,
+                fullTextToken: { [Op.like]: jiebaSplit({ text: query }) }
+              }
+            })
+            .then((items) => items.map((item) => item.dataValues))
         )
+        // MongoDatasetData.find(
+        //   {
+        //     teamId,
+        //     datasetId: id,
+        //     $text: { $search: jiebaSplit({ text: query }) }
+        //   },
+        //   {
+        //     score: { $meta: 'textScore' },
+        //     _id: 1,
+        //     datasetId: 1,
+        //     collectionId: 1,
+        //     q: 1,
+        //     a: 1,
+        //     chunkIndex: 1
+        //   }
+        // )
+        //   .sort({ score: { $meta: 'textScore' } })
+        //   .limit(limit)
+        // )
       )
     ).flat() as (DatasetDataSchemaType & { score: number })[];
 

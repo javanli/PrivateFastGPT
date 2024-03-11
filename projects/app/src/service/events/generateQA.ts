@@ -12,6 +12,7 @@ import { pushDataToTrainingQueue } from '@/service/core/dataset/data/controller'
 import { getLLMModel } from '@fastgpt/service/core/ai/model';
 import { checkInvalidChunkAndLock, checkTeamAiPointsAndLock } from './utils';
 import { countGptMessagesChars } from '@fastgpt/service/core/chat/utils';
+import { Op } from '@fastgpt/service/common/mongo';
 
 const reduceQueue = () => {
   global.qaQueueLen = global.qaQueueLen > 0 ? global.qaQueueLen - 1 : 0;
@@ -31,27 +32,15 @@ export async function generateQA(): Promise<any> {
     error = false
   } = await (async () => {
     try {
-      const data = await MongoDatasetTraining.findOneAndUpdate(
+      const data = await MongoDatasetTraining.update(
         {
-          lockTime: { $lte: new Date(Date.now() - 6 * 60 * 1000) },
+          lockTime: { [Op.gt]: new Date(Date.now() - 6 * 60 * 1000) },
           mode: TrainingModeEnum.qa
         },
         {
           lockTime: new Date()
         }
-      ).select({
-        _id: 1,
-        userId: 1,
-        teamId: 1,
-        tmbId: 1,
-        datasetId: 1,
-        collectionId: 1,
-        q: 1,
-        model: 1,
-        chunkIndex: 1,
-        billId: 1,
-        prompt: 1
-      });
+      );
       // task preemption
       if (!data) {
         return {

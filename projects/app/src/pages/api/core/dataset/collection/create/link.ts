@@ -77,7 +77,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       // load
       await reloadCollectionChunks({
         collection: {
-          ...collection.toObject(),
+          ...collection,
           datasetId: dataset
         },
         tmbId,

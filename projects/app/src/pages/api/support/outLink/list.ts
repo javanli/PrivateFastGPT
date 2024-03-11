@@ -15,12 +15,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { teamId, tmbId, isOwner } = await authApp({ req, authToken: true, appId, per: 'w' });
 
-    const data = await MongoOutLink.find({
-      appId,
-      ...(isOwner ? { teamId } : { tmbId })
-    }).sort({
-      _id: -1
-    });
+    const data = (
+      await MongoOutLink.find({
+        appId,
+        ...(isOwner ? { teamId } : { tmbId })
+      })
+    ).sort((a, b) => a._id.localeCompare(b._id));
 
     jsonRes(res, { data });
   } catch (err) {

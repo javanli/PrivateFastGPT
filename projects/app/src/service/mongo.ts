@@ -43,20 +43,18 @@ async function initRootUser() {
     await mongoSessionRun(async (session) => {
       // init root user
       if (rootUser) {
-        await MongoUser.findOneAndUpdate(
+        await MongoUser.update(
           { username: 'root' },
           {
             password: hashStr(psw)
           }
         );
       } else {
-        const [{ _id }] = await MongoUser.create(
-          [
-            {
-              username: 'root',
-              password: hashStr(psw)
-            }
-          ],
+        const { _id } = await MongoUser.create(
+          {
+            username: 'root',
+            password: hashStr(psw)
+          },
           { session }
         );
         rootId = _id;

@@ -4,6 +4,7 @@ import { TrainingModeEnum } from '@fastgpt/global/core/dataset/constants';
 import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { checkInvalidChunkAndLock, checkTeamAiPointsAndLock } from './utils';
 import { delay } from '@fastgpt/global/common/system/utils';
+import { Op } from '@fastgpt/service/common/mongo';
 
 const reduceQueue = () => {
   global.vectorQueueLen = global.vectorQueueLen > 0 ? global.vectorQueueLen - 1 : 0;
@@ -25,32 +26,18 @@ export async function generateVector(): Promise<any> {
     error = false
   } = await (async () => {
     try {
-      const data = await MongoDatasetTraining.findOneAndUpdate(
-        {
-          lockTime: { $lte: new Date(Date.now() - 1 * 60 * 1000) },
+      const model = await MongoDatasetTraining.sqliteModel.findOne({
+        where: {
+          lockTime: { [Op.gt]: new Date(Date.now() - 1 * 60 * 1000) },
           mode: TrainingModeEnum.chunk
         },
-        {
-          lockTime: new Date()
-        }
-      )
-        .sort({
-          weight: -1
-        })
-        .select({
-          _id: 1,
-          userId: 1,
-          teamId: 1,
-          tmbId: 1,
-          datasetId: 1,
-          collectionId: 1,
-          q: 1,
-          a: 1,
-          chunkIndex: 1,
-          indexes: 1,
-          model: 1,
-          billId: 1
-        });
+        order: [['weight', 'DESC']]
+      });
+      if (model) {
+        model.dataValues.lockTime = new Date();
+        await model.save();
+      }
+      const data = model?.dataValues;
       // task preemption
       if (!data) {
         return {

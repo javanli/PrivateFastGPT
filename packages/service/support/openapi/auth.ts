@@ -20,7 +20,7 @@ export async function authOpenApiKey({ apikey }: { apikey: string }) {
     // @ts-ignore
     if (global.feConfigs?.isPlus) {
       await POST('/support/openapi/authLimit', {
-        openApi: openApi.toObject()
+        openApi: openApi
       } as AuthOpenApiLimitProps);
     }
 

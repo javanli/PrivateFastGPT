@@ -19,11 +19,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       authApiKey: true
     });
 
-    const datasets = await MongoDataset.find({
-      ...mongoRPermission({ teamId, tmbId, role }),
-      ...(parentId !== undefined && { parentId: parentId || null }),
-      ...(type && { type })
-    }).sort({ updateTime: -1 });
+    const datasets = (
+      await MongoDataset.sqliteModel.findAll({
+        where: {
+          ...mongoRPermission({ teamId, tmbId, role }),
+          ...(parentId !== undefined ? { parentId: parentId } : {}),
+          ...(type && { type })
+        },
+        order: [['updateTime', 'DESC']]
+      })
+    ).map((item) => item.dataValues);
     const data = await Promise.all(
       datasets.map<DatasetListItemType>((item) => ({
         _id: item._id,

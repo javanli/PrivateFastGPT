@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { appId, name, limit } = req.body as EditApiKeyProps;
     const { teamId, tmbId } = await authUserNotVisitor({ req, authToken: true });
 
-    const count = await MongoOpenApi.find({ tmbId, appId }).countDocuments();
+    const count = await MongoOpenApi.countDocuments({ tmbId, appId });
 
     if (count >= 10) {
       throw new Error('最多 10 组 API 秘钥');

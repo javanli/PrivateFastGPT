@@ -2,7 +2,7 @@ import { connectionMongo, Model, Schema, model } from '../../../common/mongo';
 
 import { DatasetCollectionSchemaType } from '@fastgpt/global/core/dataset/type.d';
 import { TrainingTypeMap, DatasetCollectionTypeMap } from '@fastgpt/global/core/dataset/constants';
-import { DatasetCollectionName } from '../schema';
+import { DatasetCollectionName, MongoDataset } from '../schema';
 import {
   TeamCollectionName,
   TeamMemberCollectionName
@@ -31,11 +31,11 @@ const DatasetCollectionSchema = new Schema({
     ref: TeamMemberCollectionName,
     required: true
   },
-  datasetId: {
-    type: Schema.Types.ObjectId,
-    ref: DatasetCollectionName,
-    required: true
-  },
+  // datasetId: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: DatasetCollectionName,
+  //   required: true
+  // },
   type: {
     type: String,
     enum: Object.keys(DatasetCollectionTypeMap),
@@ -107,8 +107,9 @@ try {
 } catch (error) {
   console.log(error);
 }
-
-export const MongoDatasetCollection: Model<DatasetCollectionSchemaType> = model(
+const _model: Model<DatasetCollectionSchemaType> = model(
   DatasetColCollectionName,
   DatasetCollectionSchema
 );
+_model.sqliteModel.belongsTo(MongoDataset.sqliteModel, { foreignKey: 'datasetId' });
+export const MongoDatasetCollection: Model<DatasetCollectionSchemaType> = _model;

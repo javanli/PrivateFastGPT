@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     await authOutLinkCrud({ req, outLinkId: id, authToken: true, per: 'owner' });
 
-    await MongoOutLink.findByIdAndRemove(id);
+    await MongoOutLink.destroy({ _id: id });
 
     jsonRes(res);
   } catch (err) {

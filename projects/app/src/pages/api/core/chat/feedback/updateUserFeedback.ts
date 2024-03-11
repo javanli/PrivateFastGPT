@@ -26,24 +26,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!chatItemId) {
       throw new Error('chatItemId is required');
     }
-
-    await MongoChatItem.findOneAndUpdate(
-      {
-        appId,
-        chatId,
-        dataId: chatItemId
-      },
-      {
-        $unset: {
-          ...(userBadFeedback === undefined && { userBadFeedback: '' }),
-          ...(userGoodFeedback === undefined && { userGoodFeedback: '' })
-        },
-        $set: {
-          ...(userBadFeedback !== undefined && { userBadFeedback }),
-          ...(userGoodFeedback !== undefined && { userGoodFeedback })
-        }
-      }
-    );
+    // TODO: feedback
+    // await MongoChatItem.findOneAndUpdate(
+    //   {
+    //     appId,
+    //     chatId,
+    //     dataId: chatItemId
+    //   },
+    //   {
+    //     $unset: {
+    //       ...(userBadFeedback === undefined && { userBadFeedback: '' }),
+    //       ...(userGoodFeedback === undefined && { userGoodFeedback: '' })
+    //     },
+    //     $set: {
+    //       ...(userBadFeedback !== undefined && { userBadFeedback }),
+    //       ...(userGoodFeedback !== undefined && { userGoodFeedback })
+    //     }
+    //   }
+    // );
 
     jsonRes(res);
   } catch (err) {

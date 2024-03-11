@@ -10,15 +10,15 @@ export const addOutLinkUsage = async ({
   shareId: string;
   totalPoints: number;
 }) => {
-  MongoOutLink.findOneAndUpdate(
+  await MongoOutLink.update(
     { shareId },
     {
-      $inc: { usagePoints: totalPoints },
       lastTime: new Date()
     }
   ).catch((err) => {
     console.log('update shareChat error', err);
   });
+  await MongoOutLink.sqliteModel.increment('usagePoints', { by: totalPoints, where: { shareId } });
 };
 
 export const pushResult2Remote = async ({

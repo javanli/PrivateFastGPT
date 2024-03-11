@@ -3,6 +3,7 @@ import { jsonRes } from '@fastgpt/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import { MongoChat } from '@fastgpt/service/core/chat/chatSchema';
 import { ChatSourceEnum } from '@fastgpt/global/core/chat/constants';
+import { Op } from '@fastgpt/service/common/mongo';
 
 /* clear chat history */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -19,16 +20,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const sliceIds = chatIds.slice(0, 50);
 
-    await MongoChat.updateMany(
+    await MongoChat.sqliteModel.update(
       {
-        chatId: { $in: sliceIds },
-        source: ChatSourceEnum.share,
-        outLinkUid: { $exists: false }
+        outLinkUid
       },
       {
-        $set: {
-          outLinkUid
-        }
+        where: {
+          chatId: { [Op.in]: sliceIds },
+          source: ChatSourceEnum.share,
+          outLinkUid: { [Op.eq]: null }
+        } as any
       }
     );
 

@@ -13,12 +13,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const { teamId, tmbId, teamOwner, role } = await authUserRole({ req, authToken: true });
 
     // 根据 userId 获取模型信息
-    const myApps = await MongoApp.find(
-      { ...mongoRPermission({ teamId, tmbId, role }) },
-      '_id avatar name intro tmbId permission'
-    ).sort({
-      updateTime: -1
-    });
+    const myApps = (
+      await MongoApp.sqliteModel.findAll({
+        where: { ...mongoRPermission({ teamId, tmbId, role }) },
+        order: [['updateTime', 'DESC']]
+      })
+    ).map((data) => data.dataValues);
     jsonRes<AppListItemType[]>(res, {
       data: myApps.map((app) => ({
         _id: app._id,

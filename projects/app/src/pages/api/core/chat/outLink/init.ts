@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // auth app permission
     const [tmb, chat, app] = await Promise.all([
-      MongoTeamMember.findById(shareChat.tmbId, '_id userId').populate('userId', 'avatar'),
+      MongoTeamMember.findById(shareChat.tmbId, '_id userId'),
       MongoChat.findOne({ appId, chatId, shareId }),
       MongoApp.findById(appId)
     ]);

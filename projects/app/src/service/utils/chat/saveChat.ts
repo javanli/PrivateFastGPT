@@ -68,7 +68,13 @@ export async function saveChat({
         chat.title = title;
         chat.updateTime = new Date();
         chat.metadata = metadataUpdate;
-        await chat.save({ session });
+        await MongoChat.sqliteModel.update(chat, {
+          where: {
+            appId,
+            chatId
+          },
+          transaction: session
+        });
       } else {
         await MongoChat.create(
           [

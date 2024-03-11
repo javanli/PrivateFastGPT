@@ -4,12 +4,36 @@ import { MongoTeamMember } from '@fastgpt/service/support/user/team/teamMemberSc
 import { MongoTeam } from '@fastgpt/service/support/user/team/teamSchema';
 import { checkTeamAIPoints } from '@fastgpt/service/support/permission/teamLimit';
 import axios from 'axios';
+import { UserModelSchema } from '@fastgpt/global/support/user/type';
 
+function getDefaultUser() {
+  const user: UserModelSchema = {
+    _id: '0',
+    username: '0',
+    password: '0',
+    avatar: '0',
+    balance: 0.7,
+    promotionRate: 1.0,
+    inviterId: '0',
+    openaiKey: '0',
+    createTime: 0,
+    timezone: '0',
+    status: 'active',
+    lastLoginTmbId: '0',
+    openaiAccount: {
+      key: '0',
+      baseUrl: '0'
+    }
+  };
+  return user;
+}
 export async function getUserChatInfoAndAuthTeamPoints(tmbId: string) {
-  const tmb = (await MongoTeamMember.findById(tmbId, 'teamId userId').populate(
-    'userId',
-    'timezone openaiAccount'
-  )) as TeamMemberWithUserSchema;
+  const member = await MongoTeamMember.findById(tmbId, 'teamId userId');
+  if (!member) return Promise.reject(UserErrEnum.unAuthUser);
+  let tmb: TeamMemberWithUserSchema = {
+    ...member,
+    userId: getDefaultUser()
+  };
   if (!tmb) return Promise.reject(UserErrEnum.unAuthUser);
 
   await checkTeamAIPoints(tmb.teamId);
@@ -21,7 +45,7 @@ export async function getUserChatInfoAndAuthTeamPoints(tmbId: string) {
 
 type UserInfoType = {
   data: {
-    uid: string;
+    uid: '0';
     tags: string[];
   };
 };

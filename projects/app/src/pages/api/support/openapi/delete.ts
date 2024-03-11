@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     await authOpenApiKeyCrud({ req, authToken: true, id, per: 'owner' });
 
-    await MongoOpenApi.findOneAndRemove({ _id: id });
+    await MongoOpenApi.destroy({ _id: id });
 
     jsonRes(res);
   } catch (err) {

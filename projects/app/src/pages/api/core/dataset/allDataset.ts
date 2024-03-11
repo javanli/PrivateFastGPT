@@ -7,6 +7,7 @@ import type { DatasetListItemType } from '@fastgpt/global/core/dataset/type.d';
 import { mongoRPermission } from '@fastgpt/global/support/permission/utils';
 import { authUserRole } from '@fastgpt/service/support/permission/auth/user';
 import { DatasetTypeEnum } from '@fastgpt/global/core/dataset/constants';
+import { Op } from '@fastgpt/service/common/mongo';
 
 /* get all dataset by teamId or tmbId */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
@@ -17,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     const datasets = await MongoDataset.find({
       ...mongoRPermission({ teamId, tmbId, role }),
-      type: { $ne: DatasetTypeEnum.folder }
+      type: { [Op.ne]: DatasetTypeEnum.folder }
     });
 
     const data = datasets.map((item) => ({

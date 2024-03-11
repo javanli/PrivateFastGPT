@@ -13,12 +13,14 @@ import type { VectorModelItemType, LLMModelItemType } from '@fastgpt/global/core
 
 export const lockTrainingDataByTeamId = async (teamId: string): Promise<any> => {
   try {
-    await MongoDatasetTraining.updateMany(
+    await MongoDatasetTraining.sqliteModel.update(
       {
         teamId
       },
       {
-        lockTime: new Date('2999/5/5')
+        where: {
+          lockTime: new Date('2999/5/5')
+        }
       }
     );
   } catch (error) {}

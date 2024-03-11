@@ -7,8 +7,11 @@ import {
   ModelAttributeColumnOptions,
   ModelStatic,
   WhereOptions,
-  Transaction
+  Transaction,
+  CreationAttributes,
+  Op
 } from 'sequelize';
+export { Op } from 'sequelize';
 import { MakeNullishOptional } from 'sequelize/types/utils';
 
 export const sequelize = new Sequelize('sqlite::memory:');
@@ -67,6 +70,24 @@ export class Model<T extends {}> {
     });
     return result.map((item) => item.dataValues);
   }
+  async findById(id: string, filter?: any) {
+    return this.findOne({ _id: id });
+  }
+  async findByIdAndUpdate(id: string, updateData: any, writeOption?: WriteOption) {
+    const model = await this.sqliteModel.findByPk(id, {
+      transaction: writeOption?.session
+    });
+    if (model) {
+      const values = { ...(model!.dataValues ?? {}), ...updateData };
+      model!.dataValues = values;
+      await model!.save({
+        transaction: writeOption?.session
+      });
+    }
+  }
+  async findByIdAndDelete(id: string, writeOption?: WriteOption) {
+    await this.destroy({ _id: id }, writeOption);
+  }
   async create(values: any, writeOption?: WriteOption) {
     const result = await this.sqliteModel.create(values, { transaction: writeOption?.session });
     return result.dataValues;
@@ -77,20 +98,14 @@ export class Model<T extends {}> {
       transaction: writeOption?.session
     });
   }
-  async findById(id: string, filter?: any) {
-    return this.findOne({ _id: id });
-  }
-  async findByIdAndUpdate(id: string, updateData: any) {
-    const model = await this.sqliteModel.findByPk(id);
-    if (model) {
-      const values = { ...(model!.dataValues ?? {}), ...updateData };
-      model!.dataValues = values;
-      await model!.save();
-    }
-  }
   async deleteMany(options: WhereOptions, writeOption?: WriteOption) {
     await this.sqliteModel.destroy({
       where: options,
+      transaction: writeOption?.session
+    });
+  }
+  async insertMany(options: any, writeOption?: WriteOption) {
+    return await this.sqliteModel.bulkCreate(options, {
       transaction: writeOption?.session
     });
   }
@@ -99,6 +114,25 @@ export class Model<T extends {}> {
       where: options,
       transaction: writeOption?.session
     });
+  }
+  async countDocuments(options: WhereOptions, writeOption?: WriteOption) {
+    return await this.sqliteModel.count({
+      where: options
+    });
+  }
+  async count(options: WhereOptions, writeOption?: WriteOption) {
+    return await this.sqliteModel.count({
+      where: options
+    });
+  }
+  async update(options: WhereOptions, data: any) {
+    const result = await this.sqliteModel.update(data, {
+      where: options,
+      returning: true,
+      limit: 1
+    });
+    const model = result[1].shift();
+    return model?.dataValues;
   }
 }
 function convertType(type?: SchemaType) {

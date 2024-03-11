@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       per: 'r'
     });
 
-    await MongoChatItem.findOneAndUpdate(
+    await MongoChatItem.update(
       {
         appId,
         chatId,

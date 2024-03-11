@@ -1,5 +1,9 @@
-import { TeamItemType, TeamMemberWithTeamSchema } from '@fastgpt/global/support/user/team/type';
-import { ClientSession, Types } from '../../../common/mongo';
+import {
+  TeamItemType,
+  TeamMemberWithTeamSchema,
+  TeamSchema
+} from '@fastgpt/global/support/user/team/type';
+import { ClientSession } from '../../../common/mongo';
 import {
   TeamMemberRoleEnum,
   TeamMemberStatusEnum,
@@ -8,27 +12,45 @@ import {
 import { MongoTeamMember } from './teamMemberSchema';
 import { MongoTeam } from './teamSchema';
 
-async function getTeamMember(match: Record<string, any>): Promise<TeamItemType> {
-  const tmb = (await MongoTeamMember.findOne(match).populate('teamId')) as TeamMemberWithTeamSchema;
-
-  if (!tmb) {
-    return Promise.reject('member not exist');
-  }
-
-  return {
-    userId: String(tmb.userId),
-    teamId: String(tmb.teamId._id),
-    teamName: tmb.teamId.name,
-    memberName: tmb.name,
-    avatar: tmb.teamId.avatar,
-    balance: tmb.teamId.balance,
-    tmbId: String(tmb._id),
-    role: tmb.role,
-    status: tmb.status,
-    defaultTeam: tmb.defaultTeam,
-    canWrite: tmb.role !== TeamMemberRoleEnum.visitor,
-    maxSize: tmb.teamId.maxSize
+export function getDefaultTeamInfo() {
+  const defaultTeamInfo: TeamSchema = {
+    _id: '0',
+    name: '0',
+    ownerId: '0',
+    avatar: '',
+    createTime: new Date(0),
+    balance: 0.6,
+    maxSize: 999999999,
+    tagsUrl: '',
+    'limit.lastExportDatasetTime': new Date(0),
+    'limit.lastWebsiteSyncTime': new Date(0)
   };
+  return defaultTeamInfo;
+}
+export function getDefaultTeamMember() {
+  const teamInfo = getDefaultTeamInfo();
+  return {
+    userId: String(0),
+    teamId: String(teamInfo._id),
+    teamName: teamInfo.name,
+    memberName: '',
+    avatar: teamInfo.avatar,
+    balance: teamInfo.balance,
+    tmbId: '0',
+    role: TeamMemberRoleEnum.admin,
+    status: TeamMemberStatusEnum.active,
+    defaultTeam: true,
+    canWrite: true,
+    maxSize: teamInfo.maxSize
+  };
+}
+async function getTeamMember(match: Record<string, any>): Promise<TeamItemType> {
+  // const tmb = (await MongoTeamMember.findOne(match));
+
+  // if (!tmb) {
+  //   return Promise.reject('member not exist');
+  // }
+  return getDefaultTeamMember();
 }
 
 export async function getTmbInfoByTmbId({ tmbId }: { tmbId: string }) {
@@ -36,7 +58,7 @@ export async function getTmbInfoByTmbId({ tmbId }: { tmbId: string }) {
     return Promise.reject('tmbId or userId is required');
   }
   return getTeamMember({
-    _id: new Types.ObjectId(String(tmbId)),
+    _id: String(tmbId),
     status: notLeaveStatus
   });
 }
@@ -46,7 +68,7 @@ export async function getUserDefaultTeam({ userId }: { userId: string }) {
     return Promise.reject('tmbId or userId is required');
   }
   return getTeamMember({
-    userId: new Types.ObjectId(userId),
+    userId: userId,
     defaultTeam: true
   });
 }
@@ -67,7 +89,7 @@ export async function createDefaultTeam({
 }) {
   // auth default team
   const tmb = await MongoTeamMember.findOne({
-    userId: new Types.ObjectId(userId),
+    userId: userId,
     defaultTeam: true
   });
 
@@ -75,17 +97,15 @@ export async function createDefaultTeam({
     console.log('create default team', userId);
 
     // create
-    const [{ _id: insertedId }] = await MongoTeam.create(
-      [
-        {
-          ownerId: userId,
-          name: teamName,
-          avatar,
-          balance,
-          maxSize,
-          createTime: new Date()
-        }
-      ],
+    const { _id: insertedId } = await MongoTeam.create(
+      {
+        ownerId: userId,
+        name: teamName,
+        avatar,
+        balance,
+        maxSize,
+        createTime: new Date()
+      },
       { session }
     );
     await MongoTeamMember.create(

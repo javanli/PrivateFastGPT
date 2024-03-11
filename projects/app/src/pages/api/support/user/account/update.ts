@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
 
     // 更新对应的记录
-    await MongoUser.updateOne(
+    await MongoUser.update(
       {
         _id: userId
       },

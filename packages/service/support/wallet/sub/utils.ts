@@ -60,7 +60,10 @@ export const initTeamStandardPlan2Free = async ({
       teamStandardSub.surplusPoints && teamStandardSub.surplusPoints < 0
         ? teamStandardSub.surplusPoints + freePoints
         : freePoints;
-    return teamStandardSub.save({ session });
+    await MongoTeamSub.sqliteModel.update(teamStandardSub, {
+      where: { teamId, type: SubTypeEnum.standard },
+      transaction: session
+    });
   }
 
   return MongoTeamSub.create(

@@ -14,13 +14,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (appId) {
       const { tmbId, teamOwner } = await authApp({ req, authToken: true, appId, per: 'w' });
 
-      const findResponse = await MongoOpenApi.find({
-        appId,
-        ...(!teamOwner && { tmbId })
-      }).sort({ _id: -1 });
+      const findResponse = (
+        await MongoOpenApi.find({
+          appId,
+          ...(!teamOwner && { tmbId })
+        })
+      ).sort((a, b) => a._id.localeCompare(b._id));
 
       return jsonRes(res, {
-        data: findResponse.map((item) => item.toObject())
+        data: findResponse
       });
     }
 
@@ -30,14 +32,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       isOwner: teamOwner
     } = await authUserNotVisitor({ req, authToken: true });
 
-    const findResponse = await MongoOpenApi.find({
-      appId,
-      teamId,
-      ...(!teamOwner && { tmbId })
-    }).sort({ _id: -1 });
+    const findResponse = (
+      await MongoOpenApi.find({
+        appId,
+        teamId,
+        ...(!teamOwner && { tmbId })
+      })
+    ).sort((a, b) => a._id.localeCompare(b._id));
 
     return jsonRes(res, {
-      data: findResponse.map((item) => item.toObject())
+      data: findResponse
     });
   } catch (err) {
     jsonRes(res, {

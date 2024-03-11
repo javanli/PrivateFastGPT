@@ -15,14 +15,14 @@ export function updateApiKeyUsage({
   apikey: string;
   totalPoints: number;
 }) {
-  MongoOpenApi.findOneAndUpdate(
-    { apiKey: apikey },
-    {
-      $inc: {
-        usagePoints: totalPoints
+  MongoOpenApi.sqliteModel
+    .update(
+      { usagePoints: totalPoints },
+      {
+        where: { apiKey: apikey }
       }
-    }
-  ).catch((err) => {
-    console.log('update apiKey totalPoints error', err);
-  });
+    )
+    .catch((err) => {
+      console.log('update apiKey totalPoints error', err);
+    });
 }
