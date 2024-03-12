@@ -9,8 +9,6 @@ import {
   TeamMemberStatusEnum,
   notLeaveStatus
 } from '@/packages/global/support/user/team/constant';
-import { MongoTeamMember } from './teamMemberSchema';
-import { MongoTeam } from './teamSchema';
 
 export function getDefaultTeamInfo() {
   const defaultTeamInfo: TeamSchema = {
@@ -30,6 +28,7 @@ export function getDefaultTeamInfo() {
 export function getDefaultTeamMember() {
   const teamInfo = getDefaultTeamInfo();
   return {
+    _id: '0',
     userId: String(0),
     teamId: String(teamInfo._id),
     teamName: teamInfo.name,
@@ -41,15 +40,12 @@ export function getDefaultTeamMember() {
     status: TeamMemberStatusEnum.active,
     defaultTeam: true,
     canWrite: true,
-    maxSize: teamInfo.maxSize
+    maxSize: teamInfo.maxSize,
+    createTime: new Date(0),
+    name: ''
   };
 }
 async function getTeamMember(match: Record<string, any>): Promise<TeamItemType> {
-  // const tmb = (await MongoTeamMember.findOne(match));
-
-  // if (!tmb) {
-  //   return Promise.reject('member not exist');
-  // }
   return getDefaultTeamMember();
 }
 
@@ -67,10 +63,7 @@ export async function getUserDefaultTeam({ userId }: { userId: string }) {
   if (!userId) {
     return Promise.reject('tmbId or userId is required');
   }
-  return getTeamMember({
-    userId: userId,
-    defaultTeam: true
-  });
+  return getDefaultTeamMember();
 }
 export async function createDefaultTeam({
   userId,
@@ -86,49 +79,4 @@ export async function createDefaultTeam({
   balance?: number;
   maxSize?: number;
   session: ClientSession;
-}) {
-  // auth default team
-  const tmb = await MongoTeamMember.findOne({
-    userId: userId,
-    defaultTeam: true
-  });
-
-  if (!tmb) {
-    console.log('create default team', userId);
-
-    // create
-    const { _id: insertedId } = await MongoTeam.create(
-      {
-        ownerId: userId,
-        name: teamName,
-        avatar,
-        balance,
-        maxSize,
-        createTime: new Date()
-      },
-      { session }
-    );
-    await MongoTeamMember.create(
-      [
-        {
-          teamId: insertedId,
-          userId,
-          name: 'Owner',
-          role: TeamMemberRoleEnum.owner,
-          status: TeamMemberStatusEnum.active,
-          createTime: new Date(),
-          defaultTeam: true
-        }
-      ],
-      { session }
-    );
-  } else {
-    console.log('default team exist', userId);
-    await MongoTeam.findByIdAndUpdate(tmb.teamId, {
-      $set: {
-        ...(balance !== undefined && { balance }),
-        maxSize
-      }
-    });
-  }
-}
+}) {}

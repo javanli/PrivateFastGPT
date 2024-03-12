@@ -1,11 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { jsonRes } from '@/packages/service/common/response';
-import { MongoUser } from '@/packages/service/support/user/schema';
 import { authCert } from '@/packages/service/support/permission/auth/common';
 import { UserUpdateParams } from '@/types/user';
 import { getAIApi, openaiBaseUrl } from '@/packages/service/core/ai/config';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoTeamMember } from '@/packages/service/support/user/team/teamMemberSchema';
+import { getDefaultTeamMember } from '@/packages/service/support/user/team/controller';
 
 /* update user info */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
@@ -14,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const { avatar, timezone, openaiAccount } = req.body as UserUpdateParams;
 
     const { tmbId } = await authCert({ req, authToken: true });
-    const tmb = await MongoTeamMember.findById(tmbId);
+    const tmb = getDefaultTeamMember();
     if (!tmb) {
       throw new Error('can not find it');
     }
@@ -38,18 +37,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         throw new Error('Key response is empty');
       }
     }
-
-    // 更新对应的记录
-    await MongoUser.update(
-      {
-        _id: userId
-      },
-      {
-        ...(avatar && { avatar }),
-        ...(timezone && { timezone }),
-        openaiAccount: openaiAccount?.key ? openaiAccount : null
-      }
-    );
+    // TODO: custom openai account?
+    // // 更新对应的记录
+    // await MongoUser.update(
+    //   {
+    //     _id: userId
+    //   },
+    //   {
+    //     ...(avatar && { avatar }),
+    //     ...(timezone && { timezone }),
+    //     openaiAccount: openaiAccount?.key ? openaiAccount : null
+    //   }
+    // );
 
     jsonRes(res);
   } catch (err) {

@@ -12,11 +12,7 @@ export function mongoRPermission({
   role: `${TeamMemberRoleEnum}`;
 }) {
   return {
-    teamId,
-    ...(role === TeamMemberRoleEnum.visitor && { permission: PermissionTypeEnum.public }),
-    ...(role === TeamMemberRoleEnum.admin && {
-      $or: [{ permission: PermissionTypeEnum.public }, { tmbId }]
-    })
+    teamId
   };
 }
 export function mongoOwnerPermission({ teamId, tmbId }: { teamId: string; tmbId: string }) {

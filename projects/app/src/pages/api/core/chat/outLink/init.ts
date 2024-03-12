@@ -6,13 +6,13 @@ import { getGuideModule } from '@/packages/global/core/module/utils';
 import { getChatModelNameListByModules } from '@/service/core/app/module';
 import { ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
 import { getChatItems } from '@/packages/service/core/chat/controller';
-import { MongoTeamMember } from '@/packages/service/support/user/team/teamMemberSchema';
 import { authOutLink } from '@/service/support/permission/auth/outLink';
 import { MongoApp } from '@/packages/service/core/app/schema';
 import { selectShareResponse } from '@/utils/service/core/chat';
 import { AppErrEnum } from '@/packages/global/common/error/code/app';
 import { MongoChat } from '@/packages/service/core/chat/chatSchema';
 import { ChatErrEnum } from '@/packages/global/common/error/code/chat';
+import { getDefaultTeamMember } from '@/packages/service/support/user/team/controller';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -24,8 +24,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { shareChat, uid, appId } = await authOutLink({ shareId, outLinkUid });
 
     // auth app permission
-    const [tmb, chat, app] = await Promise.all([
-      MongoTeamMember.findById(shareChat.tmbId, '_id userId'),
+    const tmb = getDefaultTeamMember();
+    const [chat, app] = await Promise.all([
       MongoChat.findOne({ appId, chatId, shareId }),
       MongoApp.findById(appId)
     ]);

@@ -19,7 +19,7 @@ export async function connectMongo({
 
   console.log('mongo start connect');
   try {
-    connectionMongo.sync({ force: true });
+    await connectionMongo.sync();
     console.log('mongo connected');
 
     afterHook && (await afterHook());

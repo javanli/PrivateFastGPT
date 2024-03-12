@@ -16,13 +16,13 @@ export const connectPg = async (): Promise<sqlite3.Database> => {
   }
   global.pgClient = db;
 
-  await db.run(`
-  CREATE VIRTUAL TABLE vss_${PgDatasetTableName} IF NOT EXISTS (
+  await PgClient.run(`
+  CREATE VIRTUAL TABLE IF NOT EXISTS vss_${PgDatasetTableName} using vss0(
       vector(1536),
   );
 `);
-  await db.run(`
-  CREATE VIRTUAL TABLE ${PgDatasetTableName} IF NOT EXISTS (
+  await PgClient.run(`
+  CREATE TABLE IF NOT EXISTS ${PgDatasetTableName} (
       team_id VARCHAR(50) NOT NULL,
       dataset_id VARCHAR(50) NOT NULL,
       collection_id VARCHAR(50) NOT NULL,
@@ -33,16 +33,16 @@ export const connectPg = async (): Promise<sqlite3.Database> => {
   // await PgClient.run(
   //   `CREATE INDEX CONCURRENTLY IF NOT EXISTS vector_index ON ${PgDatasetTableName} USING hnsw (vector vector_ip_ops) WITH (m = 32, ef_construction = 64);`
   // );
-  await db.run(
+  await PgClient.run(
     `CREATE INDEX CONCURRENTLY IF NOT EXISTS team_dataset_index ON ${PgDatasetTableName}(team_id, dataset_id);`
   );
-  await db.run(
+  await PgClient.run(
     ` CREATE INDEX CONCURRENTLY IF NOT EXISTS team_collection_index ON ${PgDatasetTableName}(team_id, collection_id);`
   );
-  await db.run(
+  await PgClient.run(
     `CREATE INDEX CONCURRENTLY IF NOT EXISTS team_id_index ON ${PgDatasetTableName}(team_id, id);`
   );
-  await db.run(
+  await PgClient.run(
     `CREATE INDEX CONCURRENTLY IF NOT EXISTS create_time_index ON ${PgDatasetTableName}(createtime);`
   );
 
@@ -59,10 +59,13 @@ interface PGDataType {
 
 class PgClass {
   async run(sql: string) {
+    console.log(`pg run: ${sql}`);
     return new Promise<RunResult>(function (resolve, reject) {
       db.run(sql, function (result: RunResult, error: Error | null) {
-        if (error) reject(error);
-        else resolve(result);
+        if (error) {
+          console.log(`error:pg run ${sql}, error: ${error}`);
+          reject(error);
+        } else resolve(result);
       });
     });
   }

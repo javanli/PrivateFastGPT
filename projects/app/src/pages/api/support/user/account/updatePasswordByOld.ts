@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { jsonRes } from '@/packages/service/common/response';
 import { authCert } from '@/packages/service/support/permission/auth/common';
-import { MongoUser } from '@/packages/service/support/user/schema';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoTeamMember } from '@/packages/service/support/user/team/teamMemberSchema';
+import { getDefaultTeamMember } from '@/packages/service/support/user/team/controller';
+import { getDefaultUser } from '@/packages/service/support/user/controller';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
@@ -15,25 +15,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
 
     const { tmbId } = await authCert({ req, authToken: true });
-    const tmb = await MongoTeamMember.findById(tmbId);
+    const tmb = getDefaultTeamMember();
     if (!tmb) {
       throw new Error('can not find it');
     }
     const userId = tmb.userId;
     // auth old password
-    const user = await MongoUser.findOne({
-      _id: userId,
-      password: oldPsw
-    });
+    const user = getDefaultUser();
 
     if (!user) {
       throw new Error('user.Old password is error');
     }
 
     // 更新对应的记录
-    await MongoUser.findByIdAndUpdate(userId, {
-      password: newPsw
-    });
 
     jsonRes(res, {
       data: {

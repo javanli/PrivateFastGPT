@@ -1,9 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { jsonRes } from '@/packages/service/common/response';
-import { MongoUser } from '@/packages/service/support/user/schema';
 import { createJWT, setCookie } from '@/packages/service/support/permission/controller';
 import { connectToDatabase } from '@/service/mongo';
-import { getUserDetail } from '@/packages/service/support/user/controller';
+import { getDefaultUser, getUserDetail } from '@/packages/service/support/user/controller';
 import type { PostLoginProps } from '@/packages/global/support/user/api.d';
 import { UserStatusEnum } from '@/packages/global/support/user/constant';
 
@@ -17,12 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // 检测用户是否存在
-    const authCert = await MongoUser.findOne(
-      {
-        username
-      },
-      'status'
-    );
+    const authCert = getDefaultUser();
     if (!authCert) {
       throw new Error('用户未注册');
     }
@@ -31,10 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       throw new Error('账号已停用，无法登录');
     }
 
-    const user = await MongoUser.findOne({
-      username,
-      password
-    });
+    const user = getDefaultUser();
 
     if (!user) {
       throw new Error('密码错误');
@@ -43,10 +34,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const userDetail = await getUserDetail({
       tmbId: user?.lastLoginTmbId,
       userId: user._id
-    });
-
-    MongoUser.findByIdAndUpdate(user._id, {
-      lastLoginTmbId: userDetail.team.tmbId
     });
 
     const token = createJWT(userDetail);

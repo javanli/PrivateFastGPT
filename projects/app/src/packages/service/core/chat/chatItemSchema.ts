@@ -8,7 +8,6 @@ import {
   TeamMemberCollectionName
 } from '@/packages/global/support/user/team/constant';
 import { appCollectionName } from '../app/schema';
-import { userCollectionName } from '../../support/user/schema';
 import { ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
 
 export const ChatItemCollectionName = 'chatitems';
@@ -25,8 +24,7 @@ const ChatItemSchema = new Schema({
     required: true
   },
   userId: {
-    type: Schema.Types.ObjectId,
-    ref: userCollectionName
+    type: Schema.Types.ObjectId
   },
   chatId: {
     type: String,

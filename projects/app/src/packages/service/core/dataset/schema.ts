@@ -79,19 +79,19 @@ const DatasetSchema = new Schema({
     type: String,
     enum: Object.keys(PermissionTypeMap),
     default: PermissionTypeEnum.private
-  },
-  websiteConfig: {
-    type: {
-      url: {
-        type: String,
-        required: true
-      },
-      selector: {
-        type: String,
-        default: 'body'
-      }
-    }
   }
+  // websiteConfig: {
+  //   type: {
+  //     url: {
+  //       type: String,
+  //       required: true
+  //     },
+  //     selector: {
+  //       type: String,
+  //       default: 'body'
+  //     }
+  //   }
+  // }
 });
 
 try {

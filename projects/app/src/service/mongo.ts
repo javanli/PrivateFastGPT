@@ -1,6 +1,5 @@
 import { startQueue } from './utils/tools';
 import { PRICE_SCALE } from '@/packages/global/support/wallet/constants';
-import { MongoUser } from '@/packages/service/support/user/schema';
 import { connectMongo } from '@/packages/service/common/mongo/init';
 import { hashStr } from '@/packages/global/common/string/tools';
 import { createDefaultTeam } from '@/packages/service/support/user/team/controller';
@@ -9,6 +8,7 @@ import { initVectorStore } from '@/packages/service/common/vectorStore/controlle
 import { getInitConfig } from '@/pages/api/common/system/getInitData';
 import { startCron } from './common/system/cron';
 import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
+import { getDefaultUser } from '@/packages/service/support/user/controller';
 
 /**
  * connect MongoDB and init data
@@ -33,35 +33,10 @@ export function connectToDatabase(): Promise<void> {
 
 async function initRootUser() {
   try {
-    const rootUser = await MongoUser.findOne({
-      username: 'root'
-    });
+    const rootUser = getDefaultUser();
     const psw = process.env.DEFAULT_ROOT_PSW || '123456';
 
     let rootId = rootUser?._id || '';
-
-    await mongoSessionRun(async (session) => {
-      // init root user
-      if (rootUser) {
-        await MongoUser.update(
-          { username: 'root' },
-          {
-            password: hashStr(psw)
-          }
-        );
-      } else {
-        const { _id } = await MongoUser.create(
-          {
-            username: 'root',
-            password: hashStr(psw)
-          },
-          { session }
-        );
-        rootId = _id;
-      }
-      // init root team
-      await createDefaultTeam({ userId: rootId, maxSize: 1, balance: 9999 * PRICE_SCALE, session });
-    });
 
     console.log(`root user init:`, {
       username: 'root',

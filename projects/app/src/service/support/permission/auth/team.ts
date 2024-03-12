@@ -1,10 +1,12 @@
 import { UserErrEnum } from '@/packages/global/common/error/code/user';
 import { TeamMemberWithUserSchema } from '@/packages/global/support/user/team/type';
-import { MongoTeamMember } from '@/packages/service/support/user/team/teamMemberSchema';
-import { MongoTeam } from '@/packages/service/support/user/team/teamSchema';
 import { checkTeamAIPoints } from '@/packages/service/support/permission/teamLimit';
 import axios from 'axios';
 import { UserModelSchema } from '@/packages/global/support/user/type';
+import {
+  getDefaultTeamInfo,
+  getDefaultTeamMember
+} from '@/packages/service/support/user/team/controller';
 
 function getDefaultUser() {
   const user: UserModelSchema = {
@@ -28,7 +30,7 @@ function getDefaultUser() {
   return user;
 }
 export async function getUserChatInfoAndAuthTeamPoints(tmbId: string) {
-  const member = await MongoTeamMember.findById(tmbId, 'teamId userId');
+  const member = getDefaultTeamMember();
   if (!member) return Promise.reject(UserErrEnum.unAuthUser);
   let tmb: TeamMemberWithUserSchema = {
     ...member,
@@ -52,7 +54,7 @@ type UserInfoType = {
 
 export async function getShareTeamUid(shareTeamId: string, authToken: string) {
   try {
-    const teamInfo = await MongoTeam.findById(shareTeamId);
+    const teamInfo = getDefaultTeamInfo();
     const tagsUrl = teamInfo?.tagsUrl;
     const { data: userInfo } = await axios.post(tagsUrl + `/getUserInfo`, { autoken: authToken });
 

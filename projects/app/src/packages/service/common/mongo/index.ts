@@ -141,8 +141,11 @@ export class Model<T extends {}> {
       returning: true,
       limit: 1
     });
-    const model = result[1].shift();
-    return model?.dataValues;
+    const model = result[1];
+    if (model && model.length > 0) {
+      return model[0].dataValues;
+    }
+    return undefined;
   }
 }
 function convertType(type?: SchemaType) {
@@ -158,7 +161,7 @@ function convertType(type?: SchemaType) {
   if (type == Number) {
     return DataTypes.NUMBER;
   }
-  console.error('error type = ', type);
+  // console.error('error type = ', type);
   return DataTypes.JSON;
 }
 export function model<M extends {}, T>(name: string, schema?: Schema<T>): Model<M> {
@@ -183,8 +186,8 @@ export function model<M extends {}, T>(name: string, schema?: Schema<T>): Model<
           } else {
             this.setDataValue(key, value);
           }
-        },
-        references: element.ref
+        }
+        // references: element.ref
       };
       if (element.enum) {
         sqliteSchema.type = DataTypes.ENUM;
@@ -194,7 +197,9 @@ export function model<M extends {}, T>(name: string, schema?: Schema<T>): Model<
     }
   }
   const modelCtor = sequelize.define(name, attributes);
+  modelCtor.sync();
   const wrapper = new Model(modelCtor);
+  console.log(`define table: ${name}`);
   return wrapper;
 }
 
