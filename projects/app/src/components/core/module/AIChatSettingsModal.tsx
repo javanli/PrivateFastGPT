@@ -17,15 +17,15 @@ import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { Prompt_QuotePromptList, Prompt_QuoteTemplateList } from '@/global/core/prompt/AIChat';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import MySlider from '@/components/Slider';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
 import dynamic from 'next/dynamic';
-import { PromptTemplateItem } from '@fastgpt/global/core/ai/type.d';
-import type { AIChatModuleProps } from '@fastgpt/global/core/module/node/type.d';
-import type { AppSimpleEditConfigTemplateType } from '@fastgpt/global/core/app/type.d';
+import { PromptTemplateItem } from '@/packages/global/core/ai/type.d';
+import type { AIChatModuleProps } from '@/packages/global/core/module/node/type.d';
+import type { AppSimpleEditConfigTemplateType } from '@/packages/global/core/app/type.d';
 import { SimpleModeTemplate_FastGPT_Universal } from '@/global/core/app/constants';
 import { getDocPath } from '@/web/common/system/doc';
-import PromptEditor from '@fastgpt/web/components/common/Textarea/PromptEditor';
-import { EditorVariablePickerType } from '@fastgpt/web/components/common/Textarea/PromptEditor/type';
+import PromptEditor from '@/packages/web/components/common/Textarea/PromptEditor';
+import { EditorVariablePickerType } from '@/packages/web/components/common/Textarea/PromptEditor/type';
 
 const PromptTemplate = dynamic(() => import('@/components/PromptTemplate'));
 

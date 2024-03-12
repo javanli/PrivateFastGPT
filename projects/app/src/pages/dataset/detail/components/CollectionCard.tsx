@@ -28,7 +28,7 @@ import { useQuery } from '@tanstack/react-query';
 import { debounce } from 'lodash';
 import { useConfirm } from '@/web/common/hooks/useConfirm';
 import { useTranslation } from 'next-i18next';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import MyInput from '@/components/MyInput';
 import dayjs from 'dayjs';
 import { useRequest } from '@/web/common/hooks/useRequest';
@@ -47,21 +47,21 @@ import {
   DatasetTypeMap,
   DatasetStatusEnum,
   DatasetCollectionSyncResultMap
-} from '@fastgpt/global/core/dataset/constants';
-import { getCollectionIcon } from '@fastgpt/global/core/dataset/utils';
+} from '@/packages/global/core/dataset/constants';
+import { getCollectionIcon } from '@/packages/global/core/dataset/utils';
 import EditFolderModal, { useEditFolder } from '../../component/EditFolderModal';
 import { TabEnum } from '..';
 import ParentPath from '@/components/common/ParentPaths';
 import dynamic from 'next/dynamic';
 import { useDrag } from '@/web/common/hooks/useDrag';
 import SelectCollections from '@/web/core/dataset/components/SelectCollections';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import MyTooltip from '@/components/MyTooltip';
 import { useUserStore } from '@/web/support/user/useUserStore';
-import { TeamMemberRoleEnum } from '@fastgpt/global/support/user/team/constant';
+import { TeamMemberRoleEnum } from '@/packages/global/support/user/team/constant';
 import { useDatasetStore } from '@/web/core/dataset/store/dataset';
-import { DatasetSchemaType } from '@fastgpt/global/core/dataset/type';
-import { DatasetCollectionSyncResultEnum } from '@fastgpt/global/core/dataset/constants';
+import { DatasetSchemaType } from '@/packages/global/core/dataset/type';
+import { DatasetCollectionSyncResultEnum } from '@/packages/global/core/dataset/constants';
 import MyBox from '@/components/common/MyBox';
 import { ImportDataSourceEnum } from './Import';
 

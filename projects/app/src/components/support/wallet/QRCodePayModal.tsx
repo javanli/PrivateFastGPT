@@ -4,9 +4,9 @@ import { useTranslation } from 'next-i18next';
 import { Box, ModalBody, ModalFooter } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { checkBalancePayResult } from '@/web/support/wallet/bill/api';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useRouter } from 'next/router';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { getErrText } from '@/packages/global/common/error/utils';
 
 export type QRPayProps = {
   readPrice: number;

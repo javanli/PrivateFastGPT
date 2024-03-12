@@ -1,9 +1,9 @@
 import { useSystemStore } from '@/web/common/system/useSystemStore';
-import { StandardSubLevelEnum, SubModeEnum } from '@fastgpt/global/support/wallet/sub/constants';
+import { StandardSubLevelEnum, SubModeEnum } from '@/packages/global/support/wallet/sub/constants';
 import React, { useMemo } from 'react';
-import { standardSubLevelMap } from '@fastgpt/global/support/wallet/sub/constants';
+import { standardSubLevelMap } from '@/packages/global/support/wallet/sub/constants';
 import { Box, Flex, Grid } from '@chakra-ui/react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useTranslation } from 'next-i18next';
 
 const StandardPlanContentList = ({

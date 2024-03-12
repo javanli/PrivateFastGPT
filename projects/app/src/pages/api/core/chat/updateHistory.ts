@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import { UpdateHistoryProps } from '@/global/core/chat/api.d';
-import { MongoChat } from '@fastgpt/service/core/chat/chatSchema';
+import { MongoChat } from '@/packages/service/core/chat/chatSchema';
 import { autChatCrud } from '@/service/support/permission/auth/chat';
 
 /* update chat top, custom title */

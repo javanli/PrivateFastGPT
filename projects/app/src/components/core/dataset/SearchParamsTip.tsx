@@ -3,10 +3,10 @@ import { Flex, Table, Thead, Tbody, Tr, Th, Td, TableContainer } from '@chakra-u
 import {
   DatasetSearchModeEnum,
   DatasetSearchModeMap
-} from '@fastgpt/global/core/dataset/constants';
+} from '@/packages/global/core/dataset/constants';
 import { useTranslation } from 'next-i18next';
 import React, { useMemo } from 'react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 
 const SearchParamsTip = ({
   searchMode,

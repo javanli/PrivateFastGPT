@@ -15,11 +15,11 @@ import { AttachmentIcon, CopyIcon, DragHandleIcon } from '@chakra-ui/icons';
 import { putUpdateTeamTags, updateTags } from '@/web/support/user/team/api';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'next-i18next';
-import type { TeamTagsSchema } from '@fastgpt/global/support/user/team/type';
+import type { TeamTagsSchema } from '@/packages/global/support/user/team/type';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import { RepeatIcon } from '@chakra-ui/icons';
-import MyIcon from '@fastgpt/web/components/common/Icon';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import MyIcon from '@/packages/web/components/common/Icon';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useCopyData } from '@/web/common/hooks/useCopyData';
 
 const TeamTagsAsync = ({

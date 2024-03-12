@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import { Box, Button, Flex, IconButton } from '@chakra-ui/react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import { TabEnum } from '../../index';
-import { useMyStep } from '@fastgpt/web/hooks/useStep';
+import { useMyStep } from '@/packages/web/hooks/useStep';
 import dynamic from 'next/dynamic';
 import Provider from './Provider';
 import { useDatasetStore } from '@/web/core/dataset/store/dataset';

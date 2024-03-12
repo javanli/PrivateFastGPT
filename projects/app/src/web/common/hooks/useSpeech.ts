@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { POST } from '../api/request';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useTranslation } from 'next-i18next';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { getErrText } from '@/packages/global/common/error/utils';
 
 export const useSpeech = (props?: { shareId?: string }) => {
   const { shareId } = props || {};

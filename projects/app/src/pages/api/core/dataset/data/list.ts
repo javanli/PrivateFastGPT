@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import type { DatasetDataListItemType } from '@/global/core/dataset/type.d';
 import type { GetDatasetDataListProps } from '@/global/core/api/datasetReq';
-import { authDatasetCollection } from '@fastgpt/service/support/permission/auth/dataset';
-import { MongoDatasetData } from '@fastgpt/service/core/dataset/data/schema';
+import { authDatasetCollection } from '@/packages/service/support/permission/auth/dataset';
+import { MongoDatasetData } from '@/packages/service/core/dataset/data/schema';
 import { PagingData } from '@/types';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {

@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoOpenApi } from '@fastgpt/service/support/openapi/schema';
+import { MongoOpenApi } from '@/packages/service/support/openapi/schema';
 import { customAlphabet } from 'nanoid';
 import type { EditApiKeyProps } from '@/global/support/openapi/api';
-import { authUserNotVisitor } from '@fastgpt/service/support/permission/auth/user';
+import { authUserNotVisitor } from '@/packages/service/support/permission/auth/user';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

@@ -13,13 +13,13 @@ import {
   useDisclosure,
   ModalBody
 } from '@chakra-ui/react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useTranslation } from 'next-i18next';
 import { usePagination } from '@/web/common/hooks/usePagination';
 import { getAppChatLogs } from '@/web/core/app/api';
 import dayjs from 'dayjs';
-import { ChatSourceMap } from '@fastgpt/global/core/chat/constants';
-import { HUMAN_ICON } from '@fastgpt/global/common/system/constants';
+import { ChatSourceMap } from '@/packages/global/core/chat/constants';
+import { HUMAN_ICON } from '@/packages/global/common/system/constants';
 import { AppLogsListItemType } from '@/types/app';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import ChatBox, { type ComponentRef } from '@/components/ChatBox';

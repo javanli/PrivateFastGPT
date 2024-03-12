@@ -2,20 +2,20 @@ import React, { useCallback, useMemo, useTransition } from 'react';
 import { NodeProps } from 'reactflow';
 import { Box, Flex, Textarea, useTheme } from '@chakra-ui/react';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import { FlowModuleItemType, ModuleItemType } from '@fastgpt/global/core/module/type.d';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { welcomeTextTip } from '@fastgpt/global/core/module/template/tip';
+import { FlowModuleItemType, ModuleItemType } from '@/packages/global/core/module/type.d';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
+import { welcomeTextTip } from '@/packages/global/core/module/template/tip';
 import { onChangeNode } from '../../FlowProvider';
 
 import VariableEdit from '../modules/VariableEdit';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import MyTooltip from '@/components/MyTooltip';
 import Container from '../modules/Container';
 import NodeCard from '../render/NodeCard';
-import type { VariableItemType } from '@fastgpt/global/core/module/type.d';
+import type { VariableItemType } from '@/packages/global/core/module/type.d';
 import QGSwitch from '@/components/core/module/Flow/components/modules/QGSwitch';
 import TTSSelect from '@/components/core/module/Flow/components/modules/TTSSelect';
-import { splitGuideModule } from '@fastgpt/global/core/module/utils';
+import { splitGuideModule } from '@/packages/global/core/module/utils';
 import { useTranslation } from 'next-i18next';
 
 const NodeUserGuide = ({ data, selected }: NodeProps<FlowModuleItemType>) => {

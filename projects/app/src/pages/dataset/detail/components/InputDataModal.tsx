@@ -8,26 +8,26 @@ import {
   getDatasetCollectionById,
   getDatasetDataItemById
 } from '@/web/core/dataset/api';
-import { useToast } from '@fastgpt/web/hooks/useToast';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import { useToast } from '@/packages/web/hooks/useToast';
+import MyIcon from '@/packages/web/components/common/Icon';
 import MyModal from '@/components/MyModal';
 import MyTooltip from '@/components/MyTooltip';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'next-i18next';
 import { useRequest } from '@/web/common/hooks/useRequest';
-import { countPromptTokens } from '@fastgpt/global/common/string/tiktoken';
+import { countPromptTokens } from '@/packages/global/common/string/tiktoken';
 import { useConfirm } from '@/web/common/hooks/useConfirm';
-import { getDefaultIndex } from '@fastgpt/global/core/dataset/utils';
-import { DatasetDataIndexItemType } from '@fastgpt/global/core/dataset/type';
+import { getDefaultIndex } from '@/packages/global/core/dataset/utils';
+import { DatasetDataIndexItemType } from '@/packages/global/core/dataset/type';
 import SideTabs from '@/components/SideTabs';
-import DeleteIcon from '@fastgpt/web/components/common/Icon/delete';
+import DeleteIcon from '@/packages/web/components/common/Icon/delete';
 import { defaultCollectionDetail } from '@/constants/dataset';
 import { getDocPath } from '@/web/common/system/doc';
 import RawSourceBox from '@/components/core/dataset/RawSourceBox';
 import MyBox from '@/components/common/MyBox';
-import { getErrText } from '@fastgpt/global/common/error/utils';
-import RowTabs from '@fastgpt/web/components/common/Tabs/RowTabs';
+import { getErrText } from '@/packages/global/common/error/utils';
+import RowTabs from '@/packages/web/components/common/Tabs/RowTabs';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 
 export type InputDataType = {

@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { useChatBox } from '@/components/ChatBox';
-import type { ChatItemType } from '@fastgpt/global/core/chat/type.d';
+import type { ChatItemType } from '@/packages/global/core/chat/type.d';
 import { Menu, MenuButton, MenuList, MenuItem, Box } from '@chakra-ui/react';
 import { useTranslation } from 'next-i18next';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useRouter } from 'next/router';
 
 const ToolMenu = ({ history }: { history: ChatItemType[] }) => {

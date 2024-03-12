@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoChat } from '@fastgpt/service/core/chat/chatSchema';
-import { ChatSourceEnum } from '@fastgpt/global/core/chat/constants';
-import { Op } from '@fastgpt/service/common/mongo';
+import { MongoChat } from '@/packages/service/core/chat/chatSchema';
+import { ChatSourceEnum } from '@/packages/global/core/chat/constants';
+import { Op } from '@/packages/service/common/mongo';
 
 /* clear chat history */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

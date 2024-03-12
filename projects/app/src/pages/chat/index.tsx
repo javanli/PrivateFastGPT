@@ -16,10 +16,10 @@ import { useQuery } from '@tanstack/react-query';
 import { streamFetch } from '@/web/common/api/fetch';
 import { useChatStore } from '@/web/core/chat/storeChat';
 import { useLoading } from '@/web/common/hooks/useLoading';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { customAlphabet } from 'nanoid';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 12);
-import type { ChatHistoryItemType } from '@fastgpt/global/core/chat/type.d';
+import type { ChatHistoryItemType } from '@/packages/global/core/chat/type.d';
 import { useTranslation } from 'next-i18next';
 
 import ChatBox, { type ComponentRef, type StartChatFnProps } from '@/components/ChatBox';
@@ -28,13 +28,13 @@ import SideBar from '@/components/SideBar';
 import ChatHistorySlider from './components/ChatHistorySlider';
 import SliderApps from './components/SliderApps';
 import ChatHeader from './components/ChatHeader';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { getErrText } from '@/packages/global/common/error/utils';
 import { useUserStore } from '@/web/support/user/useUserStore';
 import { serviceSideProps } from '@/web/common/utils/i18n';
 import { useAppStore } from '@/web/core/app/store/useAppStore';
 import { checkChatSupportSelectFileByChatModels } from '@/web/core/chat/utils';
-import { chatContentReplaceBlock } from '@fastgpt/global/core/chat/utils';
-import { ChatStatusEnum } from '@fastgpt/global/core/chat/constants';
+import { chatContentReplaceBlock } from '@/packages/global/core/chat/utils';
+import { ChatStatusEnum } from '@/packages/global/core/chat/constants';
 
 const Chat = ({ appId, chatId }: { appId: string; chatId: string }) => {
   const router = useRouter();

@@ -4,14 +4,14 @@ import { Box, Flex, IconButton } from '@chakra-ui/react';
 import { useTranslation } from 'next-i18next';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ChatBox, { type ComponentRef, type StartChatFnProps } from '@/components/ChatBox';
-import { ModuleItemType } from '@fastgpt/global/core/module/type';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleItemType } from '@/packages/global/core/module/type';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
 import { streamFetch } from '@/web/common/api/fetch';
 import MyTooltip from '@/components/MyTooltip';
-import MyIcon from '@fastgpt/web/components/common/Icon';
-import { getGuideModule } from '@fastgpt/global/core/module/utils';
+import MyIcon from '@/packages/web/components/common/Icon';
+import { getGuideModule } from '@/packages/global/core/module/utils';
 import { checkChatSupportSelectFileByModules } from '@/web/core/chat/utils';
-import { AppTypeEnum } from '@fastgpt/global/core/app/constants';
+import { AppTypeEnum } from '@/packages/global/core/app/constants';
 
 const ChatTest = ({ appId }: { appId: string }) => {
   const { t } = useTranslation();

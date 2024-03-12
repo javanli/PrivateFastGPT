@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { authCert } from '@fastgpt/service/support/permission/auth/common';
+import { authCert } from '@/packages/service/support/permission/auth/common';
 import type { CloseCustomFeedbackParams } from '@/global/core/chat/api.d';
-import { MongoChatItem } from '@fastgpt/service/core/chat/chatItemSchema';
+import { MongoChatItem } from '@/packages/service/core/chat/chatItemSchema';
 import { autChatCrud } from '@/service/support/permission/auth/chat';
 
 /* remove custom feedback */

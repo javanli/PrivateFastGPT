@@ -1,13 +1,13 @@
 import React, { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Flex, IconButton, useTheme, Progress } from '@chakra-ui/react';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useQuery } from '@tanstack/react-query';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { getErrText } from '@/packages/global/common/error/utils';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import Tabs from '@/components/Tabs';
 import dynamic from 'next/dynamic';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import SideTabs from '@/components/SideTabs';
 import PageContainer from '@/components/PageContainer';
 import Avatar from '@/components/Avatar';
@@ -23,7 +23,7 @@ import {
   DatasetStatusEnum,
   DatasetTypeEnum,
   DatasetTypeMap
-} from '@fastgpt/global/core/dataset/constants';
+} from '@/packages/global/core/dataset/constants';
 import { useConfirm } from '@/web/common/hooks/useConfirm';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import DatasetTypeTag from '@/components/core/dataset/DatasetTypeTag';

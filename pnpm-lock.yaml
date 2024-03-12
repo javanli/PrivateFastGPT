@@ -33,207 +33,6 @@ importers:
         specifier: ^0.7.1
         version: 0.7.4
 
-  packages/global:
-    dependencies:
-      axios:
-        specifier: ^1.5.1
-        version: 1.6.7
-      dayjs:
-        specifier: ^1.11.7
-        version: 1.11.10
-      encoding:
-        specifier: ^0.1.13
-        version: 0.1.13
-      js-tiktoken:
-        specifier: ^1.0.7
-        version: 1.0.10
-      nanoid:
-        specifier: ^4.0.1
-        version: 4.0.2
-      openai:
-        specifier: 4.23.0
-        version: 4.23.0(encoding@0.1.13)
-      timezones-list:
-        specifier: ^3.0.2
-        version: 3.0.3
-    devDependencies:
-      '@types/node':
-        specifier: ^20.8.5
-        version: 20.11.19
-
-  packages/plugins:
-    devDependencies:
-      '@fastgpt/global':
-        specifier: workspace:*
-        version: link:../global
-      '@fastgpt/service':
-        specifier: workspace:*
-        version: link:../service
-      '@types/node':
-        specifier: ^20.8.5
-        version: 20.11.19
-
-  packages/service:
-    dependencies:
-      '@fastgpt/global':
-        specifier: workspace:*
-        version: link:../global
-      '@types/sqlite3':
-        specifier: ^3.1.11
-        version: 3.1.11
-      axios:
-        specifier: ^1.5.1
-        version: 1.6.7
-      cheerio:
-        specifier: 1.0.0-rc.12
-        version: 1.0.0-rc.12
-      cookie:
-        specifier: ^0.5.0
-        version: 0.5.0
-      date-fns:
-        specifier: 2.30.0
-        version: 2.30.0
-      dayjs:
-        specifier: ^1.11.7
-        version: 1.11.10
-      encoding:
-        specifier: ^0.1.13
-        version: 0.1.13
-      jsonwebtoken:
-        specifier: ^9.0.2
-        version: 9.0.2
-      multer:
-        specifier: 1.4.5-lts.1
-        version: 1.4.5-lts.1
-      next:
-        specifier: 13.5.2
-        version: 13.5.2(@babel/core@7.23.9)(react-dom@18.2.0)(react@18.2.0)(sass@1.71.0)
-      nextjs-cors:
-        specifier: ^2.1.2
-        version: 2.2.0(next@13.5.2)
-      node-cron:
-        specifier: ^3.0.3
-        version: 3.0.3
-      sequelize:
-        specifier: ^6.37.1
-        version: 6.37.1(sqlite3@5.1.7)
-      sqlite-vss:
-        specifier: ^0.1.2
-        version: 0.1.2
-      sqlite3:
-        specifier: ^5.1.7
-        version: 5.1.7
-      tunnel:
-        specifier: ^0.0.6
-        version: 0.0.6
-    devDependencies:
-      '@types/cookie':
-        specifier: ^0.5.2
-        version: 0.5.4
-      '@types/jsonwebtoken':
-        specifier: ^9.0.3
-        version: 9.0.5
-      '@types/multer':
-        specifier: ^1.4.10
-        version: 1.4.11
-      '@types/node-cron':
-        specifier: ^3.0.11
-        version: 3.0.11
-      '@types/tunnel':
-        specifier: ^0.0.4
-        version: 0.0.4
-
-  packages/web:
-    dependencies:
-      '@chakra-ui/anatomy':
-        specifier: ^2.2.1
-        version: 2.2.2
-      '@chakra-ui/icons':
-        specifier: ^2.1.1
-        version: 2.1.1(@chakra-ui/system@2.6.2)(react@18.2.0)
-      '@chakra-ui/next-js':
-        specifier: ^2.1.5
-        version: 2.2.0(@chakra-ui/react@2.8.2)(@emotion/react@11.11.3)(next@13.5.2)(react@18.2.0)
-      '@chakra-ui/react':
-        specifier: ^2.8.1
-        version: 2.8.2(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(@types/react@18.2.0)(framer-motion@9.1.7)(react-dom@18.2.0)(react@18.2.0)
-      '@chakra-ui/styled-system':
-        specifier: ^2.9.1
-        version: 2.9.2
-      '@chakra-ui/system':
-        specifier: ^2.6.1
-        version: 2.6.2(@emotion/react@11.11.3)(@emotion/styled@11.11.0)(react@18.2.0)
-      '@emotion/react':
-        specifier: ^11.11.1
-        version: 11.11.3(@types/react@18.2.0)(react@18.2.0)
-      '@emotion/styled':
-        specifier: ^11.11.0
-        version: 11.11.0(@emotion/react@11.11.3)(@types/react@18.2.0)(react@18.2.0)
-      '@fastgpt/global':
-        specifier: workspace:*
-        version: link:../global
-      '@fingerprintjs/fingerprintjs':
-        specifier: ^4.2.1
-        version: 4.2.2
-      '@lexical/react':
-        specifier: 0.12.6
-        version: 0.12.6(lexical@0.12.6)(react-dom@18.2.0)(react@18.2.0)(yjs@13.6.12)
-      '@lexical/text':
-        specifier: 0.12.6
-        version: 0.12.6(lexical@0.12.6)
-      '@lexical/utils':
-        specifier: 0.12.6
-        version: 0.12.6(lexical@0.12.6)
-      '@monaco-editor/react':
-        specifier: ^4.6.0
-        version: 4.6.0(monaco-editor@0.46.0)(react-dom@18.2.0)(react@18.2.0)
-      i18next:
-        specifier: ^22.5.1
-        version: 22.5.1
-      joplin-turndown-plugin-gfm:
-        specifier: ^1.0.12
-        version: 1.0.12
-      lexical:
-        specifier: 0.12.6
-        version: 0.12.6
-      mammoth:
-        specifier: ^1.6.0
-        version: 1.6.0
-      next-i18next:
-        specifier: ^13.3.0
-        version: 13.3.0(i18next@22.5.1)(next@13.5.2)(react-i18next@12.3.1)(react@18.2.0)
-      papaparse:
-        specifier: ^5.4.1
-        version: 5.4.1
-      pdfjs-dist:
-        specifier: 4.0.269
-        version: 4.0.269
-      react:
-        specifier: 18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: 18.2.0
-        version: 18.2.0(react@18.2.0)
-      react-i18next:
-        specifier: ^12.3.1
-        version: 12.3.1(i18next@22.5.1)(react-dom@18.2.0)(react@18.2.0)
-      turndown:
-        specifier: ^7.1.2
-        version: 7.1.2
-    devDependencies:
-      '@types/papaparse':
-        specifier: ^5.3.7
-        version: 5.3.14
-      '@types/react':
-        specifier: 18.2.0
-        version: 18.2.0
-      '@types/react-dom':
-        specifier: 18.2.0
-        version: 18.2.0
-      '@types/turndown':
-        specifier: ^5.0.4
-        version: 5.0.4
-
   projects/app:
     dependencies:
       '@chakra-ui/anatomy':
@@ -260,21 +59,24 @@ importers:
       '@emotion/styled':
         specifier: ^11.11.0
         version: 11.11.0(@emotion/react@11.11.3)(@types/react@18.2.0)(react@18.2.0)
-      '@fastgpt/global':
-        specifier: workspace:*
-        version: link:../../packages/global
-      '@fastgpt/plugins':
-        specifier: workspace:*
-        version: link:../../packages/plugins
-      '@fastgpt/service':
-        specifier: workspace:*
-        version: link:../../packages/service
-      '@fastgpt/web':
-        specifier: workspace:*
-        version: link:../../packages/web
+      '@fingerprintjs/fingerprintjs':
+        specifier: ^4.2.1
+        version: 4.2.2
       '@fortaine/fetch-event-source':
         specifier: ^3.0.6
         version: 3.0.6
+      '@lexical/react':
+        specifier: 0.12.6
+        version: 0.12.6(lexical@0.12.6)(react-dom@18.2.0)(react@18.2.0)(yjs@13.6.14)
+      '@lexical/text':
+        specifier: 0.12.6
+        version: 0.12.6(lexical@0.12.6)
+      '@lexical/utils':
+        specifier: 0.12.6
+        version: 0.12.6(lexical@0.12.6)
+      '@monaco-editor/react':
+        specifier: ^4.6.0
+        version: 4.6.0(monaco-editor@0.47.0)(react-dom@18.2.0)(react@18.2.0)
       '@node-rs/jieba':
         specifier: ^1.7.2
         version: 1.9.2
@@ -284,9 +86,18 @@ importers:
       '@types/nprogress':
         specifier: ^0.2.0
         version: 0.2.3
+      '@types/sqlite3':
+        specifier: ^3.1.11
+        version: 3.1.11
       axios:
         specifier: ^1.5.1
         version: 1.6.7
+      cheerio:
+        specifier: 1.0.0-rc.12
+        version: 1.0.0-rc.12
+      cookie:
+        specifier: ^0.5.0
+        version: 0.5.0
       date-fns:
         specifier: 2.30.0
         version: 2.30.0
@@ -299,6 +110,9 @@ importers:
       echarts-gl:
         specifier: ^2.0.9
         version: 2.0.9(echarts@5.4.3)
+      encoding:
+        specifier: ^0.1.13
+        version: 0.1.13
       formidable:
         specifier: ^2.1.1
         version: 2.1.2
@@ -314,6 +128,12 @@ importers:
       immer:
         specifier: ^9.0.19
         version: 9.0.21
+      joplin-turndown-plugin-gfm:
+        specifier: ^1.0.12
+        version: 1.0.12
+      js-tiktoken:
+        specifier: ^1.0.10
+        version: 1.0.10
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -323,12 +143,21 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
+      lexical:
+        specifier: 0.12.6
+        version: 0.12.6
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      mammoth:
+        specifier: ^1.6.0
+        version: 1.7.0
       mermaid:
         specifier: ^10.2.3
         version: 10.8.0
+      multer:
+        specifier: 1.4.5-lts.1
+        version: 1.4.5-lts.1
       nanoid:
         specifier: ^4.0.1
         version: 4.0.2
@@ -338,9 +167,24 @@ importers:
       next-i18next:
         specifier: ^13.3.0
         version: 13.3.0(i18next@22.5.1)(next@13.5.2)(react-i18next@12.3.1)(react@18.2.0)
+      nextjs-cors:
+        specifier: ^2.1.2
+        version: 2.2.0(next@13.5.2)
+      node-cron:
+        specifier: ^3.0.3
+        version: 3.0.3
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
+      openai:
+        specifier: ^4.28.4
+        version: 4.28.4(encoding@0.1.13)
+      papaparse:
+        specifier: ^5.4.1
+        version: 5.4.1
+      pdfjs-dist:
+        specifier: 4.0.269
+        version: 4.0.269(encoding@0.1.13)
       pg-hstore:
         specifier: ^2.3.4
         version: 2.3.4
@@ -386,6 +230,24 @@ importers:
       sass:
         specifier: ^1.58.3
         version: 1.71.0
+      sequelize:
+        specifier: ^6.37.1
+        version: 6.37.1(pg-hstore@2.3.4)(sqlite3@5.1.7)
+      sqlite-vss:
+        specifier: ^0.1.2
+        version: 0.1.2
+      sqlite3:
+        specifier: ^5.1.7
+        version: 5.1.7
+      timezones-list:
+        specifier: ^3.0.3
+        version: 3.0.3
+      tunnel:
+        specifier: ^0.0.6
+        version: 0.0.6
+      turndown:
+        specifier: ^7.1.2
+        version: 7.1.2
       zustand:
         specifier: ^4.3.5
         version: 4.5.0(@types/react@18.2.0)(immer@9.0.21)(react@18.2.0)
@@ -393,6 +255,9 @@ importers:
       '@svgr/webpack':
         specifier: ^6.5.1
         version: 6.5.1
+      '@types/cookie':
+        specifier: ^0.5.2
+        version: 0.5.4
       '@types/formidable':
         specifier: ^2.0.5
         version: 2.0.6
@@ -408,9 +273,18 @@ importers:
       '@types/lodash':
         specifier: ^4.14.191
         version: 4.14.202
+      '@types/multer':
+        specifier: ^1.4.10
+        version: 1.4.11
       '@types/node':
         specifier: ^20.8.5
         version: 20.11.19
+      '@types/node-cron':
+        specifier: ^3.0.11
+        version: 3.0.11
+      '@types/papaparse':
+        specifier: ^5.3.7
+        version: 5.3.14
       '@types/react':
         specifier: 18.2.0
         version: 18.2.0
@@ -423,6 +297,12 @@ importers:
       '@types/request-ip':
         specifier: ^0.0.37
         version: 0.0.37
+      '@types/tunnel':
+        specifier: ^0.0.4
+        version: 0.0.4
+      '@types/turndown':
+        specifier: ^5.0.4
+        version: 5.0.4
       eslint:
         specifier: 8.34.0
         version: 8.34.0
@@ -3624,7 +3504,7 @@ packages:
       lexical: 0.12.6
     dev: false
 
-  /@lexical/react@0.12.6(lexical@0.12.6)(react-dom@18.2.0)(react@18.2.0)(yjs@13.6.12):
+  /@lexical/react@0.12.6(lexical@0.12.6)(react-dom@18.2.0)(react@18.2.0)(yjs@13.6.14):
     resolution: {integrity: sha512-Pto4wsVwrnY94tzcCXP2kWukQejSRPDfwOPd+EFh8dUzj+L7fa9Pze2wVgCRZpEohwfbcgAdEsvmSbhz+yGkog==}
     peerDependencies:
       lexical: 0.12.6
@@ -3647,7 +3527,7 @@ packages:
       '@lexical/table': 0.12.6(lexical@0.12.6)
       '@lexical/text': 0.12.6(lexical@0.12.6)
       '@lexical/utils': 0.12.6(lexical@0.12.6)
-      '@lexical/yjs': 0.12.6(lexical@0.12.6)(yjs@13.6.12)
+      '@lexical/yjs': 0.12.6(lexical@0.12.6)(yjs@13.6.14)
       lexical: 0.12.6
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -3706,7 +3586,7 @@ packages:
       lexical: 0.12.6
     dev: false
 
-  /@lexical/yjs@0.12.6(lexical@0.12.6)(yjs@13.6.12):
+  /@lexical/yjs@0.12.6(lexical@0.12.6)(yjs@13.6.14):
     resolution: {integrity: sha512-I/Yf/Qm8/ydU983kWpFBlDFNFQXLYur5uaAimTSBcJuqHmy3cv1xM7Xrq4BtM+0orKgWJt8vR8cLVIU9sAmzfw==}
     peerDependencies:
       lexical: 0.12.6
@@ -3714,10 +3594,10 @@ packages:
     dependencies:
       '@lexical/offset': 0.12.6(lexical@0.12.6)
       lexical: 0.12.6
-      yjs: 13.6.12
+      yjs: 13.6.14
     dev: false
 
-  /@mapbox/node-pre-gyp@1.0.11:
+  /@mapbox/node-pre-gyp@1.0.11(encoding@0.1.13):
     resolution: {integrity: sha512-Yhlar6v9WQgUp/He7BdgzOz8lqMQ8sU+jkCq7Wx8Myc5YFJLbEe7lgui/V7G1qB1DJykHSGwreceSaD60Y0PUQ==}
     hasBin: true
     requiresBuild: true
@@ -3737,24 +3617,24 @@ packages:
     dev: false
     optional: true
 
-  /@monaco-editor/loader@1.4.0(monaco-editor@0.46.0):
+  /@monaco-editor/loader@1.4.0(monaco-editor@0.47.0):
     resolution: {integrity: sha512-00ioBig0x642hytVspPl7DbQyaSWRaolYie/UFNjoTdvoKPzo6xrXLhTk9ixgIKcLH5b5vDOjVNiGyY+uDCUlg==}
     peerDependencies:
       monaco-editor: '>= 0.21.0 < 1'
     dependencies:
-      monaco-editor: 0.46.0
+      monaco-editor: 0.47.0
       state-local: 1.0.7
     dev: false
 
-  /@monaco-editor/react@4.6.0(monaco-editor@0.46.0)(react-dom@18.2.0)(react@18.2.0):
+  /@monaco-editor/react@4.6.0(monaco-editor@0.47.0)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-RFkU9/i7cN2bsq/iTkurMWOEErmYcY6JiQI3Jn+WeR/FGISH8JbHERjpS9oRuSOPvDMJI0Z8nJeKkbOs9sBYQw==}
     peerDependencies:
       monaco-editor: '>= 0.25.0 < 1'
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
     dependencies:
-      '@monaco-editor/loader': 1.4.0(monaco-editor@0.46.0)
-      monaco-editor: 0.46.0
+      '@monaco-editor/loader': 1.4.0(monaco-editor@0.47.0)
+      monaco-editor: 0.47.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
@@ -4692,7 +4572,7 @@ packages:
     resolution: {integrity: sha512-oaYtiBirUOPQGSWNGPWnzyAFJ0BP3cwvN4oWZQY+zUBwpVIGsKUkpBpSztp74drYcjavs7SKFZ4DX1V2QeN8rg==}
     dependencies:
       '@types/node': 20.11.19
-      '@types/qs': 6.9.11
+      '@types/qs': 6.9.12
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
     dev: true
@@ -4702,7 +4582,7 @@ packages:
     dependencies:
       '@types/body-parser': 1.19.5
       '@types/express-serve-static-core': 4.17.43
-      '@types/qs': 6.9.11
+      '@types/qs': 6.9.12
       '@types/serve-static': 1.15.5
     dev: true
 
@@ -4802,8 +4682,8 @@ packages:
       form-data: 4.0.0
     dev: false
 
-  /@types/node@18.19.17:
-    resolution: {integrity: sha512-SzyGKgwPzuWp2SHhlpXKzCX0pIOfcI4V2eF37nNBJOhwlegQ83omtVQ1XxZpDE06V/d6AQvfQdPfnw0tRC//Ng==}
+  /@types/node@18.19.23:
+    resolution: {integrity: sha512-wtE3d0OUfNKtZYAqZb8HAWGxxXsImJcPUAgZNw+dWFxO6s5tIwIjyKnY76tsTatsNCLJPkVYwUpq15D38ng9Aw==}
     dependencies:
       undici-types: 5.26.5
     dev: false
@@ -4829,8 +4709,8 @@ packages:
   /@types/prop-types@15.7.11:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
 
-  /@types/qs@6.9.11:
-    resolution: {integrity: sha512-oGk0gmhnEJK4Yyk+oI7EfXsLayXatCWPHary1MtcmbAifkobT9cM9yutG/hZKIseOU0MqbIwQ/u2nn/Gb+ltuQ==}
+  /@types/qs@6.9.12:
+    resolution: {integrity: sha512-bZcOkJ6uWrL0Qb2NAWKa7TBU+mJHPzhx9jjLL1KHF+XpzEcR7EXHvjbHlGtR/IsP1vyPrehuS6XqkmaePy//mg==}
     dev: true
 
   /@types/range-parser@1.2.7:
@@ -5150,6 +5030,7 @@ packages:
   /agentkeepalive@4.5.0:
     resolution: {integrity: sha512-5GG/5IbQQpC9FpkRGsSvZI5QYeSCzlJHdpBQntCsuTOxhKD8lqKhrleg2Yi7yvMIf82Ycmmqln9U8V9qwEiJew==}
     engines: {node: '>= 8.0.0'}
+    requiresBuild: true
     dependencies:
       humanize-ms: 1.2.1
     dev: false
@@ -5631,13 +5512,13 @@ packages:
   /caniuse-lite@1.0.30001587:
     resolution: {integrity: sha512-HMFNotUmLXn71BQxg8cijvqxnIAofforZOwGsxyXJ0qugTdspUF4sPSJ2vhgprHCB996tIDzEq1ubumPDV8ULA==}
 
-  /canvas@2.11.2:
+  /canvas@2.11.2(encoding@0.1.13):
     resolution: {integrity: sha512-ItanGBMrmRV7Py2Z+Xhs7cT+FNt5K0vPL4p9EZ/UX/Mu7hFbkxSjKF2KVtPwX7UYWp7dRKnrTvReflgrItJbdw==}
     engines: {node: '>=6'}
     requiresBuild: true
     dependencies:
-      '@mapbox/node-pre-gyp': 1.0.11
-      nan: 2.18.0
+      '@mapbox/node-pre-gyp': 1.0.11(encoding@0.1.13)
+      nan: 2.19.0
       simple-get: 3.1.1
     transitivePeerDependencies:
       - encoding
@@ -7912,6 +7793,7 @@ packages:
 
   /humanize-ms@1.2.1:
     resolution: {integrity: sha512-Fl70vYtsAFb/C06PTS9dZBo7ihau+Tu/DNCk/OyHhea07S+aeMWpFFkUaXRa8fI+ScZbEI8dfSxwY7gxZ9SAVQ==}
+    requiresBuild: true
     dependencies:
       ms: 2.1.3
     dev: false
@@ -8482,8 +8364,8 @@ packages:
     resolution: {integrity: sha512-Nlfjc+k9cIWpOMv7XufF0Mv09TAXSemNAuAqFLaOwTcN+RvhvYTDtVLSp9D9r+5I097fYs1Vf/UYwH2xEpkFfQ==}
     dev: false
 
-  /lib0@0.2.88:
-    resolution: {integrity: sha512-KyroiEvCeZcZEMx5Ys+b4u4eEBbA1ch7XUaBhYpwa/nPMrzTjUhI4RfcytmQfYoTBPcdyx+FX6WFNIoNuJzJfQ==}
+  /lib0@0.2.91:
+    resolution: {integrity: sha512-LRcTp8RmdHexL8olb7qErdROnJ2L6Js5Am99WQo0hiTRDWtk6vyUJJjTB6I/RcW8jwNQshM3NqH598DdhSOajA==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
@@ -8712,8 +8594,8 @@ packages:
     dev: false
     optional: true
 
-  /mammoth@1.6.0:
-    resolution: {integrity: sha512-jOwbj6BwJzxCf6jr2l1zmSemniIkLnchvELXnDJCANlJawhzyIKObIq48B8kWEPLgUUh57k7FtEO3DHFQMnjMg==}
+  /mammoth@1.7.0:
+    resolution: {integrity: sha512-ptFhft61dqieLffpdpHD7PUS0cX9YvHQIO3n3ejRhj1bi5Na+RL5wovtNHHXAK6Oj554XfGrVcyTuxgegN6umw==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
@@ -9380,8 +9262,8 @@ packages:
     resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
     dev: false
 
-  /monaco-editor@0.46.0:
-    resolution: {integrity: sha512-ADwtLIIww+9FKybWscd7OCfm9odsFYHImBRI1v9AviGce55QY8raT+9ihH8jX/E/e6QVSGM+pKj4jSUSRmALNQ==}
+  /monaco-editor@0.47.0:
+    resolution: {integrity: sha512-VabVvHvQ9QmMwXu4du008ZDuyLnHs9j7ThVFsiJoXSOQk18+LF89N4ADzPbFenm0W4V2bGHnFBztIRQTgBfxzw==}
     dev: false
 
   /mri@1.2.0:
@@ -9412,8 +9294,8 @@ packages:
       xtend: 4.0.2
     dev: false
 
-  /nan@2.18.0:
-    resolution: {integrity: sha512-W7tfG7vMOGtD30sHoZSSc/JVYiyDPEyQVso/Zz+/uQd0B0L46gtC+pHha5FFMRpil6fm/AoEcRWyOVi4+E/f8w==}
+  /nan@2.19.0:
+    resolution: {integrity: sha512-nO1xXxfh/RWNxfd/XPfbIfFk5vgLsAxUR9y5O0cHMJu/AW9U95JLXqthYHjEp+8gQ5p96K9jUp8nbVOxCdRbtw==}
     requiresBuild: true
     dev: false
     optional: true
@@ -9721,11 +9603,11 @@ packages:
       mimic-fn: 4.0.0
     dev: true
 
-  /openai@4.23.0(encoding@0.1.13):
-    resolution: {integrity: sha512-ey2CXh1OTcTUa0AWZWuTpgA9t5GuAG3DVU1MofCRUI7fQJij8XJ3Sr0VtgxoAE69C9wbHBMCux8Z/IQZfSwHiA==}
+  /openai@4.28.4(encoding@0.1.13):
+    resolution: {integrity: sha512-RNIwx4MT/F0zyizGcwS+bXKLzJ8QE9IOyigDG/ttnwB220d58bYjYFp0qjvGwEFBO6+pvFVIDABZPGDl46RFsg==}
     hasBin: true
     dependencies:
-      '@types/node': 18.19.17
+      '@types/node': 18.19.23
       '@types/node-fetch': 2.6.11
       abort-controller: 3.0.0
       agentkeepalive: 4.5.0
@@ -9733,7 +9615,7 @@ packages:
       form-data-encoder: 1.7.2
       formdata-node: 4.4.1
       node-fetch: 2.7.0(encoding@0.1.13)
-      web-streams-polyfill: 3.3.2
+      web-streams-polyfill: 3.3.3
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -9900,11 +9782,11 @@ packages:
     resolution: {integrity: sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==}
     dev: true
 
-  /pdfjs-dist@4.0.269:
+  /pdfjs-dist@4.0.269(encoding@0.1.13):
     resolution: {integrity: sha512-jjWO56tcOjnmPqDf8PmXDeZ781AGvpHMYI3HhNtaFKTRXXPaD1ArSrhVe38/XsrIQJ0onISCND/vuXaWJkiDWw==}
     engines: {node: '>=18'}
     optionalDependencies:
-      canvas: 2.11.2
+      canvas: 2.11.2(encoding@0.1.13)
       path2d-polyfill: 2.0.1
     transitivePeerDependencies:
       - encoding
@@ -10718,7 +10600,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize@6.37.1(sqlite3@5.1.7):
+  /sequelize@6.37.1(pg-hstore@2.3.4)(sqlite3@5.1.7):
     resolution: {integrity: sha512-vIKKzQ9dGp2aBOxQRD1FmUYViuQiKXSJ8yah8TsaBx4U3BokJt+Y2A0qz2C4pj08uX59qpWxRqSLEfRmVOEgQw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -10760,6 +10642,7 @@ packages:
       moment: 2.30.1
       moment-timezone: 0.5.45
       pg-connection-string: 2.6.2
+      pg-hstore: 2.3.4
       retry-as-promised: 7.0.4
       semver: 7.6.0
       sequelize-pool: 7.1.0
@@ -10910,6 +10793,7 @@ packages:
   /socks@2.7.3:
     resolution: {integrity: sha512-vfuYK48HXCTFD03G/1/zkIls3Ebr2YNa4qU9gHDZdblHLiqhJrJGkY3+0Nx0JpN9qBhJbVObc1CNciT1bIZJxw==}
     engines: {node: '>= 10.0.0', npm: '>= 3.0.0'}
+    deprecated: please use 2.7.4 or 2.8.1 to fix package-lock issue
     requiresBuild: true
     dependencies:
       ip-address: 9.0.5
@@ -11914,8 +11798,8 @@ packages:
     resolution: {integrity: sha512-bKr1DkiNa2krS7qxNtdrtHAmzuYGFQLiQ13TsorsdT6ULTkPLKuu5+GsFpDlg6JFjUTwX2DyhMPG2be8uPrqsQ==}
     dev: false
 
-  /web-streams-polyfill@3.3.2:
-    resolution: {integrity: sha512-3pRGuxRF5gpuZc0W+EpwQRmCD7gRqcDOMt688KmdlDAgAyaB1XlN0zq2njfDNm44XVdIouE7pZ6GzbdyH47uIQ==}
+  /web-streams-polyfill@3.3.3:
+    resolution: {integrity: sha512-d2JWLCivmZYTSIoge9MsgFCZrt571BikcWGYkjC1khllbTeDlGqZ2D8vD8E/lJa8WGWbb7Plm8/XJYV7IJHZZw==}
     engines: {node: '>= 8'}
     dev: false
 
@@ -12062,11 +11946,11 @@ packages:
     engines: {node: '>= 14'}
     dev: true
 
-  /yjs@13.6.12:
-    resolution: {integrity: sha512-KOT8ILoyVH2f/PxPadeu5kVVS055D1r3x1iFfJVJzFdnN98pVGM8H07NcKsO+fG3F7/0tf30Vnokf5YIqhU/iw==}
+  /yjs@13.6.14:
+    resolution: {integrity: sha512-D+7KcUr0j+vBCUSKXXEWfA+bG4UQBviAwP3gYBhkstkgwy5+8diOPMx0iqLIOxNo/HxaREUimZRxqHGAHCL2BQ==}
     engines: {node: '>=16.0.0', npm: '>=8.0.0'}
     dependencies:
-      lib0: 0.2.88
+      lib0: 0.2.91
     dev: false
 
   /yocto-queue@0.1.0:

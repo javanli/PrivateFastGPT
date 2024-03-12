@@ -1,5 +1,5 @@
 import { GET, POST, DELETE, PUT } from '@/web/common/api/request';
-import type { ChatHistoryItemType, chatAppListSchema } from '@fastgpt/global/core/chat/type.d';
+import type { ChatHistoryItemType, chatAppListSchema } from '@/packages/global/core/chat/type.d';
 
 import type {
   CloseCustomFeedbackParams,
@@ -15,7 +15,7 @@ import type {
   DeleteChatItemProps,
   UpdateHistoryProps
 } from '@/global/core/chat/api.d';
-import { UpdateChatFeedbackProps } from '@fastgpt/global/core/chat/api';
+import { UpdateChatFeedbackProps } from '@/packages/global/core/chat/api';
 
 /**
  * 根据队伍ID和获取

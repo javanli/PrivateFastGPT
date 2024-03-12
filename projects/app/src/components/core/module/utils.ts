@@ -1,7 +1,7 @@
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
-import { FlowNodeOutputTargetItemType } from '@fastgpt/global/core/module/node/type';
-import { FlowModuleItemType, ModuleItemType } from '@fastgpt/global/core/module/type';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
+import { FlowNodeTypeEnum } from '@/packages/global/core/module/node/constant';
+import { FlowNodeOutputTargetItemType } from '@/packages/global/core/module/node/type';
+import { FlowModuleItemType, ModuleItemType } from '@/packages/global/core/module/type';
 import { type Node, type Edge } from 'reactflow';
 
 export const flowNode2Modules = ({

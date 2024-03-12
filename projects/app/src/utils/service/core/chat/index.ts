@@ -1,5 +1,5 @@
-import type { ChatHistoryItemResType } from '@fastgpt/global/core/chat/type.d';
-import { FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
+import type { ChatHistoryItemResType } from '@/packages/global/core/chat/type.d';
+import { FlowNodeTypeEnum } from '@/packages/global/core/module/node/constant';
 
 export const selectShareResponse = ({
   responseData = []

@@ -12,7 +12,7 @@ import {
   useTheme
 } from '@chakra-ui/react';
 import Avatar from '@/components/Avatar';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useQuery } from '@tanstack/react-query';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import SideBar from '@/components/SideBar';
@@ -34,9 +34,9 @@ import type {
   ChatHistoryItemType,
   chatAppListSchema,
   teamInfoType
-} from '@fastgpt/global/core/chat/type.d';
-import { chatContentReplaceBlock } from '@fastgpt/global/core/chat/utils';
-import { ChatStatusEnum } from '@fastgpt/global/core/chat/constants';
+} from '@/packages/global/core/chat/type.d';
+import { chatContentReplaceBlock } from '@/packages/global/core/chat/utils';
+import { ChatStatusEnum } from '@/packages/global/core/chat/constants';
 import { POST } from '@/web/common/api/request';
 const OutLink = ({
   shareTeamId,

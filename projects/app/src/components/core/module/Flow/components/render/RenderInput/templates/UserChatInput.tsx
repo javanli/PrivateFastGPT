@@ -4,7 +4,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import { useTranslation } from 'next-i18next';
 import TargetHandle from '../../TargetHandle';
 import SourceHandle from '../../SourceHandle';
-import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
 
 const UserChatInput = ({ item }: RenderInputProps) => {
   const { t } = useTranslation();

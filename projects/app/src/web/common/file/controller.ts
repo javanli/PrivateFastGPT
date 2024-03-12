@@ -1,8 +1,8 @@
 import { postUploadImg, postUploadFiles } from '@/web/common/file/api';
-import { UploadImgProps } from '@fastgpt/global/common/file/api';
-import { BucketNameEnum } from '@fastgpt/global/common/file/constants';
-import { preUploadImgProps } from '@fastgpt/global/common/file/api';
-import { compressBase64Img, type CompressImgProps } from '@fastgpt/web/common/file/img';
+import { UploadImgProps } from '@/packages/global/common/file/api';
+import { BucketNameEnum } from '@/packages/global/common/file/constants';
+import { preUploadImgProps } from '@/packages/global/common/file/api';
+import { compressBase64Img, type CompressImgProps } from '@/packages/web/common/file/img';
 
 /**
  * upload file to mongo gridfs

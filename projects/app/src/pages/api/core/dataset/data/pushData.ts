@@ -1,15 +1,15 @@
 /* push data to training queue */
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { withNextCors } from '@fastgpt/service/common/middle/cors';
+import { withNextCors } from '@/packages/service/common/middle/cors';
 import type {
   PushDatasetDataProps,
   PushDatasetDataResponse
-} from '@fastgpt/global/core/dataset/api.d';
-import { authDatasetCollection } from '@fastgpt/service/support/permission/auth/dataset';
-import { checkDatasetLimit } from '@fastgpt/service/support/permission/teamLimit';
-import { predictDataLimitLength } from '@fastgpt/global/core/dataset/utils';
+} from '@/packages/global/core/dataset/api.d';
+import { authDatasetCollection } from '@/packages/service/support/permission/auth/dataset';
+import { checkDatasetLimit } from '@/packages/service/support/permission/teamLimit';
+import { predictDataLimitLength } from '@/packages/global/core/dataset/utils';
 import { pushDataToTrainingQueue } from '@/service/core/dataset/data/controller';
 
 export default withNextCors(async function handler(req: NextApiRequest, res: NextApiResponse<any>) {

@@ -12,13 +12,13 @@ import {
 import { useTranslation } from 'next-i18next';
 import React, { useCallback, useState } from 'react';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { useToast } from '@fastgpt/web/hooks/useToast';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { useToast } from '@/packages/web/hooks/useToast';
+import { getErrText } from '@/packages/global/common/error/utils';
 import { getWxPayQRCode } from '@/web/support/wallet/bill/api';
-import { BillTypeEnum } from '@fastgpt/global/support/wallet/bill/constants';
+import { BillTypeEnum } from '@/packages/global/support/wallet/bill/constants';
 import QRCodePayModal, { type QRPayProps } from '@/components/support/wallet/QRCodePayModal';
 
 const ExtraPlan = () => {

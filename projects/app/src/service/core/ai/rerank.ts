@@ -1,4 +1,4 @@
-import { PostReRankProps, PostReRankResponse } from '@fastgpt/global/core/ai/api';
+import { PostReRankProps, PostReRankResponse } from '@/packages/global/core/ai/api';
 import { POST } from '@/service/common/api/request';
 
 export function reRankRecall({ query, inputs }: PostReRankProps) {

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import type { DatasetItemType, DatasetListItemType } from '@fastgpt/global/core/dataset/type.d';
+import type { DatasetItemType, DatasetListItemType } from '@/packages/global/core/dataset/type.d';
 import {
   getAllDataset,
   getDatasets,
@@ -10,8 +10,8 @@ import {
   postWebsiteSync
 } from '@/web/core/dataset/api';
 import { defaultDatasetDetail } from '@/constants/dataset';
-import type { DatasetUpdateBody } from '@fastgpt/global/core/dataset/api.d';
-import { DatasetStatusEnum } from '@fastgpt/global/core/dataset/constants';
+import type { DatasetUpdateBody } from '@/packages/global/core/dataset/api.d';
+import { DatasetStatusEnum } from '@/packages/global/core/dataset/constants';
 import { postCreateTrainingUsage } from '@/web/support/wallet/usage/api';
 import { checkTeamWebSyncLimit } from '@/web/support/user/team/api';
 

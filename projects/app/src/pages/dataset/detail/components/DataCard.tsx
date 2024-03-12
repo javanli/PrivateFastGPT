@@ -23,13 +23,13 @@ import {
 } from '@/web/core/dataset/api';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { useQuery } from '@tanstack/react-query';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { debounce } from 'lodash';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { getErrText } from '@/packages/global/common/error/utils';
 import { useConfirm } from '@/web/common/hooks/useConfirm';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import MyInput from '@/components/MyInput';
 import { useLoading } from '@/web/common/hooks/useLoading';
 import InputDataModal from '../components/InputDataModal';
@@ -37,15 +37,15 @@ import RawSourceBox from '@/components/core/dataset/RawSourceBox';
 import type { DatasetDataListItemType } from '@/global/core/dataset/type.d';
 import { TabEnum } from '..';
 import { useUserStore } from '@/web/support/user/useUserStore';
-import { TeamMemberRoleEnum } from '@fastgpt/global/support/user/team/constant';
+import { TeamMemberRoleEnum } from '@/packages/global/support/user/team/constant';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import {
   DatasetCollectionTypeMap,
   TrainingModeEnum,
   TrainingTypeMap
-} from '@fastgpt/global/core/dataset/constants';
-import { formatTime2YMDHM } from '@fastgpt/global/common/string/time';
-import { formatFileSize } from '@fastgpt/global/common/file/tools';
+} from '@/packages/global/core/dataset/constants';
+import { formatTime2YMDHM } from '@/packages/global/common/string/time';
+import { formatFileSize } from '@/packages/global/common/file/tools';
 import { getFileAndOpen } from '@/web/core/dataset/utils';
 import MyTooltip from '@/components/MyTooltip';
 

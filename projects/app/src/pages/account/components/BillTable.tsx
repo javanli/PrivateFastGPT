@@ -13,11 +13,11 @@ import {
   ModalBody
 } from '@chakra-ui/react';
 import { getBills, checkBalancePayResult } from '@/web/support/wallet/bill/api';
-import type { BillSchemaType } from '@fastgpt/global/support/wallet/bill/type.d';
+import type { BillSchemaType } from '@/packages/global/support/wallet/bill/type.d';
 import dayjs from 'dayjs';
-import { formatStorePrice2Read } from '@fastgpt/global/support/wallet/usage/tools';
-import { useToast } from '@fastgpt/web/hooks/useToast';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import { formatStorePrice2Read } from '@/packages/global/support/wallet/usage/tools';
+import { useToast } from '@/packages/web/hooks/useToast';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useTranslation } from 'next-i18next';
 import MySelect from '@/components/Select';
 import {
@@ -25,12 +25,12 @@ import {
   billPayWayMap,
   billStatusMap,
   billTypeMap
-} from '@fastgpt/global/support/wallet/bill/constants';
+} from '@/packages/global/support/wallet/bill/constants';
 import { usePagination } from '@/web/common/hooks/usePagination';
 import MyBox from '@/components/common/MyBox';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import MyModal from '@/components/MyModal';
-import { standardSubLevelMap, subModeMap } from '@fastgpt/global/support/wallet/sub/constants';
+import { standardSubLevelMap, subModeMap } from '@/packages/global/support/wallet/sub/constants';
 
 const BillTable = () => {
   const { t } = useTranslation();

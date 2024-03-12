@@ -1,19 +1,19 @@
-import type { moduleDispatchResType } from '@fastgpt/global/core/chat/type.d';
+import type { moduleDispatchResType } from '@/packages/global/core/chat/type.d';
 import { formatModelChars2Points } from '@/service/support/wallet/usage/utils';
-import type { SelectedDatasetType } from '@fastgpt/global/core/module/api.d';
-import type { SearchDataResponseItemType } from '@fastgpt/global/core/dataset/type';
+import type { SelectedDatasetType } from '@/packages/global/core/module/api.d';
+import type { SearchDataResponseItemType } from '@/packages/global/core/dataset/type';
 import type {
   ModuleDispatchProps,
   ModuleDispatchResponse
-} from '@fastgpt/global/core/module/type.d';
-import { ModelTypeEnum, getLLMModel, getVectorModel } from '@fastgpt/service/core/ai/model';
+} from '@/packages/global/core/module/type.d';
+import { ModelTypeEnum, getLLMModel, getVectorModel } from '@/packages/service/core/ai/model';
 import { searchDatasetData } from '@/service/core/dataset/data/controller';
-import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { DatasetSearchModeEnum } from '@fastgpt/global/core/dataset/constants';
+import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
+import { DatasetSearchModeEnum } from '@/packages/global/core/dataset/constants';
 import { getHistories } from '../utils';
-import { datasetSearchQueryExtension } from '@fastgpt/service/core/dataset/search/utils';
-import { ChatModuleBillType } from '@fastgpt/global/support/wallet/bill/type';
-import { checkTeamReRankPermission } from '@fastgpt/service/support/permission/teamLimit';
+import { datasetSearchQueryExtension } from '@/packages/service/core/dataset/search/utils';
+import { ChatModuleBillType } from '@/packages/global/support/wallet/bill/type';
+import { checkTeamReRankPermission } from '@/packages/service/support/permission/teamLimit';
 
 type DatasetSearchProps = ModuleDispatchProps<{
   [ModuleInputKeyEnum.datasetSelectList]: SelectedDatasetType;

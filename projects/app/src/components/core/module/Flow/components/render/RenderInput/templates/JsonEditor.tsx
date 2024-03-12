@@ -2,12 +2,12 @@ import React, { useCallback, useMemo } from 'react';
 import type { RenderInputProps } from '../type';
 import { onChangeNode, useFlowProviderStore } from '../../../../FlowProvider';
 import { useTranslation } from 'next-i18next';
-import JSONEditor from '@fastgpt/web/components/common/Textarea/JsonEditor';
+import JSONEditor from '@/packages/web/components/common/Textarea/JsonEditor';
 import {
   formatEditorVariablePickerIcon,
   getGuideModule,
   splitGuideModule
-} from '@fastgpt/global/core/module/utils';
+} from '@/packages/global/core/module/utils';
 
 const JsonEditor = ({ inputs = [], item, moduleId }: RenderInputProps) => {
   const { t } = useTranslation();

@@ -1,16 +1,16 @@
-import type { moduleDispatchResType } from '@fastgpt/global/core/chat/type.d';
+import type { moduleDispatchResType } from '@/packages/global/core/chat/type.d';
 import type {
   ModuleDispatchProps,
   ModuleDispatchResponse
-} from '@fastgpt/global/core/module/type.d';
+} from '@/packages/global/core/module/type.d';
 import {
   DYNAMIC_INPUT_KEY,
   ModuleInputKeyEnum,
   ModuleOutputKeyEnum
-} from '@fastgpt/global/core/module/constants';
+} from '@/packages/global/core/module/constants';
 import axios from 'axios';
 import { valueTypeFormat } from '../utils';
-import { SERVICE_LOCAL_HOST } from '@fastgpt/service/common/system/tools';
+import { SERVICE_LOCAL_HOST } from '@/packages/service/common/system/tools';
 
 type HttpRequestProps = ModuleDispatchProps<{
   [ModuleInputKeyEnum.abandon_httpUrl]: string;

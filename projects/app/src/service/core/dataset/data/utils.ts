@@ -1,4 +1,4 @@
-import { MongoDatasetData } from '@fastgpt/service/core/dataset/data/schema';
+import { MongoDatasetData } from '@/packages/service/core/dataset/data/schema';
 
 /**
  * Same value judgment

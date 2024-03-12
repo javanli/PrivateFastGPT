@@ -1,18 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import type { InitChatResponse, InitOutLinkChatProps } from '@/global/core/chat/api.d';
-import { getGuideModule } from '@fastgpt/global/core/module/utils';
+import { getGuideModule } from '@/packages/global/core/module/utils';
 import { getChatModelNameListByModules } from '@/service/core/app/module';
-import { ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { getChatItems } from '@fastgpt/service/core/chat/controller';
-import { MongoTeamMember } from '@fastgpt/service/support/user/team/teamMemberSchema';
+import { ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
+import { getChatItems } from '@/packages/service/core/chat/controller';
+import { MongoTeamMember } from '@/packages/service/support/user/team/teamMemberSchema';
 import { authOutLink } from '@/service/support/permission/auth/outLink';
-import { MongoApp } from '@fastgpt/service/core/app/schema';
+import { MongoApp } from '@/packages/service/core/app/schema';
 import { selectShareResponse } from '@/utils/service/core/chat';
-import { AppErrEnum } from '@fastgpt/global/common/error/code/app';
-import { MongoChat } from '@fastgpt/service/core/chat/chatSchema';
-import { ChatErrEnum } from '@fastgpt/global/common/error/code/chat';
+import { AppErrEnum } from '@/packages/global/common/error/code/app';
+import { MongoChat } from '@/packages/service/core/chat/chatSchema';
+import { ChatErrEnum } from '@/packages/global/common/error/code/chat';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

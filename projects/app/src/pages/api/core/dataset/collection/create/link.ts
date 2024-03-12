@@ -2,22 +2,22 @@
     Create one dataset collection
 */
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import type { LinkCreateDatasetCollectionParams } from '@fastgpt/global/core/dataset/api.d';
-import { authDataset } from '@fastgpt/service/support/permission/auth/dataset';
-import { createOneCollection } from '@fastgpt/service/core/dataset/collection/controller';
+import type { LinkCreateDatasetCollectionParams } from '@/packages/global/core/dataset/api.d';
+import { authDataset } from '@/packages/service/support/permission/auth/dataset';
+import { createOneCollection } from '@/packages/service/core/dataset/collection/controller';
 import {
   TrainingModeEnum,
   DatasetCollectionTypeEnum
-} from '@fastgpt/global/core/dataset/constants';
-import { checkDatasetLimit } from '@fastgpt/service/support/permission/teamLimit';
-import { predictDataLimitLength } from '@fastgpt/global/core/dataset/utils';
-import { createTrainingUsage } from '@fastgpt/service/support/wallet/usage/controller';
-import { UsageSourceEnum } from '@fastgpt/global/support/wallet/usage/constants';
-import { getLLMModel, getVectorModel } from '@fastgpt/service/core/ai/model';
-import { reloadCollectionChunks } from '@fastgpt/service/core/dataset/collection/utils';
-import { mongoSessionRun } from '@fastgpt/service/common/mongo/sessionRun';
+} from '@/packages/global/core/dataset/constants';
+import { checkDatasetLimit } from '@/packages/service/support/permission/teamLimit';
+import { predictDataLimitLength } from '@/packages/global/core/dataset/utils';
+import { createTrainingUsage } from '@/packages/service/support/wallet/usage/controller';
+import { UsageSourceEnum } from '@/packages/global/support/wallet/usage/constants';
+import { getLLMModel, getVectorModel } from '@/packages/service/core/ai/model';
+import { reloadCollectionChunks } from '@/packages/service/core/dataset/collection/utils';
+import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

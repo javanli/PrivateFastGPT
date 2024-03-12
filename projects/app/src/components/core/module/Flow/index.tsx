@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import ReactFlow, { Background, Connection, Controls, ReactFlowProvider } from 'reactflow';
 import { Box, Flex, IconButton, useDisclosure } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
-import { EDGE_TYPE, FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
+import { EDGE_TYPE, FlowNodeTypeEnum } from '@/packages/global/core/module/node/constant';
 
 import dynamic from 'next/dynamic';
 
@@ -11,7 +11,7 @@ import ModuleTemplateList, { type ModuleTemplateProps } from './ModuleTemplateLi
 import { useFlowProviderStore } from './FlowProvider';
 
 import 'reactflow/dist/style.css';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useTranslation } from 'next-i18next';
 
 const NodeSimple = dynamic(() => import('./components/nodes/NodeSimple'));

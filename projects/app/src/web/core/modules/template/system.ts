@@ -1,25 +1,25 @@
-import { UserGuideModule } from '@fastgpt/global/core/module/template/system/userGuide';
-import { UserInputModule } from '@fastgpt/global/core/module/template/system/userInput';
-import { AiChatModule } from '@fastgpt/global/core/module/template/system/aiChat';
-import { DatasetSearchModule } from '@fastgpt/global/core/module/template/system/datasetSearch';
-import { DatasetConcatModule } from '@fastgpt/global/core/module/template/system/datasetConcat';
-import { AssignedAnswerModule } from '@fastgpt/global/core/module/template/system/assignedAnswer';
-import { ClassifyQuestionModule } from '@fastgpt/global/core/module/template/system/classifyQuestion';
-import { ContextExtractModule } from '@fastgpt/global/core/module/template/system/contextExtract';
-import { HttpModule468 } from '@fastgpt/global/core/module/template/system/http468';
-import { HttpModule } from '@fastgpt/global/core/module/template/system/abandon/http';
+import { UserGuideModule } from '@/packages/global/core/module/template/system/userGuide';
+import { UserInputModule } from '@/packages/global/core/module/template/system/userInput';
+import { AiChatModule } from '@/packages/global/core/module/template/system/aiChat';
+import { DatasetSearchModule } from '@/packages/global/core/module/template/system/datasetSearch';
+import { DatasetConcatModule } from '@/packages/global/core/module/template/system/datasetConcat';
+import { AssignedAnswerModule } from '@/packages/global/core/module/template/system/assignedAnswer';
+import { ClassifyQuestionModule } from '@/packages/global/core/module/template/system/classifyQuestion';
+import { ContextExtractModule } from '@/packages/global/core/module/template/system/contextExtract';
+import { HttpModule468 } from '@/packages/global/core/module/template/system/http468';
+import { HttpModule } from '@/packages/global/core/module/template/system/abandon/http';
 
-import { RunAppModule } from '@fastgpt/global/core/module/template/system/runApp';
-import { PluginInputModule } from '@fastgpt/global/core/module/template/system/pluginInput';
-import { PluginOutputModule } from '@fastgpt/global/core/module/template/system/pluginOutput';
-import { RunPluginModule } from '@fastgpt/global/core/module/template/system/runPlugin';
-import { AiQueryExtension } from '@fastgpt/global/core/module/template/system/queryExtension';
+import { RunAppModule } from '@/packages/global/core/module/template/system/runApp';
+import { PluginInputModule } from '@/packages/global/core/module/template/system/pluginInput';
+import { PluginOutputModule } from '@/packages/global/core/module/template/system/pluginOutput';
+import { RunPluginModule } from '@/packages/global/core/module/template/system/runPlugin';
+import { AiQueryExtension } from '@/packages/global/core/module/template/system/queryExtension';
 
 import type {
   FlowModuleTemplateType,
   moduleTemplateListType
-} from '@fastgpt/global/core/module/type.d';
-import { ModuleTemplateTypeEnum } from '@fastgpt/global/core/module/constants';
+} from '@/packages/global/core/module/type.d';
+import { ModuleTemplateTypeEnum } from '@/packages/global/core/module/constants';
 
 export const appSystemModuleTemplates: FlowModuleTemplateType[] = [
   UserGuideModule,

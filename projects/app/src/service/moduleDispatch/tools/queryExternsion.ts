@@ -1,14 +1,14 @@
-import type { ChatItemType } from '@fastgpt/global/core/chat/type.d';
+import type { ChatItemType } from '@/packages/global/core/chat/type.d';
 import type {
   ModuleDispatchProps,
   ModuleDispatchResponse
-} from '@fastgpt/global/core/module/type.d';
-import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { ModelTypeEnum, getLLMModel } from '@fastgpt/service/core/ai/model';
+} from '@/packages/global/core/module/type.d';
+import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
+import { ModelTypeEnum, getLLMModel } from '@/packages/service/core/ai/model';
 import { formatModelChars2Points } from '@/service/support/wallet/usage/utils';
-import { queryExtension } from '@fastgpt/service/core/ai/functions/queryExtension';
+import { queryExtension } from '@/packages/service/core/ai/functions/queryExtension';
 import { getHistories } from '../utils';
-import { hashStr } from '@fastgpt/global/common/string/tools';
+import { hashStr } from '@/packages/global/common/string/tools';
 
 type Props = ModuleDispatchProps<{
   [ModuleInputKeyEnum.aiModel]: string;

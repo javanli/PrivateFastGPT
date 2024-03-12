@@ -12,7 +12,7 @@ import {
   Tag,
   Input
 } from '@chakra-ui/react';
-import type { TeamTagsSchema } from '@fastgpt/global/support/user/team/type';
+import type { TeamTagsSchema } from '@/packages/global/support/user/team/type';
 const TagEdit = ({
   defaultValues,
   teamsTags,

@@ -1,19 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
-import { withNextCors } from '@fastgpt/service/common/middle/cors';
+import { jsonRes } from '@/packages/service/common/response';
+import { withNextCors } from '@/packages/service/common/middle/cors';
 import type { SearchTestProps, SearchTestResponse } from '@/global/core/dataset/api.d';
 import { connectToDatabase } from '@/service/mongo';
-import { authDataset } from '@fastgpt/service/support/permission/auth/dataset';
+import { authDataset } from '@/packages/service/support/permission/auth/dataset';
 import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { searchDatasetData } from '@/service/core/dataset/data/controller';
-import { updateApiKeyUsage } from '@fastgpt/service/support/openapi/tools';
-import { UsageSourceEnum } from '@fastgpt/global/support/wallet/usage/constants';
-import { getLLMModel } from '@fastgpt/service/core/ai/model';
-import { datasetSearchQueryExtension } from '@fastgpt/service/core/dataset/search/utils';
+import { updateApiKeyUsage } from '@/packages/service/support/openapi/tools';
+import { UsageSourceEnum } from '@/packages/global/support/wallet/usage/constants';
+import { getLLMModel } from '@/packages/service/core/ai/model';
+import { datasetSearchQueryExtension } from '@/packages/service/core/dataset/search/utils';
 import {
   checkTeamAIPoints,
   checkTeamReRankPermission
-} from '@fastgpt/service/support/permission/teamLimit';
+} from '@/packages/service/support/permission/teamLimit';
 
 export default withNextCors(async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

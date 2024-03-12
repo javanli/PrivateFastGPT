@@ -1,6 +1,6 @@
-import { AppSimpleEditConfigTemplateType } from '@fastgpt/global/core/app/type';
-import { GET } from '@fastgpt/service/common/api/plusRequest';
-import { FastGPTProUrl } from '@fastgpt/service/common/system/constants';
+import { AppSimpleEditConfigTemplateType } from '@/packages/global/core/app/type';
+import { GET } from '@/packages/service/common/api/plusRequest';
+import { FastGPTProUrl } from '@/packages/service/common/system/constants';
 
 export async function getSimpleTemplatesFromPlus(): Promise<AppSimpleEditConfigTemplateType[]> {
   try {

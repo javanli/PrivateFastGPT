@@ -1,10 +1,10 @@
 import { insertData2Dataset } from '@/service/core/dataset/data/controller';
-import { MongoDatasetTraining } from '@fastgpt/service/core/dataset/training/schema';
-import { TrainingModeEnum } from '@fastgpt/global/core/dataset/constants';
+import { MongoDatasetTraining } from '@/packages/service/core/dataset/training/schema';
+import { TrainingModeEnum } from '@/packages/global/core/dataset/constants';
 import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { checkInvalidChunkAndLock, checkTeamAiPointsAndLock } from './utils';
-import { delay } from '@fastgpt/global/common/system/utils';
-import { Op } from '@fastgpt/service/common/mongo';
+import { delay } from '@/packages/global/common/system/utils';
+import { Op } from '@/packages/service/common/mongo';
 
 const reduceQueue = () => {
   global.vectorQueueLen = global.vectorQueueLen > 0 ? global.vectorQueueLen - 1 : 0;

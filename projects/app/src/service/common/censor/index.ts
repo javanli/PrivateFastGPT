@@ -1,4 +1,4 @@
-import { POST } from '@fastgpt/service/common/api/plusRequest';
+import { POST } from '@/packages/service/common/api/plusRequest';
 
 export const postTextCensor = (data: { text: string }) =>
   POST<{ code?: number; message: string }>('/common/censor/text_baidu', data)

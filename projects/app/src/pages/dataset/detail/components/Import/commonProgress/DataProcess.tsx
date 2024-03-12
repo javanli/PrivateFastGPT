@@ -14,10 +14,10 @@ import {
   Textarea,
   useDisclosure
 } from '@chakra-ui/react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useTranslation } from 'next-i18next';
-import LeftRadio from '@fastgpt/web/components/common/Radio/LeftRadio';
-import { TrainingTypeMap } from '@fastgpt/global/core/dataset/constants';
+import LeftRadio from '@/packages/web/components/common/Radio/LeftRadio';
+import { TrainingTypeMap } from '@/packages/global/core/dataset/constants';
 import { ImportProcessWayEnum } from '@/web/core/dataset/constants';
 import MyTooltip from '@/components/MyTooltip';
 import { useImportStore } from '../Provider';

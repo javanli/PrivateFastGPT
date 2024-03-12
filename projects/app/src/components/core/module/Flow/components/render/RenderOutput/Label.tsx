@@ -1,13 +1,13 @@
-import { EditNodeFieldType, FlowNodeOutputItemType } from '@fastgpt/global/core/module/node/type';
+import { EditNodeFieldType, FlowNodeOutputItemType } from '@/packages/global/core/module/node/type';
 import React, { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 import { Box, Flex } from '@chakra-ui/react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { onChangeNode } from '../../../FlowProvider';
 import MyTooltip from '@/components/MyTooltip';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import SourceHandle from '../SourceHandle';
-import { FlowNodeOutputTypeEnum } from '@fastgpt/global/core/module/node/constant';
+import { FlowNodeOutputTypeEnum } from '@/packages/global/core/module/node/constant';
 import dynamic from 'next/dynamic';
 
 const FieldEditModal = dynamic(() => import('../FieldEditModal'));

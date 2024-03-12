@@ -1,6 +1,6 @@
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { Box, Flex } from '@chakra-ui/react';
-import { ParentTreePathItemType } from '@fastgpt/global/common/parentFolder/type';
+import { ParentTreePathItemType } from '@/packages/global/common/parentFolder/type';
 import React, { useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 

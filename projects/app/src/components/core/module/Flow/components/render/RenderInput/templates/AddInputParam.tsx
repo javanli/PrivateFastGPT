@@ -4,7 +4,7 @@ import { onChangeNode } from '../../../../FlowProvider';
 import { Button } from '@chakra-ui/react';
 import { SmallAddIcon } from '@chakra-ui/icons';
 import { useTranslation } from 'next-i18next';
-import { EditNodeFieldType } from '@fastgpt/global/core/module/node/type';
+import { EditNodeFieldType } from '@/packages/global/core/module/node/type';
 import dynamic from 'next/dynamic';
 
 const FieldEditModal = dynamic(() => import('../../FieldEditModal'));

@@ -1,15 +1,21 @@
 import { NextApiResponse } from 'next';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
-import type { ChatDispatchProps, RunningModuleItemType } from '@fastgpt/global/core/module/type.d';
-import { ModuleDispatchProps } from '@fastgpt/global/core/module/type.d';
-import type { ChatHistoryItemResType } from '@fastgpt/global/core/chat/type.d';
-import { FlowNodeInputTypeEnum, FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
-import { ModuleItemType } from '@fastgpt/global/core/module/type';
-import { replaceVariable } from '@fastgpt/global/common/string/tools';
-import { responseWrite } from '@fastgpt/service/common/response';
-import { sseResponseEventEnum } from '@fastgpt/service/common/response/constant';
-import { getSystemTime } from '@fastgpt/global/common/time/timezone';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
+import { ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
+import type {
+  ChatDispatchProps,
+  RunningModuleItemType
+} from '@/packages/global/core/module/type.d';
+import { ModuleDispatchProps } from '@/packages/global/core/module/type.d';
+import type { ChatHistoryItemResType } from '@/packages/global/core/chat/type.d';
+import {
+  FlowNodeInputTypeEnum,
+  FlowNodeTypeEnum
+} from '@/packages/global/core/module/node/constant';
+import { ModuleItemType } from '@/packages/global/core/module/type';
+import { replaceVariable } from '@/packages/global/common/string/tools';
+import { responseWrite } from '@/packages/service/common/response';
+import { sseResponseEventEnum } from '@/packages/service/common/response/constant';
+import { getSystemTime } from '@/packages/global/common/time/timezone';
 import { initRunningModuleType } from '../core/modules/constant';
 
 import { dispatchHistory } from './init/history';
@@ -28,7 +34,7 @@ import { dispatchRunPlugin } from './plugin/run';
 import { dispatchPluginInput } from './plugin/runInput';
 import { dispatchPluginOutput } from './plugin/runOutput';
 import { valueTypeFormat } from './utils';
-import { ChatModuleBillType } from '@fastgpt/global/support/wallet/bill/type';
+import { ChatModuleBillType } from '@/packages/global/support/wallet/bill/type';
 
 const callbackMap: Record<`${FlowNodeTypeEnum}`, Function> = {
   [FlowNodeTypeEnum.historyNode]: dispatchHistory,

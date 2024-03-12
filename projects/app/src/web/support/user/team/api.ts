@@ -7,14 +7,14 @@ import {
   UpdateInviteProps,
   UpdateTeamMemberProps,
   UpdateTeamProps
-} from '@fastgpt/global/support/user/team/controller.d';
-import type { TeamTagsSchema } from '@fastgpt/global/support/user/team/type';
+} from '@/packages/global/support/user/team/controller.d';
+import type { TeamTagsSchema } from '@/packages/global/support/user/team/type';
 import {
   TeamItemType,
   TeamMemberItemType,
   TeamMemberSchema
-} from '@fastgpt/global/support/user/team/type.d';
-import { FeTeamPlanStatusType, TeamSubSchema } from '@fastgpt/global/support/wallet/sub/type';
+} from '@/packages/global/support/user/team/type.d';
+import { FeTeamPlanStatusType, TeamSubSchema } from '@/packages/global/support/wallet/sub/type';
 
 /* --------------- team  ---------------- */
 export const getTeamList = (status: `${TeamMemberSchema['status']}`) =>

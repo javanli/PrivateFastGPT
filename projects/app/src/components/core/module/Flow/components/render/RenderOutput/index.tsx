@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
-import type { FlowNodeOutputItemType } from '@fastgpt/global/core/module/node/type';
+import type { FlowNodeOutputItemType } from '@/packages/global/core/module/node/type';
 import { Box } from '@chakra-ui/react';
-import { FlowNodeOutputTypeEnum } from '@fastgpt/global/core/module/node/constant';
-import { ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { FlowNodeOutputTypeEnum } from '@/packages/global/core/module/node/constant';
+import { ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
 import OutputLabel from './Label';
 import { RenderOutputProps } from './type';
 import dynamic from 'next/dynamic';

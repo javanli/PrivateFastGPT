@@ -4,15 +4,15 @@ import { Box, Flex, Image, Spinner, Textarea } from '@chakra-ui/react';
 import React, { useRef, useEffect, useCallback, useState, useTransition } from 'react';
 import { useTranslation } from 'next-i18next';
 import MyTooltip from '../MyTooltip';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useRouter } from 'next/router';
 import { useSelectFile } from '@/web/common/file/hooks/useSelectFile';
 import { compressImgFileAndUpload } from '@/web/common/file/controller';
 import { customAlphabet } from 'nanoid';
-import { IMG_BLOCK_KEY } from '@fastgpt/global/core/chat/constants';
+import { IMG_BLOCK_KEY } from '@/packages/global/core/chat/constants';
 import { addDays } from 'date-fns';
 import { useRequest } from '@/web/common/hooks/useRequest';
-import { MongoImageTypeEnum } from '@fastgpt/global/common/file/image/constants';
+import { MongoImageTypeEnum } from '@/packages/global/common/file/image/constants';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 6);
 
 enum FileTypeEnum {

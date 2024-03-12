@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { Box, Button, Table, Thead, Tbody, Tr, Th, Td, TableContainer } from '@chakra-ui/react';
 import { NodeProps } from 'reactflow';
-import { FlowModuleItemType } from '@fastgpt/global/core/module/type.d';
+import { FlowModuleItemType } from '@/packages/global/core/module/type.d';
 import { useTranslation } from 'next-i18next';
 import NodeCard from '../../render/NodeCard';
 import Container from '../../modules/Container';
 import { AddIcon } from '@chakra-ui/icons';
 import RenderInput from '../../render/RenderInput';
 import Divider from '../../modules/Divider';
-import type { ContextExtractAgentItemType } from '@fastgpt/global/core/module/type';
+import type { ContextExtractAgentItemType } from '@/packages/global/core/module/type';
 import RenderOutput from '../../render/RenderOutput';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import ExtractFieldModal, { defaultField } from './ExtractFieldModal';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { FlowNodeOutputTypeEnum } from '@fastgpt/global/core/module/node/constant';
-import { ModuleIOValueTypeEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
+import { FlowNodeOutputTypeEnum } from '@/packages/global/core/module/node/constant';
+import { ModuleIOValueTypeEnum } from '@/packages/global/core/module/constants';
 import { onChangeNode } from '../../../FlowProvider';
 
 const NodeExtract = ({ data }: NodeProps<FlowModuleItemType>) => {

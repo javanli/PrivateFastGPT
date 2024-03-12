@@ -25,7 +25,7 @@ import {
 import { checkTeamExportDatasetLimit } from '@/web/support/user/team/api';
 import { useTranslation } from 'next-i18next';
 import Avatar from '@/components/Avatar';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { serviceSideProps } from '@/web/common/utils/i18n';
 import dynamic from 'next/dynamic';
 import {
@@ -33,7 +33,7 @@ import {
   DatasetTypeMap,
   FolderIcon,
   FolderImgUrl
-} from '@fastgpt/global/core/dataset/constants';
+} from '@/packages/global/core/dataset/constants';
 import MyMenu from '@/components/MyMenu';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
@@ -42,12 +42,12 @@ import EditFolderModal, { useEditFolder } from '../component/EditFolderModal';
 import { useDrag } from '@/web/common/hooks/useDrag';
 import { useUserStore } from '@/web/support/user/useUserStore';
 import PermissionIconText from '@/components/support/permission/IconText';
-import { PermissionTypeEnum } from '@fastgpt/global/support/permission/constant';
-import { DatasetItemType } from '@fastgpt/global/core/dataset/type';
+import { PermissionTypeEnum } from '@/packages/global/support/permission/constant';
+import { DatasetItemType } from '@/packages/global/core/dataset/type';
 import ParentPaths from '@/components/common/ParentPaths';
 import DatasetTypeTag from '@/components/core/dataset/DatasetTypeTag';
-import { useToast } from '@fastgpt/web/hooks/useToast';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { useToast } from '@/packages/web/hooks/useToast';
+import { getErrText } from '@/packages/global/common/error/utils';
 
 const CreateModal = dynamic(() => import('./component/CreateModal'), { ssr: false });
 const MoveModal = dynamic(() => import('./component/MoveModal'), { ssr: false });

@@ -11,16 +11,16 @@ import {
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import MyModal from '@/components/MyModal';
-import { DYNAMIC_INPUT_KEY, ModuleIOValueTypeEnum } from '@fastgpt/global/core/module/constants';
+import { DYNAMIC_INPUT_KEY, ModuleIOValueTypeEnum } from '@/packages/global/core/module/constants';
 import { useTranslation } from 'next-i18next';
 import MySelect from '@/components/Select';
 import { FlowValueTypeMap } from '@/web/core/modules/constants/dataType';
 import {
   FlowNodeInputTypeEnum,
   FlowNodeOutputTypeEnum
-} from '@fastgpt/global/core/module/node/constant';
-import { EditInputFieldMap, EditNodeFieldType } from '@fastgpt/global/core/module/node/type.d';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+} from '@/packages/global/core/module/node/constant';
+import { EditInputFieldMap, EditNodeFieldType } from '@/packages/global/core/module/node/type.d';
+import { useToast } from '@/packages/web/hooks/useToast';
 
 const FieldEditModal = ({
   editField = {

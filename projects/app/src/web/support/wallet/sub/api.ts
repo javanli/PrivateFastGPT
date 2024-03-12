@@ -2,8 +2,8 @@ import { GET, POST, PUT, DELETE } from '@/web/common/api/request';
 import {
   StandardSubPlanParams,
   StandardSubPlanUpdateResponse
-} from '@fastgpt/global/support/wallet/sub/api';
-import { SubStatusEnum, SubTypeEnum } from '@fastgpt/global/support/wallet/sub/constants';
+} from '@/packages/global/support/wallet/sub/api';
+import { SubStatusEnum, SubTypeEnum } from '@/packages/global/support/wallet/sub/constants';
 
 export const putTeamDatasetSubStatus = (data: {
   status: `${SubStatusEnum}`;

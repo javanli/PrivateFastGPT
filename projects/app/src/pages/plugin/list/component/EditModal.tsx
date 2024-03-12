@@ -3,8 +3,8 @@ import { Box, Flex, Button, ModalBody, Input, Textarea, IconButton } from '@chak
 import { useSelectFile } from '@/web/common/file/hooks/useSelectFile';
 import { useForm } from 'react-hook-form';
 import { compressImgFileAndUpload } from '@/web/common/file/controller';
-import { getErrText } from '@fastgpt/global/common/error/utils';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { getErrText } from '@/packages/global/common/error/utils';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useRouter } from 'next/router';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import { useRequest } from '@/web/common/hooks/useRequest';
@@ -14,10 +14,10 @@ import MyTooltip from '@/components/MyTooltip';
 import MyModal from '@/components/MyModal';
 import { useTranslation } from 'next-i18next';
 import { useConfirm } from '@/web/common/hooks/useConfirm';
-import MyIcon from '@fastgpt/web/components/common/Icon';
-import { CreateOnePluginParams } from '@fastgpt/global/core/plugin/controller';
+import MyIcon from '@/packages/web/components/common/Icon';
+import { CreateOnePluginParams } from '@/packages/global/core/plugin/controller';
 import { customAlphabet } from 'nanoid';
-import { MongoImageTypeEnum } from '@fastgpt/global/common/file/image/constants';
+import { MongoImageTypeEnum } from '@/packages/global/common/file/image/constants';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 12);
 
 export type FormType = CreateOnePluginParams & {

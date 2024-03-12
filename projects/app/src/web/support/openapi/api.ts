@@ -1,6 +1,6 @@
 import { GET, POST, DELETE, PUT } from '@/web/common/api/request';
 import type { EditApiKeyProps, GetApiKeyProps } from '@/global/support/openapi/api.d';
-import type { OpenApiSchema } from '@fastgpt/global/support/openapi/type';
+import type { OpenApiSchema } from '@/packages/global/support/openapi/type';
 
 /**
  * crete a api key

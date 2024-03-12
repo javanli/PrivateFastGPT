@@ -17,8 +17,8 @@ import { AddIcon } from '@chakra-ui/icons';
 import { useSelectFile } from '@/web/common/file/hooks/useSelectFile';
 import { useForm } from 'react-hook-form';
 import { compressImgFileAndUpload } from '@/web/common/file/controller';
-import { getErrText } from '@fastgpt/global/common/error/utils';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { getErrText } from '@/packages/global/common/error/utils';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { postCreateApp } from '@/web/core/app/api';
 import { useRouter } from 'next/router';
 import { appTemplates } from '@/web/core/app/templates';
@@ -28,7 +28,7 @@ import Avatar from '@/components/Avatar';
 import MyTooltip from '@/components/MyTooltip';
 import MyModal from '@/components/MyModal';
 import { useTranslation } from 'next-i18next';
-import { MongoImageTypeEnum } from '@fastgpt/global/common/file/image/constants';
+import { MongoImageTypeEnum } from '@/packages/global/common/file/image/constants';
 
 type FormType = {
   avatar: string;

@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoChat } from '@fastgpt/service/core/chat/chatSchema';
+import { MongoChat } from '@/packages/service/core/chat/chatSchema';
 import type { PagingData } from '@/types';
 import { AppLogsListItemType } from '@/types/app';
 import { addDays } from 'date-fns';
 import type { GetAppChatLogsParams } from '@/global/core/api/appReq.d';
-import { authApp } from '@fastgpt/service/support/permission/auth/app';
-import { ChatItemCollectionName, MongoChatItem } from '@fastgpt/service/core/chat/chatItemSchema';
-import { Op } from '@fastgpt/service/common/mongo';
+import { authApp } from '@/packages/service/support/permission/auth/app';
+import { ChatItemCollectionName, MongoChatItem } from '@/packages/service/core/chat/chatItemSchema';
+import { Op } from '@/packages/service/common/mongo';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

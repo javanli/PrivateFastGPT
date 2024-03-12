@@ -16,19 +16,19 @@ import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import MySlider from '@/components/Slider';
 import MyTooltip from '@/components/MyTooltip';
 import MyModal from '@/components/MyModal';
-import { DatasetSearchModeEnum } from '@fastgpt/global/core/dataset/constants';
+import { DatasetSearchModeEnum } from '@/packages/global/core/dataset/constants';
 import { useTranslation } from 'next-i18next';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { DatasetSearchModeMap } from '@fastgpt/global/core/dataset/constants';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
+import { DatasetSearchModeMap } from '@/packages/global/core/dataset/constants';
 import MyRadio from '@/components/common/MyRadio';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import Tabs from '@/components/Tabs';
-import PromptEditor from '@fastgpt/web/components/common/Textarea/PromptEditor';
+import PromptEditor from '@/packages/web/components/common/Textarea/PromptEditor';
 import SelectAiModel from '@/components/Select/SelectAiModel';
 import { useUserStore } from '@/web/support/user/useUserStore';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 
 export type DatasetParamsProps = {
   searchMode: `${DatasetSearchModeEnum}`;

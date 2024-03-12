@@ -1,6 +1,6 @@
 import { initSystemConfig } from '@/pages/api/common/system/getInitData';
 import { startQueue } from '@/service/utils/tools';
-import { setCron } from '@fastgpt/service/common/system/cron';
+import { setCron } from '@/packages/service/common/system/cron';
 
 export const startCron = () => {
   setUpdateSystemConfigCron();

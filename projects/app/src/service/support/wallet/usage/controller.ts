@@ -1,7 +1,7 @@
-import { ConcatUsageProps, CreateUsageProps } from '@fastgpt/global/support/wallet/usage/api';
-import { addLog } from '@fastgpt/service/common/system/log';
-import { POST } from '@fastgpt/service/common/api/plusRequest';
-import { FastGPTProUrl } from '@fastgpt/service/common/system/constants';
+import { ConcatUsageProps, CreateUsageProps } from '@/packages/global/support/wallet/usage/api';
+import { addLog } from '@/packages/service/common/system/log';
+import { POST } from '@/packages/service/common/api/plusRequest';
+import { FastGPTProUrl } from '@/packages/service/common/system/constants';
 
 export function createUsage(data: CreateUsageProps) {
   if (!FastGPTProUrl) return;

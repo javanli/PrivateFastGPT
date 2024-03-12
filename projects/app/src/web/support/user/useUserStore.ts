@@ -2,9 +2,9 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import type { UserUpdateParams } from '@/types/user';
-import type { UserType } from '@fastgpt/global/support/user/type.d';
+import type { UserType } from '@/packages/global/support/user/type.d';
 import { getTokenLogin, putUserInfo } from '@/web/support/user/api';
-import { FeTeamPlanStatusType } from '@fastgpt/global/support/wallet/sub/type';
+import { FeTeamPlanStatusType } from '@/packages/global/support/wallet/sub/type';
 import { getTeamPlanStatus } from './team/api';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 

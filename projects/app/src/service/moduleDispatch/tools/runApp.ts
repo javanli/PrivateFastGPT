@@ -1,16 +1,16 @@
-import type { moduleDispatchResType, ChatItemType } from '@fastgpt/global/core/chat/type.d';
+import type { moduleDispatchResType, ChatItemType } from '@/packages/global/core/chat/type.d';
 import type {
   ModuleDispatchProps,
   ModuleDispatchResponse
-} from '@fastgpt/global/core/module/type.d';
-import { SelectAppItemType } from '@fastgpt/global/core/module/type';
+} from '@/packages/global/core/module/type.d';
+import { SelectAppItemType } from '@/packages/global/core/module/type';
 import { dispatchModules } from '../index';
-import { MongoApp } from '@fastgpt/service/core/app/schema';
-import { responseWrite } from '@fastgpt/service/common/response';
-import { ChatRoleEnum } from '@fastgpt/global/core/chat/constants';
-import { sseResponseEventEnum } from '@fastgpt/service/common/response/constant';
+import { MongoApp } from '@/packages/service/core/app/schema';
+import { responseWrite } from '@/packages/service/common/response';
+import { ChatRoleEnum } from '@/packages/global/core/chat/constants';
+import { sseResponseEventEnum } from '@/packages/service/common/response/constant';
 import { textAdaptGptResponse } from '@/utils/adapt';
-import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
 import { getHistories } from '../utils';
 
 type Props = ModuleDispatchProps<{

@@ -2,11 +2,11 @@
     Create one dataset collection
 */
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import type { CreateDatasetCollectionParams } from '@fastgpt/global/core/dataset/api.d';
-import { authDataset } from '@fastgpt/service/support/permission/auth/dataset';
-import { createOneCollection } from '@fastgpt/service/core/dataset/collection/controller';
+import type { CreateDatasetCollectionParams } from '@/packages/global/core/dataset/api.d';
+import { authDataset } from '@/packages/service/support/permission/auth/dataset';
+import { createOneCollection } from '@/packages/service/core/dataset/collection/controller';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

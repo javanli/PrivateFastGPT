@@ -3,11 +3,11 @@ import { ImportDataComponentProps } from '@/web/core/dataset/type.d';
 import { Box, Button, Flex } from '@chakra-ui/react';
 import { ImportSourceItemType } from '@/web/core/dataset/type.d';
 import FileSelector, { type SelectFileItemType } from '@/web/core/dataset/components/FileSelector';
-import { getFileIcon } from '@fastgpt/global/common/file/icon';
-import MyIcon from '@fastgpt/web/components/common/Icon';
-import { formatFileSize } from '@fastgpt/global/common/file/tools';
+import { getFileIcon } from '@/packages/global/common/file/icon';
+import MyIcon from '@/packages/web/components/common/Icon';
+import { formatFileSize } from '@/packages/global/common/file/tools';
 import { useTranslation } from 'next-i18next';
-import { getNanoid } from '@fastgpt/global/common/string/tools';
+import { getNanoid } from '@/packages/global/common/string/tools';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import MyTooltip from '@/components/MyTooltip';
 import { useImportStore } from '../Provider';
@@ -15,7 +15,7 @@ import { useSystemStore } from '@/web/common/system/useSystemStore';
 
 import dynamic from 'next/dynamic';
 import { fileDownload } from '@/web/common/file/utils';
-import { readCsvContent } from '@fastgpt/web/common/file/read/csv';
+import { readCsvContent } from '@/packages/web/common/file/read/csv';
 
 const PreviewData = dynamic(() => import('../commonProgress/PreviewData'));
 const Upload = dynamic(() => import('../commonProgress/Upload'));

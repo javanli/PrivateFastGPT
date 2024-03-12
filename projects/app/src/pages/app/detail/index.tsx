@@ -2,14 +2,14 @@ import React, { useEffect, useMemo, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Flex, IconButton, useTheme } from '@chakra-ui/react';
 import dynamic from 'next/dynamic';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useQuery } from '@tanstack/react-query';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 
 import Tabs from '@/components/Tabs';
 import SideTabs from '@/components/SideTabs';
 import Avatar from '@/components/Avatar';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import PageContainer from '@/components/PageContainer';
 import Loading from '@/components/Loading';
 import SimpleEdit from './components/SimpleEdit';

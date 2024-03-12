@@ -1,16 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes, responseWrite, responseWriteController } from '@fastgpt/service/common/response';
+import {
+  jsonRes,
+  responseWrite,
+  responseWriteController
+} from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { addLog } from '@fastgpt/service/common/system/log';
-import { authDataset } from '@fastgpt/service/support/permission/auth/dataset';
-import { MongoDatasetData } from '@fastgpt/service/core/dataset/data/schema';
-import { findDatasetAndAllChildren } from '@fastgpt/service/core/dataset/controller';
-import { withNextCors } from '@fastgpt/service/common/middle/cors';
+import { addLog } from '@/packages/service/common/system/log';
+import { authDataset } from '@/packages/service/support/permission/auth/dataset';
+import { MongoDatasetData } from '@/packages/service/core/dataset/data/schema';
+import { findDatasetAndAllChildren } from '@/packages/service/core/dataset/controller';
+import { withNextCors } from '@/packages/service/common/middle/cors';
 import {
   checkExportDatasetLimit,
   updateExportDatasetLimit
-} from '@fastgpt/service/support/user/utils';
-import { sseResponseEventEnum } from '@fastgpt/service/common/response/constant';
+} from '@/packages/service/support/user/utils';
+import { sseResponseEventEnum } from '@/packages/service/common/response/constant';
 
 export default withNextCors(async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

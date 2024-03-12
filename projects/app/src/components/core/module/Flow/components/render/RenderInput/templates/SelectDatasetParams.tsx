@@ -3,10 +3,10 @@ import type { RenderInputProps } from '../type';
 import { onChangeNode, useFlowProviderStore } from '../../../../FlowProvider';
 import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react';
 import { useTranslation } from 'next-i18next';
-import { DatasetSearchModeEnum } from '@fastgpt/global/core/dataset/constants';
-import { FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import { DatasetSearchModeEnum } from '@/packages/global/core/dataset/constants';
+import { FlowNodeTypeEnum } from '@/packages/global/core/module/node/constant';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
+import MyIcon from '@/packages/web/components/common/Icon';
 import DatasetParamsModal, {
   DatasetParamsProps
 } from '@/components/core/module/DatasetParamsModal';

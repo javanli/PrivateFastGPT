@@ -1,15 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { connectToDatabase } from '@/service/mongo';
-import { sseErrRes } from '@fastgpt/service/common/response';
-import { sseResponseEventEnum } from '@fastgpt/service/common/response/constant';
-import { responseWrite } from '@fastgpt/service/common/response';
-import type { ModuleItemType } from '@fastgpt/global/core/module/type.d';
+import { sseErrRes } from '@/packages/service/common/response';
+import { sseResponseEventEnum } from '@/packages/service/common/response/constant';
+import { responseWrite } from '@/packages/service/common/response';
+import type { ModuleItemType } from '@/packages/global/core/module/type.d';
 import { pushChatUsage } from '@/service/support/wallet/usage/push';
-import { UsageSourceEnum } from '@fastgpt/global/support/wallet/usage/constants';
-import type { ChatItemType } from '@fastgpt/global/core/chat/type';
-import { authApp } from '@fastgpt/service/support/permission/auth/app';
+import { UsageSourceEnum } from '@/packages/global/support/wallet/usage/constants';
+import type { ChatItemType } from '@/packages/global/core/chat/type';
+import { authApp } from '@/packages/service/support/permission/auth/app';
 import { dispatchModules } from '@/service/moduleDispatch';
-import { authCert } from '@fastgpt/service/support/permission/auth/common';
+import { authCert } from '@/packages/service/support/permission/auth/common';
 import { getUserChatInfoAndAuthTeamPoints } from '@/service/support/permission/auth/team';
 
 export type Props = {

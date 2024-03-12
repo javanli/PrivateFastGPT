@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { findCollectionAndChild } from '@fastgpt/service/core/dataset/collection/utils';
-import { delCollectionAndRelatedSources } from '@fastgpt/service/core/dataset/collection/controller';
-import { authDatasetCollection } from '@fastgpt/service/support/permission/auth/dataset';
-import { mongoSessionRun } from '@fastgpt/service/common/mongo/sessionRun';
+import { findCollectionAndChild } from '@/packages/service/core/dataset/collection/utils';
+import { delCollectionAndRelatedSources } from '@/packages/service/core/dataset/collection/controller';
+import { authDatasetCollection } from '@/packages/service/support/permission/auth/dataset';
+import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

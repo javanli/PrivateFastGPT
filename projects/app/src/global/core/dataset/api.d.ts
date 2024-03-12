@@ -1,14 +1,14 @@
-import { PushDatasetDataChunkProps } from '@fastgpt/global/core/dataset/api';
+import { PushDatasetDataChunkProps } from '@/packages/global/core/dataset/api';
 import {
   DatasetSearchModeEnum,
   DatasetTypeEnum,
   TrainingModeEnum
-} from '@fastgpt/global/core/dataset/constants';
+} from '@/packages/global/core/dataset/constants';
 import {
   DatasetDataIndexItemType,
   SearchDataResponseItemType
-} from '@fastgpt/global/core/dataset/type';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
+} from '@/packages/global/core/dataset/type';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
 
 /* ================= dataset ===================== */
 export type CreateDatasetParams = {

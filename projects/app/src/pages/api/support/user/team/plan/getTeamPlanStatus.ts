@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { authCert } from '@fastgpt/service/support/permission/auth/common';
-import { FeTeamPlanStatusType } from '@fastgpt/global/support/wallet/sub/type';
-import { getTeamPlanStatus } from '@fastgpt/service/support/wallet/sub/utils';
+import { authCert } from '@/packages/service/support/permission/auth/common';
+import { FeTeamPlanStatusType } from '@/packages/global/support/wallet/sub/type';
+import { getTeamPlanStatus } from '@/packages/service/support/wallet/sub/utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

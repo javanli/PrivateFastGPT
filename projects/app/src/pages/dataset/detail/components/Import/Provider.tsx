@@ -1,9 +1,9 @@
 import React, { useContext, useCallback, createContext, useState, useMemo, useEffect } from 'react';
 
-import { splitText2Chunks } from '@fastgpt/global/common/string/textSplitter';
-import { TrainingModeEnum } from '@fastgpt/global/core/dataset/constants';
+import { splitText2Chunks } from '@/packages/global/common/string/textSplitter';
+import { TrainingModeEnum } from '@/packages/global/core/dataset/constants';
 import { useTranslation } from 'next-i18next';
-import { DatasetItemType } from '@fastgpt/global/core/dataset/type';
+import { DatasetItemType } from '@/packages/global/core/dataset/type';
 import { Prompt_AgentQA } from '@/global/core/prompt/agent';
 import { UseFormReturn, useForm } from 'react-hook-form';
 import { ImportProcessWayEnum } from '@/web/core/dataset/constants';

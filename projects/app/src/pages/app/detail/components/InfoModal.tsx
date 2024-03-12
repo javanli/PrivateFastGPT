@@ -11,18 +11,18 @@ import {
   Image
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { AppSchema } from '@fastgpt/global/core/app/type.d';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { AppSchema } from '@/packages/global/core/app/type.d';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useSelectFile } from '@/web/common/file/hooks/useSelectFile';
 import { compressImgFileAndUpload } from '@/web/common/file/controller';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { getErrText } from '@/packages/global/common/error/utils';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import Avatar from '@/components/Avatar';
 import MyModal from '@/components/MyModal';
 import { useAppStore } from '@/web/core/app/store/useAppStore';
 import PermissionRadio from '@/components/support/permission/Radio';
 import { useTranslation } from 'next-i18next';
-import { MongoImageTypeEnum } from '@fastgpt/global/common/file/image/constants';
+import { MongoImageTypeEnum } from '@/packages/global/common/file/image/constants';
 
 const InfoModal = ({
   defaultApp,

@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoApp } from '@fastgpt/service/core/app/schema';
-import { mongoRPermission } from '@fastgpt/global/support/permission/utils';
-import { AppListItemType } from '@fastgpt/global/core/app/type';
-import { authUserRole } from '@fastgpt/service/support/permission/auth/user';
+import { MongoApp } from '@/packages/service/core/app/schema';
+import { mongoRPermission } from '@/packages/global/support/permission/utils';
+import { AppListItemType } from '@/packages/global/core/app/type';
+import { authUserRole } from '@/packages/service/support/permission/auth/user';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

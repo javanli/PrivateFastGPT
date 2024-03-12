@@ -3,8 +3,8 @@ import type { RenderInputProps } from '../type';
 import { onChangeNode } from '../../../../FlowProvider';
 import { useTranslation } from 'next-i18next';
 import { Button, useDisclosure } from '@chakra-ui/react';
-import { AIChatModuleProps } from '@fastgpt/global/core/module/node/type';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import { AIChatModuleProps } from '@/packages/global/core/module/node/type';
+import MyIcon from '@/packages/web/components/common/Icon';
 import AIChatSettingsModal from '@/components/core/module/AIChatSettingsModal';
 
 const AiSettingRender = ({ inputs = [], moduleId }: RenderInputProps) => {

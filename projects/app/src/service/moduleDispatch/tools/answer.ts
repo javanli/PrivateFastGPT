@@ -1,8 +1,8 @@
-import { sseResponseEventEnum } from '@fastgpt/service/common/response/constant';
-import { responseWrite } from '@fastgpt/service/common/response';
+import { sseResponseEventEnum } from '@/packages/service/common/response/constant';
+import { responseWrite } from '@/packages/service/common/response';
 import { textAdaptGptResponse } from '@/utils/adapt';
-import type { ModuleDispatchProps } from '@fastgpt/global/core/module/type.d';
-import { ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
+import type { ModuleDispatchProps } from '@/packages/global/core/module/type.d';
+import { ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
 export type AnswerProps = ModuleDispatchProps<{
   text: string;
 }>;

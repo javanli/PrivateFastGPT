@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState, useTransition } from 'react';
 import { NodeProps } from 'reactflow';
 import NodeCard from '../../render/NodeCard';
-import { FlowModuleItemType } from '@fastgpt/global/core/module/type.d';
+import { FlowModuleItemType } from '@/packages/global/core/module/type.d';
 import Divider from '../../modules/Divider';
 import Container from '../../modules/Container';
 import RenderInput from '../../render/RenderInput';
@@ -20,23 +20,23 @@ import {
   Button
 } from '@chakra-ui/react';
 import MySelect from '@/components/Select';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
 import { onChangeNode, useFlowProviderStore } from '../../../FlowProvider';
 import { useTranslation } from 'next-i18next';
 import Tabs from '@/components/Tabs';
-import MyIcon from '@fastgpt/web/components/common/Icon';
-import { FlowNodeInputItemType } from '@fastgpt/global/core/module/node/type';
-import { useToast } from '@fastgpt/web/hooks/useToast';
-import MyTooltip from '@fastgpt/web/components/common/MyTooltip';
+import MyIcon from '@/packages/web/components/common/Icon';
+import { FlowNodeInputItemType } from '@/packages/global/core/module/node/type';
+import { useToast } from '@/packages/web/hooks/useToast';
+import MyTooltip from '@/packages/web/components/common/MyTooltip';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import JSONEditor from '@fastgpt/web/components/common/Textarea/JsonEditor';
+import JSONEditor from '@/packages/web/components/common/Textarea/JsonEditor';
 import {
   formatEditorVariablePickerIcon,
   getGuideModule,
   splitGuideModule
-} from '@fastgpt/global/core/module/utils';
-import { EditorVariablePickerType } from '@fastgpt/web/components/common/Textarea/PromptEditor/type';
-import HttpInput from '@fastgpt/web/components/common/Input/HttpInput';
+} from '@/packages/global/core/module/utils';
+import { EditorVariablePickerType } from '@/packages/web/components/common/Textarea/PromptEditor/type';
+import HttpInput from '@/packages/web/components/common/Input/HttpInput';
 import dynamic from 'next/dynamic';
 const OpenApiImportModal = dynamic(() => import('./OpenApiImportModal'));
 

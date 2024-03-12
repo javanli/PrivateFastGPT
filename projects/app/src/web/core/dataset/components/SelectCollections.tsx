@@ -1,4 +1,4 @@
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import MyModal from '@/components/MyModal';
 import ParentPaths from '@/components/common/ParentPaths';
 import { useLoading } from '@/web/common/hooks/useLoading';
@@ -16,8 +16,8 @@ import {
   Image,
   ModalBody
 } from '@chakra-ui/react';
-import { DatasetCollectionTypeEnum } from '@fastgpt/global/core/dataset/constants';
-import { getCollectionIcon } from '@fastgpt/global/core/dataset/utils';
+import { DatasetCollectionTypeEnum } from '@/packages/global/core/dataset/constants';
+import { getCollectionIcon } from '@/packages/global/core/dataset/utils';
 import { useQuery } from '@tanstack/react-query';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'next-i18next';

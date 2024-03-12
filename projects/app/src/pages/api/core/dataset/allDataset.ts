@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoDataset } from '@fastgpt/service/core/dataset/schema';
-import { getVectorModel } from '@fastgpt/service/core/ai/model';
-import type { DatasetListItemType } from '@fastgpt/global/core/dataset/type.d';
-import { mongoRPermission } from '@fastgpt/global/support/permission/utils';
-import { authUserRole } from '@fastgpt/service/support/permission/auth/user';
-import { DatasetTypeEnum } from '@fastgpt/global/core/dataset/constants';
-import { Op } from '@fastgpt/service/common/mongo';
+import { MongoDataset } from '@/packages/service/core/dataset/schema';
+import { getVectorModel } from '@/packages/service/core/ai/model';
+import type { DatasetListItemType } from '@/packages/global/core/dataset/type.d';
+import { mongoRPermission } from '@/packages/global/support/permission/utils';
+import { authUserRole } from '@/packages/service/support/permission/auth/user';
+import { DatasetTypeEnum } from '@/packages/global/core/dataset/constants';
+import { Op } from '@/packages/service/common/mongo';
 
 /* get all dataset by teamId or tmbId */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {

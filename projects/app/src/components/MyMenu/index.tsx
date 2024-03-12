@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Menu, MenuList, MenuItem, Box, useOutsideClick, MenuButton } from '@chakra-ui/react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 
 interface Props {
   width?: number | string;

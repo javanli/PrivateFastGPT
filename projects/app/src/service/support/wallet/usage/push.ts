@@ -1,10 +1,10 @@
-import { UsageSourceEnum } from '@fastgpt/global/support/wallet/usage/constants';
-import { ModelTypeEnum } from '@fastgpt/service/core/ai/model';
-import type { ChatHistoryItemResType } from '@fastgpt/global/core/chat/type.d';
-import { addLog } from '@fastgpt/service/common/system/log';
+import { UsageSourceEnum } from '@/packages/global/support/wallet/usage/constants';
+import { ModelTypeEnum } from '@/packages/service/core/ai/model';
+import type { ChatHistoryItemResType } from '@/packages/global/core/chat/type.d';
+import { addLog } from '@/packages/service/common/system/log';
 import { createUsage, concatUsage } from './controller';
 import { formatModelChars2Points } from '@/service/support/wallet/usage/utils';
-import { ChatModuleBillType } from '@fastgpt/global/support/wallet/bill/type';
+import { ChatModuleBillType } from '@/packages/global/support/wallet/bill/type';
 
 export const pushChatUsage = ({
   appName,

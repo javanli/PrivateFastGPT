@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { RenderInputProps } from '../type';
 import { getFlowStore, onChangeNode, useFlowProviderStoreType } from '../../../../FlowProvider';
 import { Box, Button, Flex, useDisclosure, useTheme } from '@chakra-ui/react';
-import { SelectAppItemType } from '@fastgpt/global/core/module/type';
+import { SelectAppItemType } from '@/packages/global/core/module/type';
 import Avatar from '@/components/Avatar';
 import SelectAppModal from '../../../../SelectAppModal';
 

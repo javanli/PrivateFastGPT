@@ -25,20 +25,20 @@ import {
   useDisclosure
 } from '@chakra-ui/react';
 import { QuestionOutlineIcon, SmallAddIcon } from '@chakra-ui/icons';
-import { VariableInputEnum } from '@fastgpt/global/core/module/constants';
-import type { VariableItemType } from '@fastgpt/global/core/module/type.d';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import { VariableInputEnum } from '@/packages/global/core/module/constants';
+import type { VariableItemType } from '@/packages/global/core/module/type.d';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useForm } from 'react-hook-form';
 import { useFieldArray } from 'react-hook-form';
 import { customAlphabet } from 'nanoid';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 6);
 import MyModal from '@/components/MyModal';
 import MyTooltip from '@/components/MyTooltip';
-import { variableTip } from '@fastgpt/global/core/module/template/tip';
+import { variableTip } from '@/packages/global/core/module/template/tip';
 import { useTranslation } from 'next-i18next';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import MyRadio from '@/components/common/MyRadio';
-import { formatEditorVariablePickerIcon } from '@fastgpt/global/core/module/utils';
+import { formatEditorVariablePickerIcon } from '@/packages/global/core/module/utils';
 
 const VariableEdit = ({
   variables,

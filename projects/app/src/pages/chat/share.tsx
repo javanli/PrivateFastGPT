@@ -2,15 +2,15 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Box, Flex, useDisclosure, Drawer, DrawerOverlay, DrawerContent } from '@chakra-ui/react';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import { useQuery } from '@tanstack/react-query';
 import { streamFetch } from '@/web/common/api/fetch';
 import { useShareChatStore } from '@/web/core/chat/storeShareChat';
 import SideBar from '@/components/SideBar';
 import { gptMessage2ChatType } from '@/utils/adapt';
-import { getErrText } from '@fastgpt/global/common/error/utils';
-import type { ChatHistoryItemType, ChatSiteItemType } from '@fastgpt/global/core/chat/type.d';
+import { getErrText } from '@/packages/global/common/error/utils';
+import type { ChatHistoryItemType, ChatSiteItemType } from '@/packages/global/core/chat/type.d';
 import { customAlphabet } from 'nanoid';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 12);
 
@@ -23,9 +23,9 @@ import { checkChatSupportSelectFileByChatModels } from '@/web/core/chat/utils';
 import { useTranslation } from 'next-i18next';
 import { getInitOutLinkChatInfo } from '@/web/core/chat/api';
 import { POST } from '@/web/common/api/request';
-import { chatContentReplaceBlock } from '@fastgpt/global/core/chat/utils';
+import { chatContentReplaceBlock } from '@/packages/global/core/chat/utils';
 import { useChatStore } from '@/web/core/chat/storeChat';
-import { ChatStatusEnum } from '@fastgpt/global/core/chat/constants';
+import { ChatStatusEnum } from '@/packages/global/core/chat/constants';
 import MyBox from '@/components/common/MyBox';
 
 const OutLink = ({

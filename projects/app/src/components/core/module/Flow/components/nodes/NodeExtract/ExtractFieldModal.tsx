@@ -9,7 +9,7 @@ import {
   Input,
   Textarea
 } from '@chakra-ui/react';
-import type { ContextExtractAgentItemType } from '@fastgpt/global/core/module/type';
+import type { ContextExtractAgentItemType } from '@/packages/global/core/module/type';
 import { useForm } from 'react-hook-form';
 import MyModal from '@/components/MyModal';
 import { useTranslation } from 'next-i18next';

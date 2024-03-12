@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import type { CreateAppParams } from '@fastgpt/global/core/app/api.d';
-import { AppTypeEnum } from '@fastgpt/global/core/app/constants';
-import { MongoApp } from '@fastgpt/service/core/app/schema';
-import { authUserNotVisitor } from '@fastgpt/service/support/permission/auth/user';
+import type { CreateAppParams } from '@/packages/global/core/app/api.d';
+import { AppTypeEnum } from '@/packages/global/core/app/constants';
+import { MongoApp } from '@/packages/service/core/app/schema';
+import { authUserNotVisitor } from '@/packages/service/support/permission/auth/user';
 import { SimpleModeTemplate_FastGPT_Universal } from '@/global/core/app/constants';
-import { checkTeamAppLimit } from '@fastgpt/service/support/permission/teamLimit';
+import { checkTeamAppLimit } from '@/packages/service/support/permission/teamLimit';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

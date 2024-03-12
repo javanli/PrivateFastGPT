@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { authDatasetFile } from '@fastgpt/service/support/permission/auth/dataset';
-import { createFileToken } from '@fastgpt/service/support/permission/controller';
-import { BucketNameEnum, FileBaseUrl } from '@fastgpt/global/common/file/constants';
+import { authDatasetFile } from '@/packages/service/support/permission/auth/dataset';
+import { createFileToken } from '@/packages/service/support/permission/controller';
+import { BucketNameEnum, FileBaseUrl } from '@/packages/global/common/file/constants';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

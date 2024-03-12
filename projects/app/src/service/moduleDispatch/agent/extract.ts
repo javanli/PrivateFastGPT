@@ -1,19 +1,19 @@
-import { adaptChat2GptMessages } from '@fastgpt/global/core/chat/adapt';
-import { ChatContextFilter, countMessagesChars } from '@fastgpt/service/core/chat/utils';
-import type { moduleDispatchResType, ChatItemType } from '@fastgpt/global/core/chat/type.d';
-import { ChatRoleEnum } from '@fastgpt/global/core/chat/constants';
-import { getAIApi } from '@fastgpt/service/core/ai/config';
+import { adaptChat2GptMessages } from '@/packages/global/core/chat/adapt';
+import { ChatContextFilter, countMessagesChars } from '@/packages/service/core/chat/utils';
+import type { moduleDispatchResType, ChatItemType } from '@/packages/global/core/chat/type.d';
+import { ChatRoleEnum } from '@/packages/global/core/chat/constants';
+import { getAIApi } from '@/packages/service/core/ai/config';
 import type {
   ContextExtractAgentItemType,
   ModuleDispatchResponse
-} from '@fastgpt/global/core/module/type';
-import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
-import type { ModuleDispatchProps } from '@fastgpt/global/core/module/type.d';
+} from '@/packages/global/core/module/type';
+import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
+import type { ModuleDispatchProps } from '@/packages/global/core/module/type.d';
 import { Prompt_ExtractJson } from '@/global/core/prompt/agent';
-import { replaceVariable } from '@fastgpt/global/common/string/tools';
-import { LLMModelItemType } from '@fastgpt/global/core/ai/model.d';
+import { replaceVariable } from '@/packages/global/common/string/tools';
+import { LLMModelItemType } from '@/packages/global/core/ai/model';
 import { getHistories } from '../utils';
-import { ModelTypeEnum, getLLMModel } from '@fastgpt/service/core/ai/model';
+import { ModelTypeEnum, getLLMModel } from '@/packages/service/core/ai/model';
 import { formatModelChars2Points } from '@/service/support/wallet/usage/utils';
 
 type Props = ModuleDispatchProps<{

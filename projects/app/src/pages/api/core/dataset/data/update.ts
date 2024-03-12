@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
-import { withNextCors } from '@fastgpt/service/common/middle/cors';
+import { jsonRes } from '@/packages/service/common/response';
+import { withNextCors } from '@/packages/service/common/middle/cors';
 import { connectToDatabase } from '@/service/mongo';
 import { updateData2Dataset } from '@/service/core/dataset/data/controller';
 import { authDatasetData } from '@/service/support/permission/auth/dataset';
 import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { UpdateDatasetDataProps } from '@/global/core/dataset/api';
-import { checkDatasetLimit } from '@fastgpt/service/support/permission/teamLimit';
+import { checkDatasetLimit } from '@/packages/service/support/permission/teamLimit';
 
 export default withNextCors(async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

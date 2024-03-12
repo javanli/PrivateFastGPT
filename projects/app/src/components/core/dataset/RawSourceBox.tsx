@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import { Box, BoxProps, Image } from '@chakra-ui/react';
-import { useToast } from '@fastgpt/web/hooks/useToast';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { useToast } from '@/packages/web/hooks/useToast';
+import { getErrText } from '@/packages/global/common/error/utils';
 import MyTooltip from '@/components/MyTooltip';
 import { useTranslation } from 'next-i18next';
 import { getFileAndOpen } from '@/web/core/dataset/utils';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
-import { getSourceNameIcon } from '@fastgpt/global/core/dataset/utils';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import { getSourceNameIcon } from '@/packages/global/core/dataset/utils';
+import MyIcon from '@/packages/web/components/common/Icon';
 
 type Props = BoxProps & {
   sourceName?: string;

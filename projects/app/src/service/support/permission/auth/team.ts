@@ -1,10 +1,10 @@
-import { UserErrEnum } from '@fastgpt/global/common/error/code/user';
-import { TeamMemberWithUserSchema } from '@fastgpt/global/support/user/team/type';
-import { MongoTeamMember } from '@fastgpt/service/support/user/team/teamMemberSchema';
-import { MongoTeam } from '@fastgpt/service/support/user/team/teamSchema';
-import { checkTeamAIPoints } from '@fastgpt/service/support/permission/teamLimit';
+import { UserErrEnum } from '@/packages/global/common/error/code/user';
+import { TeamMemberWithUserSchema } from '@/packages/global/support/user/team/type';
+import { MongoTeamMember } from '@/packages/service/support/user/team/teamMemberSchema';
+import { MongoTeam } from '@/packages/service/support/user/team/teamSchema';
+import { checkTeamAIPoints } from '@/packages/service/support/permission/teamLimit';
 import axios from 'axios';
-import { UserModelSchema } from '@fastgpt/global/support/user/type';
+import { UserModelSchema } from '@/packages/global/support/user/type';
 
 function getDefaultUser() {
   const user: UserModelSchema = {

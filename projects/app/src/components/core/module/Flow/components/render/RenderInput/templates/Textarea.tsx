@@ -2,12 +2,12 @@ import React, { useCallback, useMemo, useTransition } from 'react';
 import type { RenderInputProps } from '../type';
 import { useFlowProviderStore, onChangeNode } from '../../../../FlowProvider';
 import { useTranslation } from 'next-i18next';
-import PromptEditor from '@fastgpt/web/components/common/Textarea/PromptEditor';
+import PromptEditor from '@/packages/web/components/common/Textarea/PromptEditor';
 import {
   formatEditorVariablePickerIcon,
   getGuideModule,
   splitGuideModule
-} from '@fastgpt/global/core/module/utils';
+} from '@/packages/global/core/module/utils';
 
 const TextareaRender = ({ inputs = [], item, moduleId }: RenderInputProps) => {
   const { t } = useTranslation();

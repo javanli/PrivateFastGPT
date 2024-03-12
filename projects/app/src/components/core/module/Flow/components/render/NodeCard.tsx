@@ -1,21 +1,21 @@
 import React, { useMemo } from 'react';
 import { Box, Flex, useTheme, MenuButton } from '@chakra-ui/react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import Avatar from '@/components/Avatar';
-import type { FlowModuleItemType } from '@fastgpt/global/core/module/type.d';
+import type { FlowModuleItemType } from '@/packages/global/core/module/type.d';
 import MyTooltip from '@/components/MyTooltip';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { useTranslation } from 'next-i18next';
 import { useEditTitle } from '@/web/common/hooks/useEditTitle';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { onChangeNode, onCopyNode, onResetNode, onDelNode } from '../../FlowProvider';
-import { FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { FlowNodeTypeEnum } from '@/packages/global/core/module/node/constant';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import { getPreviewPluginModule } from '@/web/core/plugin/api';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { getErrText } from '@/packages/global/common/error/utils';
 import { useConfirm } from '@/web/common/hooks/useConfirm';
-import { LOGO_ICON } from '@fastgpt/global/common/system/constants';
+import { LOGO_ICON } from '@/packages/global/common/system/constants';
 import MyMenu from '@/components/MyMenu';
 
 type Props = FlowModuleItemType & {

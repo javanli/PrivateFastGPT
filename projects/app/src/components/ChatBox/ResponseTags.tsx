@@ -1,18 +1,18 @@
 import React, { useMemo, useState } from 'react';
-import type { ChatHistoryItemResType } from '@fastgpt/global/core/chat/type.d';
-import type { ChatItemType } from '@fastgpt/global/core/chat/type';
+import type { ChatHistoryItemResType } from '@/packages/global/core/chat/type.d';
+import type { ChatItemType } from '@/packages/global/core/chat/type';
 import { Flex, BoxProps, useDisclosure, Image, useTheme, Box } from '@chakra-ui/react';
 import { useTranslation } from 'next-i18next';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
-import type { SearchDataResponseItemType } from '@fastgpt/global/core/dataset/type';
+import type { SearchDataResponseItemType } from '@/packages/global/core/dataset/type';
 import dynamic from 'next/dynamic';
 import Tag from '../Tag';
 import MyTooltip from '../MyTooltip';
-import { FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
-import { getSourceNameIcon } from '@fastgpt/global/core/dataset/utils';
+import { FlowNodeTypeEnum } from '@/packages/global/core/module/node/constant';
+import { getSourceNameIcon } from '@/packages/global/core/dataset/utils';
 import ChatBoxDivider from '@/components/core/chat/Divider';
-import { strIsLink } from '@fastgpt/global/common/string/tools';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import { strIsLink } from '@/packages/global/common/string/tools';
+import MyIcon from '@/packages/web/components/common/Icon';
 
 const QuoteModal = dynamic(() => import('./QuoteModal'), { ssr: false });
 const ContextModal = dynamic(() => import('./ContextModal'), { ssr: false });

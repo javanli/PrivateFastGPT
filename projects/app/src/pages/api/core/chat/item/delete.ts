@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoChatItem } from '@fastgpt/service/core/chat/chatItemSchema';
+import { MongoChatItem } from '@/packages/service/core/chat/chatItemSchema';
 import { autChatCrud } from '@/service/support/permission/auth/chat';
 import type { DeleteChatItemProps } from '@/global/core/chat/api.d';
 

@@ -1,19 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import {
   DatasetTrainingCollectionName,
   MongoDatasetTraining
-} from '@fastgpt/service/core/dataset/training/schema';
+} from '@/packages/service/core/dataset/training/schema';
 import type { DatasetCollectionsListItemType } from '@/global/core/dataset/type.d';
 import type { GetDatasetCollectionsProps } from '@/global/core/api/datasetReq';
 import { PagingData } from '@/types';
-import { MongoDatasetCollection } from '@fastgpt/service/core/dataset/collection/schema';
-import { DatasetCollectionTypeEnum } from '@fastgpt/global/core/dataset/constants';
+import { MongoDatasetCollection } from '@/packages/service/core/dataset/collection/schema';
+import { DatasetCollectionTypeEnum } from '@/packages/global/core/dataset/constants';
 import { startQueue } from '@/service/utils/tools';
-import { authDataset } from '@fastgpt/service/support/permission/auth/dataset';
-import { DatasetDataCollectionName } from '@fastgpt/service/core/dataset/data/schema';
-import { Op } from '@fastgpt/service/common/mongo';
+import { authDataset } from '@/packages/service/support/permission/auth/dataset';
+import { DatasetDataCollectionName } from '@/packages/service/core/dataset/data/schema';
+import { Op } from '@/packages/service/common/mongo';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

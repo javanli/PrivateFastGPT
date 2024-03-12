@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { ModalFooter, ModalBody, Button, Input, Box, Grid } from '@chakra-ui/react';
 import { getWxPayQRCode } from '@/web/support/wallet/bill/api';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useRouter } from 'next/router';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { getErrText } from '@/packages/global/common/error/utils';
 import { useTranslation } from 'next-i18next';
 import MyModal from '@/components/MyModal';
-import { BillTypeEnum } from '@fastgpt/global/support/wallet/bill/constants';
+import { BillTypeEnum } from '@/packages/global/support/wallet/bill/constants';
 
 import QRCodePayModal, { type QRPayProps } from '@/components/support/wallet/QRCodePayModal';
 import { useSystemStore } from '@/web/common/system/useSystemStore';

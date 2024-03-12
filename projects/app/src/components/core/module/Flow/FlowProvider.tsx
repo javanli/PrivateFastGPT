@@ -11,8 +11,8 @@ import {
 import type {
   FlowModuleItemType,
   FlowModuleTemplateType
-} from '@fastgpt/global/core/module/type.d';
-import type { FlowNodeChangeProps } from '@fastgpt/global/core/module/node/type';
+} from '@/packages/global/core/module/type.d';
+import type { FlowNodeChangeProps } from '@/packages/global/core/module/node/type';
 import React, {
   type SetStateAction,
   type Dispatch,
@@ -24,11 +24,11 @@ import React, {
 } from 'react';
 import { customAlphabet } from 'nanoid';
 import { appModule2FlowEdge, appModule2FlowNode } from '@/utils/adapt';
-import { useToast } from '@fastgpt/web/hooks/useToast';
-import { EDGE_TYPE, FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
-import { ModuleIOValueTypeEnum } from '@fastgpt/global/core/module/constants';
+import { useToast } from '@/packages/web/hooks/useToast';
+import { EDGE_TYPE, FlowNodeTypeEnum } from '@/packages/global/core/module/node/constant';
+import { ModuleIOValueTypeEnum } from '@/packages/global/core/module/constants';
 import { useTranslation } from 'next-i18next';
-import { ModuleItemType } from '@fastgpt/global/core/module/type.d';
+import { ModuleItemType } from '@/packages/global/core/module/type.d';
 import { EventNameEnum, eventBus } from '@/web/common/utils/eventbus';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 6);

@@ -1,22 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { authDatasetCollection } from '@fastgpt/service/support/permission/auth/dataset';
+import { authDatasetCollection } from '@/packages/service/support/permission/auth/dataset';
 import {
   getCollectionAndRawText,
   reloadCollectionChunks
-} from '@fastgpt/service/core/dataset/collection/utils';
-import { delCollectionAndRelatedSources } from '@fastgpt/service/core/dataset/collection/controller';
+} from '@/packages/service/core/dataset/collection/utils';
+import { delCollectionAndRelatedSources } from '@/packages/service/core/dataset/collection/controller';
 import {
   DatasetCollectionSyncResultEnum,
   DatasetCollectionTypeEnum
-} from '@fastgpt/global/core/dataset/constants';
-import { DatasetErrEnum } from '@fastgpt/global/common/error/code/dataset';
-import { createTrainingUsage } from '@fastgpt/service/support/wallet/usage/controller';
-import { UsageSourceEnum } from '@fastgpt/global/support/wallet/usage/constants';
-import { getLLMModel, getVectorModel } from '@fastgpt/service/core/ai/model';
-import { createOneCollection } from '@fastgpt/service/core/dataset/collection/controller';
-import { mongoSessionRun } from '@fastgpt/service/common/mongo/sessionRun';
+} from '@/packages/global/core/dataset/constants';
+import { DatasetErrEnum } from '@/packages/global/common/error/code/dataset';
+import { createTrainingUsage } from '@/packages/service/support/wallet/usage/controller';
+import { UsageSourceEnum } from '@/packages/global/support/wallet/usage/constants';
+import { getLLMModel, getVectorModel } from '@/packages/service/core/ai/model';
+import { createOneCollection } from '@/packages/service/core/dataset/collection/controller';
+import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

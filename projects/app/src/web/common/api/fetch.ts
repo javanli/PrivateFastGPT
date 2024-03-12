@@ -1,9 +1,9 @@
-import { sseResponseEventEnum } from '@fastgpt/service/common/response/constant';
-import { getErrText } from '@fastgpt/global/common/error/utils';
-import type { ChatHistoryItemResType } from '@fastgpt/global/core/chat/type.d';
+import { sseResponseEventEnum } from '@/packages/service/common/response/constant';
+import { getErrText } from '@/packages/global/common/error/utils';
+import type { ChatHistoryItemResType } from '@/packages/global/core/chat/type.d';
 import { StartChatFnProps } from '@/components/ChatBox';
 import { getToken } from '@/web/support/user/auth';
-import { ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
 import dayjs from 'dayjs';
 import {
   // refer to https://github.com/ChatGPTNextWeb/ChatGPT-Next-Web

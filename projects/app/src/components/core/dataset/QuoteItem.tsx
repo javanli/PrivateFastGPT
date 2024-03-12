@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { Box, Flex, Link, Progress } from '@chakra-ui/react';
 import RawSourceBox from '@/components/core/dataset/RawSourceBox';
-import type { SearchDataResponseItemType } from '@fastgpt/global/core/dataset/type.d';
+import type { SearchDataResponseItemType } from '@/packages/global/core/dataset/type.d';
 import NextLink from 'next/link';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useTranslation } from 'next-i18next';
 import MyTooltip from '@/components/MyTooltip';
 import dynamic from 'next/dynamic';
 import MyBox from '@/components/common/MyBox';
-import { SearchScoreTypeEnum, SearchScoreTypeMap } from '@fastgpt/global/core/dataset/constants';
+import { SearchScoreTypeEnum, SearchScoreTypeMap } from '@/packages/global/core/dataset/constants';
 
 const InputDataModal = dynamic(() => import('@/pages/dataset/detail/components/InputDataModal'));
 

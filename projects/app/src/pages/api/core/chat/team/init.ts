@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { getGuideModule } from '@fastgpt/global/core/module/utils';
+import { getGuideModule } from '@/packages/global/core/module/utils';
 import { getChatModelNameListByModules } from '@/service/core/app/module';
-import { ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
 import type { InitChatProps, InitChatResponse } from '@/global/core/chat/api.d';
-import { MongoChat } from '@fastgpt/service/core/chat/chatSchema';
-import { MongoApp } from '@fastgpt/service/core/app/schema';
-import { getChatItems } from '@fastgpt/service/core/chat/controller';
-import { AppErrEnum } from '@fastgpt/global/common/error/code/app';
+import { MongoChat } from '@/packages/service/core/chat/chatSchema';
+import { MongoApp } from '@/packages/service/core/app/schema';
+import { getChatItems } from '@/packages/service/core/chat/controller';
+import { AppErrEnum } from '@/packages/global/common/error/code/app';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

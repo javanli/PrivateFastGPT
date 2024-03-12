@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { HttpBodyType } from '@fastgpt/global/core/module/api.d';
-import { getErrText } from '@fastgpt/global/common/error/utils';
-import { addCustomFeedbacks } from '@fastgpt/service/core/chat/controller';
-import { authRequestFromLocal } from '@fastgpt/service/support/permission/auth/common';
+import type { HttpBodyType } from '@/packages/global/core/module/api.d';
+import { getErrText } from '@/packages/global/common/error/utils';
+import { addCustomFeedbacks } from '@/packages/service/core/chat/controller';
+import { authRequestFromLocal } from '@/packages/service/support/permission/auth/common';
 
 type Props = HttpBodyType<{
   appId: string;

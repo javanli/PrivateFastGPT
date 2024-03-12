@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
-import { authCert } from '@fastgpt/service/support/permission/auth/common';
-import { withNextCors } from '@fastgpt/service/common/middle/cors';
-import { getUploadModel } from '@fastgpt/service/common/file/multer';
-import { removeFilesByPaths } from '@fastgpt/service/common/file/utils';
+import { jsonRes } from '@/packages/service/common/response';
+import { authCert } from '@/packages/service/support/permission/auth/common';
+import { withNextCors } from '@/packages/service/common/middle/cors';
+import { getUploadModel } from '@/packages/service/common/file/multer';
+import { removeFilesByPaths } from '@/packages/service/common/file/utils';
 import fs from 'fs';
-import { getAIApi } from '@fastgpt/service/core/ai/config';
+import { getAIApi } from '@/packages/service/core/ai/config';
 import { pushWhisperUsage } from '@/service/support/wallet/usage/push';
 
 const upload = getUploadModel({

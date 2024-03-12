@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
-import { withNextCors } from '@fastgpt/service/common/middle/cors';
+import { jsonRes } from '@/packages/service/common/response';
+import { withNextCors } from '@/packages/service/common/middle/cors';
 import { connectToDatabase } from '@/service/mongo';
 import { authDatasetData } from '@/service/support/permission/auth/dataset';
 import { deleteDatasetData } from '@/service/core/dataset/data/controller';

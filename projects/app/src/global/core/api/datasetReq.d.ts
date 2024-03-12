@@ -2,14 +2,14 @@ import {
   TrainingModeEnum,
   DatasetCollectionTypeEnum,
   DatasetTypeEnum
-} from '@fastgpt/global/core/dataset/constants';
+} from '@/packages/global/core/dataset/constants';
 import type { RequestPaging } from '@/types';
-import { TrainingModeEnum } from '@fastgpt/global/core/dataset/constants';
+import { TrainingModeEnum } from '@/packages/global/core/dataset/constants';
 import type { SearchTestItemType } from '@/types/core/dataset';
-import { UploadChunkItemType } from '@fastgpt/global/core/dataset/type';
-import { DatasetCollectionSchemaType } from '@fastgpt/global/core/dataset/type';
-import { PermissionTypeEnum } from '@fastgpt/global/support/permission/constant';
-import type { LLMModelItemType } from '@fastgpt/global/core/ai/model.d';
+import { UploadChunkItemType } from '@/packages/global/core/dataset/type';
+import { DatasetCollectionSchemaType } from '@/packages/global/core/dataset/type';
+import { PermissionTypeEnum } from '@/packages/global/support/permission/constant';
+import type { LLMModelItemType } from '@/packages/global/core/ai/model.d';
 
 /* ===== dataset ===== */
 

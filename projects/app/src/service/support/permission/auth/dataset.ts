@@ -1,7 +1,7 @@
-import { DatasetDataItemType } from '@fastgpt/global/core/dataset/type';
-import { MongoDatasetData } from '@fastgpt/service/core/dataset/data/schema';
-import { authDatasetCollection } from '@fastgpt/service/support/permission/auth/dataset';
-import { AuthModeType } from '@fastgpt/service/support/permission/type';
+import { DatasetDataItemType } from '@/packages/global/core/dataset/type';
+import { MongoDatasetData } from '@/packages/service/core/dataset/data/schema';
+import { authDatasetCollection } from '@/packages/service/support/permission/auth/dataset';
+import { AuthModeType } from '@/packages/service/support/permission/type';
 
 /* data permission same of collection */
 export async function authDatasetData({

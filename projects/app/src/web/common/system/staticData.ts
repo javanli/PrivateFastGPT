@@ -1,6 +1,6 @@
 import { getSystemInitData } from '@/web/common/system/api';
-import { delay } from '@fastgpt/global/common/system/utils';
-import type { FastGPTFeConfigsType } from '@fastgpt/global/common/system/types/index.d';
+import { delay } from '@/packages/global/common/system/utils';
+import type { FastGPTFeConfigsType } from '@/packages/global/common/system/types/index.d';
 
 import { useSystemStore } from './useSystemStore';
 

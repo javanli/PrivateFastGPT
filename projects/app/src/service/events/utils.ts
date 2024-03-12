@@ -1,11 +1,11 @@
-import { TeamErrEnum } from '@fastgpt/global/common/error/code/team';
-import { checkTeamAIPoints } from '@fastgpt/service/support/permission/teamLimit';
+import { TeamErrEnum } from '@/packages/global/common/error/code/team';
+import { checkTeamAIPoints } from '@/packages/service/support/permission/teamLimit';
 import { sendOneInform } from '../support/user/inform/api';
-import { lockTrainingDataByTeamId } from '@fastgpt/service/core/dataset/training/controller';
-import { DatasetTrainingSchemaType } from '@fastgpt/global/core/dataset/type';
-import { addLog } from '@fastgpt/service/common/system/log';
-import { MongoDatasetTraining } from '@fastgpt/service/core/dataset/training/schema';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { lockTrainingDataByTeamId } from '@/packages/service/core/dataset/training/controller';
+import { DatasetTrainingSchemaType } from '@/packages/global/core/dataset/type';
+import { addLog } from '@/packages/service/common/system/log';
+import { MongoDatasetTraining } from '@/packages/service/core/dataset/training/schema';
+import { getErrText } from '@/packages/global/common/error/utils';
 
 export const checkTeamAiPointsAndLock = async (teamId: string, tmbId: string) => {
   try {

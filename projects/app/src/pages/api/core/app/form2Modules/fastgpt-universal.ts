@@ -3,10 +3,10 @@
     @author: FastGpt Team
 */
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
-import type { AppSimpleEditFormType } from '@fastgpt/global/core/app/type.d';
-import type { ModuleItemType } from '@fastgpt/global/core/module/type';
-import { FormatForm2ModulesProps } from '@fastgpt/global/core/app/api';
+import { jsonRes } from '@/packages/service/common/response';
+import type { AppSimpleEditFormType } from '@/packages/global/core/app/type.d';
+import type { ModuleItemType } from '@/packages/global/core/module/type';
+import { FormatForm2ModulesProps } from '@/packages/global/core/app/api';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

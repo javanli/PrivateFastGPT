@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import type { chatByTeamProps } from '@/global/core/chat/api.d';
 import axios from 'axios';
-import { MongoChatItem } from '@fastgpt/service/core/chat/chatItemSchema';
-import { getChatItems } from '@fastgpt/service/core/chat/controller';
+import { MongoChatItem } from '@/packages/service/core/chat/chatItemSchema';
+import { getChatItems } from '@/packages/service/core/chat/controller';
 import { selectShareResponse } from '@/utils/service/core/chat';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

@@ -3,19 +3,19 @@
   manual input or mark data
 */
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { withNextCors } from '@fastgpt/service/common/middle/cors';
-import { countPromptTokens } from '@fastgpt/global/common/string/tiktoken';
-import { getVectorModel } from '@fastgpt/service/core/ai/model';
+import { withNextCors } from '@/packages/service/common/middle/cors';
+import { countPromptTokens } from '@/packages/global/common/string/tiktoken';
+import { getVectorModel } from '@/packages/service/core/ai/model';
 import { hasSameValue } from '@/service/core/dataset/data/utils';
 import { insertData2Dataset } from '@/service/core/dataset/data/controller';
-import { authDatasetCollection } from '@fastgpt/service/support/permission/auth/dataset';
-import { getCollectionWithDataset } from '@fastgpt/service/core/dataset/controller';
+import { authDatasetCollection } from '@/packages/service/support/permission/auth/dataset';
+import { getCollectionWithDataset } from '@/packages/service/core/dataset/controller';
 import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { InsertOneDatasetDataProps } from '@/global/core/dataset/api';
-import { simpleText } from '@fastgpt/global/common/string/tools';
-import { checkDatasetLimit } from '@fastgpt/service/support/permission/teamLimit';
+import { simpleText } from '@/packages/global/common/string/tools';
+import { checkDatasetLimit } from '@/packages/service/support/permission/teamLimit';
 
 export default withNextCors(async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

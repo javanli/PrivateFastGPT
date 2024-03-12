@@ -1,5 +1,5 @@
 import { cut } from '@node-rs/jieba';
-import { stopWords } from '@fastgpt/global/common/string/jieba';
+import { stopWords } from '@/packages/global/common/string/jieba';
 
 export function jiebaSplit({ text }: { text: string }) {
   const tokens = cut(text, true);

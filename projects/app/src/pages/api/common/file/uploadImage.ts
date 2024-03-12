@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { authCertOrShareId } from '@fastgpt/service/support/permission/auth/common';
-import { uploadMongoImg } from '@fastgpt/service/common/file/image/controller';
-import { UploadImgProps } from '@fastgpt/global/common/file/api';
+import { authCertOrShareId } from '@/packages/service/support/permission/auth/common';
+import { uploadMongoImg } from '@/packages/service/common/file/image/controller';
+import { UploadImgProps } from '@/packages/global/common/file/api';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

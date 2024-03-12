@@ -3,8 +3,8 @@ import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { getMyApps, getModelById, putAppById, replaceAppById } from '@/web/core/app/api';
 import { defaultApp } from '@/constants/app';
-import type { AppUpdateParams } from '@fastgpt/global/core/app/api.d';
-import { AppDetailType, AppListItemType } from '@fastgpt/global/core/app/type.d';
+import type { AppUpdateParams } from '@/packages/global/core/app/api.d';
+import { AppDetailType, AppListItemType } from '@/packages/global/core/app/type.d';
 
 type State = {
   myApps: AppListItemType[];

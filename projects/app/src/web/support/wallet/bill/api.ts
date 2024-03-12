@@ -1,8 +1,8 @@
 import { RequestPaging } from '@/types';
 import { GET, POST } from '@/web/common/api/request';
-import { CreateBillProps, CreateBillResponse } from '@fastgpt/global/support/wallet/bill/api';
-import { BillTypeEnum } from '@fastgpt/global/support/wallet/bill/constants';
-import type { BillSchemaType } from '@fastgpt/global/support/wallet/bill/type.d';
+import { CreateBillProps, CreateBillResponse } from '@/packages/global/support/wallet/bill/api';
+import { BillTypeEnum } from '@/packages/global/support/wallet/bill/constants';
+import type { BillSchemaType } from '@/packages/global/support/wallet/bill/type.d';
 
 export const getBills = (
   data: RequestPaging & {

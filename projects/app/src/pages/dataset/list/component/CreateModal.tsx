@@ -3,8 +3,8 @@ import { Box, Flex, Button, ModalFooter, ModalBody, Input } from '@chakra-ui/rea
 import { useSelectFile } from '@/web/common/file/hooks/useSelectFile';
 import { useForm } from 'react-hook-form';
 import { compressImgFileAndUpload } from '@/web/common/file/controller';
-import { getErrText } from '@fastgpt/global/common/error/utils';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { getErrText } from '@/packages/global/common/error/utils';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useRouter } from 'next/router';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import { useRequest } from '@/web/common/hooks/useRequest';
@@ -16,8 +16,8 @@ import type { CreateDatasetParams } from '@/global/core/dataset/api.d';
 import MySelect from '@/components/Select';
 import { useTranslation } from 'next-i18next';
 import MyRadio from '@/components/common/MyRadio';
-import { DatasetTypeEnum } from '@fastgpt/global/core/dataset/constants';
-import { MongoImageTypeEnum } from '@fastgpt/global/common/file/image/constants';
+import { DatasetTypeEnum } from '@/packages/global/core/dataset/constants';
+import { MongoImageTypeEnum } from '@/packages/global/common/file/image/constants';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 
 const CreateModal = ({ onClose, parentId }: { onClose: () => void; parentId?: string }) => {

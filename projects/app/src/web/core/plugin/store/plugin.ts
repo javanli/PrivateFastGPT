@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { getPlugTemplates } from '../api';
-import { FlowModuleTemplateType } from '@fastgpt/global/core/module/type';
+import { FlowModuleTemplateType } from '@/packages/global/core/module/type';
 
 type State = {
   pluginModuleTemplates: FlowModuleTemplateType[];

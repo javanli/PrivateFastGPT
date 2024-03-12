@@ -2,18 +2,18 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import axios from 'axios';
-import { OAuthEnum } from '@fastgpt/global/support/user/constant';
+import { OAuthEnum } from '@/packages/global/support/user/constant';
 import type {
   AudioSpeechModelType,
   LLMModelItemType,
   ReRankModelItemType,
   VectorModelItemType,
   WhisperModelType
-} from '@fastgpt/global/core/ai/model.d';
+} from '@/packages/global/core/ai/model';
 import { InitDateResponse } from '@/global/common/api/systemRes';
-import { FastGPTFeConfigsType } from '@fastgpt/global/common/system/types';
-import { SubPlanType } from '@fastgpt/global/support/wallet/sub/type';
-import { AppSimpleEditConfigTemplateType } from '@fastgpt/global/core/app/type';
+import { FastGPTFeConfigsType } from '@/packages/global/common/system/types';
+import { SubPlanType } from '@/packages/global/support/wallet/sub/type';
+import { AppSimpleEditConfigTemplateType } from '@/packages/global/core/app/type';
 
 type LoginStoreType = { provider: `${OAuthEnum}`; lastRoute: string; state: string };
 

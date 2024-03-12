@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoChat } from '@fastgpt/service/core/chat/chatSchema';
-import { MongoApp } from '@fastgpt/service/core/app/schema';
-import { MongoOutLink } from '@fastgpt/service/support/outLink/schema';
-import { authApp } from '@fastgpt/service/support/permission/auth/app';
-import { MongoChatItem } from '@fastgpt/service/core/chat/chatItemSchema';
-import { mongoSessionRun } from '@fastgpt/service/common/mongo/sessionRun';
+import { MongoChat } from '@/packages/service/core/chat/chatSchema';
+import { MongoApp } from '@/packages/service/core/app/schema';
+import { MongoOutLink } from '@/packages/service/support/outLink/schema';
+import { authApp } from '@/packages/service/support/permission/auth/app';
+import { MongoChatItem } from '@/packages/service/core/chat/chatItemSchema';
+import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

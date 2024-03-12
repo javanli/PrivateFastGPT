@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { HttpBodyType } from '@fastgpt/global/core/module/api.d';
-import { getErrText } from '@fastgpt/global/common/error/utils';
-import { replaceVariable } from '@fastgpt/global/common/string/tools';
-import { authRequestFromLocal } from '@fastgpt/service/support/permission/auth/common';
+import type { HttpBodyType } from '@/packages/global/core/module/api.d';
+import { getErrText } from '@/packages/global/common/error/utils';
+import { replaceVariable } from '@/packages/global/common/string/tools';
+import { authRequestFromLocal } from '@/packages/service/support/permission/auth/common';
 
 type Props = HttpBodyType<{
   text: string;

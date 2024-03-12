@@ -1,5 +1,5 @@
 import { AppItemType } from '@/types/app';
-import { AppTypeEnum } from '@fastgpt/global/core/app/constants';
+import { AppTypeEnum } from '@/packages/global/core/app/constants';
 
 // template
 export const appTemplates: (AppItemType & {

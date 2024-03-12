@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { delFileByFileIdList, uploadFile } from '@fastgpt/service/common/file/gridfs/controller';
-import { getUploadModel } from '@fastgpt/service/common/file/multer';
-import { authDataset } from '@fastgpt/service/support/permission/auth/dataset';
-import { FileCreateDatasetCollectionParams } from '@fastgpt/global/core/dataset/api';
-import { removeFilesByPaths } from '@fastgpt/service/common/file/utils';
-import { createOneCollection } from '@fastgpt/service/core/dataset/collection/controller';
-import { DatasetCollectionTypeEnum } from '@fastgpt/global/core/dataset/constants';
-import { BucketNameEnum } from '@fastgpt/global/common/file/constants';
+import { delFileByFileIdList, uploadFile } from '@/packages/service/common/file/gridfs/controller';
+import { getUploadModel } from '@/packages/service/common/file/multer';
+import { authDataset } from '@/packages/service/support/permission/auth/dataset';
+import { FileCreateDatasetCollectionParams } from '@/packages/global/core/dataset/api';
+import { removeFilesByPaths } from '@/packages/service/common/file/utils';
+import { createOneCollection } from '@/packages/service/core/dataset/collection/controller';
+import { DatasetCollectionTypeEnum } from '@/packages/global/core/dataset/constants';
+import { BucketNameEnum } from '@/packages/global/common/file/constants';
 
 /**
  * Creates the multer uploader

@@ -1,9 +1,9 @@
 import { GET, POST, DELETE, PUT } from '@/web/common/api/request';
-import type { AppDetailType, AppListItemType } from '@fastgpt/global/core/app/type.d';
+import type { AppDetailType, AppListItemType } from '@/packages/global/core/app/type.d';
 import { RequestPaging } from '@/types/index';
 import { addDays } from 'date-fns';
 import type { GetAppChatLogsParams } from '@/global/core/api/appReq.d';
-import type { CreateAppParams, AppUpdateParams } from '@fastgpt/global/core/app/api.d';
+import type { CreateAppParams, AppUpdateParams } from '@/packages/global/core/app/api.d';
 
 /**
  * 获取模型列表

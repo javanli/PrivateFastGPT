@@ -6,11 +6,11 @@ import {
   ReRankModelItemType,
   VectorModelItemType,
   WhisperModelType
-} from '@fastgpt/global/core/ai/model.d';
+} from '@/packages/global/core/ai/model.d';
 import { TrackEventName } from '@/constants/common';
-import { AppSimpleEditConfigTemplateType } from '@fastgpt/global/core/app/type';
-import { FastGPTFeConfigsType, SystemEnvType } from '@fastgpt/global/common/system/types';
-import { SubPlanType } from '@fastgpt/global/support/wallet/sub/type';
+import { AppSimpleEditConfigTemplateType } from '@/packages/global/core/app/type';
+import { FastGPTFeConfigsType, SystemEnvType } from '@/packages/global/common/system/types';
+import { SubPlanType } from '@/packages/global/support/wallet/sub/type';
 
 export type PagingData<T> = {
   pageNum: number;

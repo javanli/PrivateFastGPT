@@ -11,11 +11,11 @@ import React, {
 import Script from 'next/script';
 import { throttle } from 'lodash';
 import type { ExportChatType } from '@/types/chat.d';
-import type { ChatItemType, ChatSiteItemType } from '@fastgpt/global/core/chat/type.d';
-import type { ChatHistoryItemResType } from '@fastgpt/global/core/chat/type.d';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import type { ChatItemType, ChatSiteItemType } from '@/packages/global/core/chat/type.d';
+import type { ChatHistoryItemResType } from '@/packages/global/core/chat/type.d';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useAudioPlay } from '@/web/common/utils/voice';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { getErrText } from '@/packages/global/common/error/utils';
 import { useCopyData } from '@/web/common/hooks/useCopyData';
 import {
   Box,
@@ -31,12 +31,12 @@ import {
   Checkbox
 } from '@chakra-ui/react';
 import { EventNameEnum, eventBus } from '@/web/common/utils/eventbus';
-import { adaptChat2GptMessages } from '@fastgpt/global/core/chat/adapt';
+import { adaptChat2GptMessages } from '@/packages/global/core/chat/adapt';
 import { useMarkdown } from '@/web/common/hooks/useMarkdown';
-import { ModuleItemType } from '@fastgpt/global/core/module/type.d';
-import { VariableInputEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleItemType } from '@/packages/global/core/module/type.d';
+import { VariableInputEnum } from '@/packages/global/core/module/constants';
 import { UseFormReturn, useForm } from 'react-hook-form';
-import type { ChatMessageItemType } from '@fastgpt/global/core/ai/type.d';
+import type { ChatMessageItemType } from '@/packages/global/core/ai/type.d';
 import { fileDownload } from '@/web/common/file/utils';
 import { htmlTemplate } from '@/constants/common';
 import { useRouter } from 'next/router';
@@ -50,7 +50,7 @@ import {
 } from '@/web/core/chat/api';
 import type { AdminMarkType } from './SelectMarkCollection';
 
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import Avatar from '@/components/Avatar';
 import Markdown, { CodeClassName } from '@/components/Markdown';
 import MySelect from '@/components/Select';
@@ -63,10 +63,10 @@ const SelectMarkCollection = dynamic(() => import('./SelectMarkCollection'));
 
 import styles from './index.module.scss';
 import { postQuestionGuide } from '@/web/core/ai/api';
-import { splitGuideModule } from '@fastgpt/global/core/module/utils';
-import type { AppTTSConfigType, VariableItemType } from '@fastgpt/global/core/module/type.d';
+import { splitGuideModule } from '@/packages/global/core/module/utils';
+import type { AppTTSConfigType, VariableItemType } from '@/packages/global/core/module/type.d';
 import MessageInput from './MessageInput';
-import { ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
 import ChatBoxDivider from '../core/chat/Divider';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 24);

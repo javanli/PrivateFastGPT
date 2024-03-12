@@ -1,21 +1,21 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Box, Flex, IconButton, useTheme, useDisclosure } from '@chakra-ui/react';
 import { SmallCloseIcon } from '@chakra-ui/icons';
-import { ModuleItemType } from '@fastgpt/global/core/module/type';
+import { ModuleItemType } from '@/packages/global/core/module/type';
 import { useRequest } from '@/web/common/hooks/useRequest';
-import { AppSchema } from '@fastgpt/global/core/app/type.d';
+import { AppSchema } from '@/packages/global/core/app/type.d';
 import { useTranslation } from 'next-i18next';
 import { useCopyData } from '@/web/common/hooks/useCopyData';
-import { AppTypeEnum } from '@fastgpt/global/core/app/constants';
+import { AppTypeEnum } from '@/packages/global/core/app/constants';
 import dynamic from 'next/dynamic';
 
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import MyTooltip from '@/components/MyTooltip';
 import ChatTest, { type ChatTestComponentRef } from '@/components/core/module/Flow/ChatTest';
 import { getFlowStore } from '@/components/core/module/Flow/FlowProvider';
 import { flowNode2Modules, filterExportModules } from '@/components/core/module/utils';
 import { useAppStore } from '@/web/core/app/store/useAppStore';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useConfirm } from '@/web/common/hooks/useConfirm';
 
 const ImportSettings = dynamic(() => import('@/components/core/module/Flow/ImportSettings'));

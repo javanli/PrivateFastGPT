@@ -1,6 +1,10 @@
-import type { AppTTSConfigType } from '@fastgpt/global/core/module/type.d';
+import type { AppTTSConfigType } from '@/packages/global/core/module/type.d';
 import { ModuleItemType } from '../module/type';
-import { AdminFbkType, ChatItemType, moduleDispatchResType } from '@fastgpt/global/core/chat/type';
+import {
+  AdminFbkType,
+  ChatItemType,
+  moduleDispatchResType
+} from '@/packages/global/core/chat/type';
 
 export type GetChatSpeechProps = {
   ttsConfig: AppTTSConfigType;

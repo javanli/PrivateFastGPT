@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
-import { authCert } from '@fastgpt/service/support/permission/auth/common';
-import { withNextCors } from '@fastgpt/service/common/middle/cors';
+import { jsonRes } from '@/packages/service/common/response';
+import { authCert } from '@/packages/service/support/permission/auth/common';
+import { withNextCors } from '@/packages/service/common/middle/cors';
 import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { connectToDatabase } from '@/service/mongo';
-import { getVectorsByText } from '@fastgpt/service/core/ai/embedding';
-import { updateApiKeyUsage } from '@fastgpt/service/support/openapi/tools';
-import { getUsageSourceByAuthType } from '@fastgpt/global/support/wallet/usage/tools';
-import { getVectorModel } from '@fastgpt/service/core/ai/model';
-import { checkTeamAIPoints } from '@fastgpt/service/support/permission/teamLimit';
+import { getVectorsByText } from '@/packages/service/core/ai/embedding';
+import { updateApiKeyUsage } from '@/packages/service/support/openapi/tools';
+import { getUsageSourceByAuthType } from '@/packages/global/support/wallet/usage/tools';
+import { getVectorModel } from '@/packages/service/core/ai/model';
+import { checkTeamAIPoints } from '@/packages/service/support/permission/teamLimit';
 
 type Props = {
   input: string | string[];

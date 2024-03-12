@@ -1,13 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoDataset } from '@fastgpt/service/core/dataset/schema';
+import { MongoDataset } from '@/packages/service/core/dataset/schema';
 import type { CreateDatasetParams } from '@/global/core/dataset/api.d';
-import { createDefaultCollection } from '@fastgpt/service/core/dataset/collection/controller';
-import { authUserNotVisitor } from '@fastgpt/service/support/permission/auth/user';
-import { DatasetTypeEnum } from '@fastgpt/global/core/dataset/constants';
-import { getLLMModel, getVectorModel, getDatasetModel } from '@fastgpt/service/core/ai/model';
-import { checkTeamDatasetLimit } from '@fastgpt/service/support/permission/teamLimit';
+import { createDefaultCollection } from '@/packages/service/core/dataset/collection/controller';
+import { authUserNotVisitor } from '@/packages/service/support/permission/auth/user';
+import { DatasetTypeEnum } from '@/packages/global/core/dataset/constants';
+import { getLLMModel, getVectorModel, getDatasetModel } from '@/packages/service/core/ai/model';
+import { checkTeamDatasetLimit } from '@/packages/service/support/permission/teamLimit';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

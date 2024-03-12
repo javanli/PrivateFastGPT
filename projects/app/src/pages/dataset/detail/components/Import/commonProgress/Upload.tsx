@@ -14,18 +14,18 @@ import {
 } from '@chakra-ui/react';
 import { useImportStore, type FormType } from '../Provider';
 import { useTranslation } from 'next-i18next';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import { postCreateTrainingUsage } from '@/web/support/wallet/usage/api';
 import { useDatasetStore } from '@/web/core/dataset/store/dataset';
 import { chunksUpload, fileCollectionCreate } from '@/web/core/dataset/utils';
 import { ImportSourceItemType } from '@/web/core/dataset/type';
-import { hashStr } from '@fastgpt/global/common/string/tools';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { hashStr } from '@/packages/global/common/string/tools';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useRouter } from 'next/router';
 import { TabEnum } from '../../../index';
 import { postCreateDatasetLinkCollection, postDatasetCollection } from '@/web/core/dataset/api';
-import { DatasetCollectionTypeEnum } from '@fastgpt/global/core/dataset/constants';
+import { DatasetCollectionTypeEnum } from '@/packages/global/core/dataset/constants';
 import { checkTeamDatasetSizeLimit } from '@/web/support/user/team/api';
 
 const Upload = ({ showPreviewChunks }: { showPreviewChunks: boolean }) => {

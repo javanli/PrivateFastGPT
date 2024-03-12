@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MyModal from '../MyModal';
 import { Box, Button, Flex, Grid, useTheme } from '@chakra-ui/react';
-import { PromptTemplateItem } from '@fastgpt/global/core/ai/type.d';
+import { PromptTemplateItem } from '@/packages/global/core/ai/type.d';
 import { ModalBody, ModalFooter } from '@chakra-ui/react';
 
 const PromptTemplate = ({

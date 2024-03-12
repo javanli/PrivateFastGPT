@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { authDataset } from '@fastgpt/service/support/permission/auth/dataset';
-import { checkExportDatasetLimit } from '@fastgpt/service/support/user/utils';
+import { authDataset } from '@/packages/service/support/permission/auth/dataset';
+import { checkExportDatasetLimit } from '@/packages/service/support/user/utils';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

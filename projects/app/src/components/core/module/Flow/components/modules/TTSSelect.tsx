@@ -1,4 +1,4 @@
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import MyTooltip from '@/components/MyTooltip';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, ModalBody, useDisclosure, Image } from '@chakra-ui/react';
@@ -6,7 +6,7 @@ import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import MySelect from '@/components/Select';
 import { TTSTypeEnum } from '@/constants/app';
-import type { AppTTSConfigType } from '@fastgpt/global/core/module/type.d';
+import type { AppTTSConfigType } from '@/packages/global/core/module/type.d';
 import { useAudioPlay } from '@/web/common/utils/voice';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import MyModal from '@/components/MyModal';
@@ -54,7 +54,7 @@ const TTSSelect = ({
         onChange({ type: e as `${TTSTypeEnum}` });
       } else {
         const audioModel = audioSpeechModelList.find((item) =>
-          item.voices?.find((voice) => voice.value === e)
+          item.voices?.find((voice: { value: string }) => voice.value === e)
         );
         if (!audioModel) {
           return;

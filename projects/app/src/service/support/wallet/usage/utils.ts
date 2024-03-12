@@ -1,6 +1,6 @@
-import { ModelTypeEnum, getModelMap } from '@fastgpt/service/core/ai/model';
-import { AuthUserTypeEnum } from '@fastgpt/global/support/permission/constant';
-import { UsageSourceEnum } from '@fastgpt/global/support/wallet/usage/constants';
+import { ModelTypeEnum, getModelMap } from '@/packages/service/core/ai/model';
+import { AuthUserTypeEnum } from '@/packages/global/support/permission/constant';
+import { UsageSourceEnum } from '@/packages/global/support/wallet/usage/constants';
 
 export function authType2UsageSource({
   authType,

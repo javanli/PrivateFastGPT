@@ -1,12 +1,12 @@
 import { getFileViewUrl, postChunks2Dataset } from '@/web/core/dataset/api';
-import { TrainingModeEnum } from '@fastgpt/global/core/dataset/constants';
-import { delay } from '@fastgpt/global/common/system/utils';
-import { strIsLink } from '@fastgpt/global/common/string/tools';
+import { TrainingModeEnum } from '@/packages/global/core/dataset/constants';
+import { delay } from '@/packages/global/common/system/utils';
+import { strIsLink } from '@/packages/global/common/string/tools';
 import type {
   FileCreateDatasetCollectionParams,
   PushDatasetDataChunkProps
-} from '@fastgpt/global/core/dataset/api.d';
-import { BucketNameEnum } from '@fastgpt/global/common/file/constants';
+} from '@/packages/global/core/dataset/api.d';
+import { BucketNameEnum } from '@/packages/global/common/file/constants';
 import { POST } from '@/web/common/api/request';
 
 /* upload a file to create collection */

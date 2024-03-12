@@ -1,8 +1,8 @@
-import type { SearchDataResponseItemType } from '@fastgpt/global/core/dataset/type';
-import type { ModuleDispatchProps } from '@fastgpt/global/core/module/type.d';
-import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { datasetSearchResultConcat } from '@fastgpt/global/core/dataset/search/utils';
-import { filterSearchResultsByMaxChars } from '@fastgpt/global/core/dataset/search/utils';
+import type { SearchDataResponseItemType } from '@/packages/global/core/dataset/type';
+import type { ModuleDispatchProps } from '@/packages/global/core/module/type.d';
+import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
+import { datasetSearchResultConcat } from '@/packages/global/core/dataset/search/utils';
+import { filterSearchResultsByMaxChars } from '@/packages/global/core/dataset/search/utils';
 
 type DatasetConcatProps = ModuleDispatchProps<
   {

@@ -1,4 +1,4 @@
-import { SERVICE_LOCAL_HOST } from '@fastgpt/service/common/system/tools';
+import { SERVICE_LOCAL_HOST } from '@/packages/service/common/system/tools';
 import axios, { Method, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface ConfigType {

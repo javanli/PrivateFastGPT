@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { authCert } from '@fastgpt/service/support/permission/auth/common';
-import { uploadFile } from '@fastgpt/service/common/file/gridfs/controller';
-import { getUploadModel } from '@fastgpt/service/common/file/multer';
+import { authCert } from '@/packages/service/support/permission/auth/common';
+import { uploadFile } from '@/packages/service/common/file/gridfs/controller';
+import { getUploadModel } from '@/packages/service/common/file/multer';
 
 /**
  * Creates the multer uploader

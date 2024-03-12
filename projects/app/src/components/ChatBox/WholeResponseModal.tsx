@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Box, useTheme, Flex, Image } from '@chakra-ui/react';
-import type { ChatHistoryItemResType } from '@fastgpt/global/core/chat/type.d';
+import type { ChatHistoryItemResType } from '@/packages/global/core/chat/type.d';
 import { useTranslation } from 'next-i18next';
 import { moduleTemplatesFlat } from '@/web/core/modules/template/system';
 
@@ -10,8 +10,8 @@ import MyTooltip from '../MyTooltip';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import Markdown from '../Markdown';
 import { QuoteList } from './QuoteModal';
-import { DatasetSearchModeMap } from '@fastgpt/global/core/dataset/constants';
-import { formatNumber } from '@fastgpt/global/common/math/tools';
+import { DatasetSearchModeMap } from '@/packages/global/core/dataset/constants';
+import { formatNumber } from '@/packages/global/common/math/tools';
 
 function Row({
   label,

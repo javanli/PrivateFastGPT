@@ -6,7 +6,7 @@ import { useImportStore } from '../Provider';
 import { useTranslation } from 'next-i18next';
 import { useForm } from 'react-hook-form';
 import { Box, Button, Flex, Input, Textarea } from '@chakra-ui/react';
-import { getNanoid } from '@fastgpt/global/common/string/tools';
+import { getNanoid } from '@/packages/global/common/string/tools';
 import Loading from '@/components/Loading';
 
 const DataProcess = dynamic(() => import('../commonProgress/DataProcess'), {

@@ -13,14 +13,17 @@ import { useQuery } from '@tanstack/react-query';
 import { QuestionOutlineIcon, SmallAddIcon } from '@chakra-ui/icons';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
-import { appModules2Form, getDefaultAppForm } from '@fastgpt/global/core/app/utils';
-import type { AppSimpleEditFormType } from '@fastgpt/global/core/app/type.d';
-import { chatNodeSystemPromptTip, welcomeTextTip } from '@fastgpt/global/core/module/template/tip';
+import { appModules2Form, getDefaultAppForm } from '@/packages/global/core/app/utils';
+import type { AppSimpleEditFormType } from '@/packages/global/core/app/type.d';
+import {
+  chatNodeSystemPromptTip,
+  welcomeTextTip
+} from '@/packages/global/core/module/template/tip';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import { useConfirm } from '@/web/common/hooks/useConfirm';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { AppTypeEnum } from '@fastgpt/global/core/app/constants';
+import { AppTypeEnum } from '@/packages/global/core/app/constants';
 import { useDatasetStore } from '@/web/core/dataset/store/dataset';
 import { useAppStore } from '@/web/core/app/store/useAppStore';
 import { postForm2Modules } from '@/web/core/app/utils';
@@ -28,13 +31,13 @@ import { postForm2Modules } from '@/web/core/app/utils';
 import dynamic from 'next/dynamic';
 import MyTooltip from '@/components/MyTooltip';
 import Avatar from '@/components/Avatar';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import VariableEdit from '@/components/core/module/Flow/components/modules/VariableEdit';
 import MyTextarea from '@/components/common/Textarea/MyTextarea/index';
-import { DatasetSearchModeMap } from '@fastgpt/global/core/dataset/constants';
+import { DatasetSearchModeMap } from '@/packages/global/core/dataset/constants';
 import SelectAiModel from '@/components/Select/SelectAiModel';
-import PromptEditor from '@fastgpt/web/components/common/Textarea/PromptEditor';
-import { formatEditorVariablePickerIcon } from '@fastgpt/global/core/module/utils';
+import PromptEditor from '@/packages/web/components/common/Textarea/PromptEditor';
+import { formatEditorVariablePickerIcon } from '@/packages/global/core/module/utils';
 import SearchParamsTip from '@/components/core/dataset/SearchParamsTip';
 
 const DatasetSelectModal = dynamic(() => import('@/components/core/module/DatasetSelectModal'));

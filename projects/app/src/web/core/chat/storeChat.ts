@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import type { ChatHistoryItemType } from '@fastgpt/global/core/chat/type.d';
+import type { ChatHistoryItemType } from '@/packages/global/core/chat/type.d';
 import type {
   InitChatResponse,
   getHistoriesProps,

@@ -1,13 +1,13 @@
-import type { ChatItemType } from '@fastgpt/global/core/chat/type.d';
-import type { ChatMessageItemType } from '@fastgpt/global/core/ai/type.d';
-import type { ModuleItemType, FlowModuleItemType } from '@fastgpt/global/core/module/type.d';
+import type { ChatItemType } from '@/packages/global/core/chat/type.d';
+import type { ChatMessageItemType } from '@/packages/global/core/ai/type.d';
+import type { ModuleItemType, FlowModuleItemType } from '@/packages/global/core/module/type.d';
 import type { Edge, Node } from 'reactflow';
 import { customAlphabet } from 'nanoid';
 import { moduleTemplatesFlat } from '@/web/core/modules/template/system';
-import { adaptRole_Message2Chat } from '@fastgpt/global/core/chat/adapt';
-import { EDGE_TYPE } from '@fastgpt/global/core/module/node/constant';
-import { UserInputModule } from '@fastgpt/global/core/module/template/system/userInput';
-import { ChatCompletionRequestMessageRoleEnum } from '@fastgpt/global/core/ai/constant';
+import { adaptRole_Message2Chat } from '@/packages/global/core/chat/adapt';
+import { EDGE_TYPE } from '@/packages/global/core/module/node/constant';
+import { UserInputModule } from '@/packages/global/core/module/template/system/userInput';
+import { ChatCompletionRequestMessageRoleEnum } from '@/packages/global/core/ai/constant';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 6);
 
 export const gptMessage2ChatType = (messages: ChatMessageItemType[]): ChatItemType[] => {

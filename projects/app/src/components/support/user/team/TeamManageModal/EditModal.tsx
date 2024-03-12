@@ -3,16 +3,16 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'next-i18next';
 import { useSelectFile } from '@/web/common/file/hooks/useSelectFile';
 import { compressImgFileAndUpload } from '@/web/common/file/controller';
-import { useToast } from '@fastgpt/web/hooks/useToast';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { useToast } from '@/packages/web/hooks/useToast';
+import { getErrText } from '@/packages/global/common/error/utils';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import MyModal from '@/components/MyModal';
 import { Box, Button, Flex, Input, ModalBody, ModalFooter } from '@chakra-ui/react';
 import MyTooltip from '@/components/MyTooltip';
 import Avatar from '@/components/Avatar';
 import { postCreateTeam, putUpdateTeam } from '@/web/support/user/team/api';
-import { CreateTeamProps } from '@fastgpt/global/support/user/team/controller.d';
-import { MongoImageTypeEnum } from '@fastgpt/global/common/file/image/constants';
+import { CreateTeamProps } from '@/packages/global/support/user/team/controller.d';
+import { MongoImageTypeEnum } from '@/packages/global/common/file/image/constants';
 
 export type FormDataType = CreateTeamProps & {
   id?: string;

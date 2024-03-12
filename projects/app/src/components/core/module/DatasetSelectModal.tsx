@@ -11,11 +11,11 @@ import {
   Divider
 } from '@chakra-ui/react';
 import Avatar from '@/components/Avatar';
-import type { SelectedDatasetType } from '@fastgpt/global/core/module/api.d';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import type { SelectedDatasetType } from '@/packages/global/core/module/api.d';
+import { useToast } from '@/packages/web/hooks/useToast';
 import MyTooltip from '@/components/MyTooltip';
-import MyIcon from '@fastgpt/web/components/common/Icon';
-import { DatasetTypeEnum } from '@fastgpt/global/core/dataset/constants';
+import MyIcon from '@/packages/web/components/common/Icon';
+import { DatasetTypeEnum } from '@/packages/global/core/dataset/constants';
 import { useTranslation } from 'next-i18next';
 import { useDatasetStore } from '@/web/core/dataset/store/dataset';
 import DatasetSelectContainer, { useDatasetSelect } from '@/components/core/dataset/SelectModal';

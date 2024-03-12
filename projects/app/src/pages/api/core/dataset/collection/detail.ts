@@ -2,12 +2,12 @@
     Get one dataset collection detail
 */
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { authDatasetCollection } from '@fastgpt/service/support/permission/auth/dataset';
-import { DatasetCollectionItemType } from '@fastgpt/global/core/dataset/type';
-import { BucketNameEnum } from '@fastgpt/global/common/file/constants';
-import { getFileById } from '@fastgpt/service/common/file/gridfs/controller';
+import { authDatasetCollection } from '@/packages/service/support/permission/auth/dataset';
+import { DatasetCollectionItemType } from '@/packages/global/core/dataset/type';
+import { BucketNameEnum } from '@/packages/global/common/file/constants';
+import { getFileById } from '@/packages/service/common/file/gridfs/controller';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

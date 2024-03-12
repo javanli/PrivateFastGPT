@@ -1,11 +1,11 @@
 import { Box, Card, Flex, Select } from '@chakra-ui/react';
 import React, { useCallback, useRef } from 'react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useTranslation } from 'next-i18next';
-import { timezoneList } from '@fastgpt/global/common/time/timezone';
+import { timezoneList } from '@/packages/global/common/time/timezone';
 import { useUserStore } from '@/web/support/user/useUserStore';
-import { UserType } from '@fastgpt/global/support/user/type';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { UserType } from '@/packages/global/support/user/type';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useForm } from 'react-hook-form';
 import { UserUpdateParams } from '@/types/user';
 import { langMap, setLngStore } from '@/web/common/utils/i18n';

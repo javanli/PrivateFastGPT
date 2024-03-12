@@ -1,18 +1,18 @@
-import { MongoDatasetTraining } from '@fastgpt/service/core/dataset/training/schema';
+import { MongoDatasetTraining } from '@/packages/service/core/dataset/training/schema';
 import { pushQAUsage } from '@/service/support/wallet/usage/push';
-import { TrainingModeEnum } from '@fastgpt/global/core/dataset/constants';
-import { getAIApi } from '@fastgpt/service/core/ai/config';
-import type { ChatMessageItemType } from '@fastgpt/global/core/ai/type.d';
-import { addLog } from '@fastgpt/service/common/system/log';
-import { splitText2Chunks } from '@fastgpt/global/common/string/textSplitter';
-import { replaceVariable } from '@fastgpt/global/common/string/tools';
+import { TrainingModeEnum } from '@/packages/global/core/dataset/constants';
+import { getAIApi } from '@/packages/service/core/ai/config';
+import type { ChatMessageItemType } from '@/packages/global/core/ai/type.d';
+import { addLog } from '@/packages/service/common/system/log';
+import { splitText2Chunks } from '@/packages/global/common/string/textSplitter';
+import { replaceVariable } from '@/packages/global/common/string/tools';
 import { Prompt_AgentQA } from '@/global/core/prompt/agent';
-import type { PushDatasetDataChunkProps } from '@fastgpt/global/core/dataset/api.d';
+import type { PushDatasetDataChunkProps } from '@/packages/global/core/dataset/api.d';
 import { pushDataToTrainingQueue } from '@/service/core/dataset/data/controller';
-import { getLLMModel } from '@fastgpt/service/core/ai/model';
+import { getLLMModel } from '@/packages/service/core/ai/model';
 import { checkInvalidChunkAndLock, checkTeamAiPointsAndLock } from './utils';
-import { countGptMessagesChars } from '@fastgpt/service/core/chat/utils';
-import { Op } from '@fastgpt/service/common/mongo';
+import { countGptMessagesChars } from '@/packages/service/core/chat/utils';
+import { Op } from '@/packages/service/common/mongo';
 
 const reduceQueue = () => {
   global.qaQueueLen = global.qaQueueLen > 0 ? global.qaQueueLen - 1 : 0;

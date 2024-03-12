@@ -13,9 +13,9 @@ import { Link, Button } from '@chakra-ui/react';
 import MyTooltip from '../MyTooltip';
 import { useTranslation } from 'next-i18next';
 import { EventNameEnum, eventBus } from '@/web/common/utils/eventbus';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { getFileAndOpen } from '@/web/core/dataset/utils';
-import { MARKDOWN_QUOTE_SIGN } from '@fastgpt/global/core/chat/constants';
+import { MARKDOWN_QUOTE_SIGN } from '@/packages/global/core/chat/constants';
 
 const CodeLight = dynamic(() => import('./CodeLight'));
 const MermaidCodeBlock = dynamic(() => import('./img/MermaidCodeBlock'));

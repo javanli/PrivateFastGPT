@@ -8,7 +8,7 @@ import { useDatasetStore } from '@/web/core/dataset/store/dataset';
 import { useConfirm } from '@/web/common/hooks/useConfirm';
 import { useForm } from 'react-hook-form';
 import { compressImgFileAndUpload } from '@/web/common/file/controller';
-import type { DatasetItemType } from '@fastgpt/global/core/dataset/type.d';
+import type { DatasetItemType } from '@/packages/global/core/dataset/type.d';
 import Avatar from '@/components/Avatar';
 import MyTooltip from '@/components/MyTooltip';
 import { useTranslation } from 'next-i18next';
@@ -16,7 +16,7 @@ import PermissionRadio from '@/components/support/permission/Radio';
 import MySelect from '@/components/Select';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import { useRequest } from '@/web/common/hooks/useRequest';
-import { MongoImageTypeEnum } from '@fastgpt/global/common/file/image/constants';
+import { MongoImageTypeEnum } from '@/packages/global/common/file/image/constants';
 
 const Info = ({ datasetId }: { datasetId: string }) => {
   const { t } = useTranslation();

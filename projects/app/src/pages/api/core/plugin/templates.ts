@@ -1,14 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { authCert } from '@fastgpt/service/support/permission/auth/common';
-import { MongoPlugin } from '@fastgpt/service/core/plugin/schema';
-import { FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
-import { FlowModuleTemplateType } from '@fastgpt/global/core/module/type';
-import { ModuleTemplateTypeEnum } from '@fastgpt/global/core/module/constants';
-import { GET } from '@fastgpt/service/common/api/plusRequest';
-import type { PluginTemplateType } from '@fastgpt/global/core/plugin/type.d';
-import { FastGPTProUrl } from '@fastgpt/service/common/system/constants';
+import { authCert } from '@/packages/service/support/permission/auth/common';
+import { MongoPlugin } from '@/packages/service/core/plugin/schema';
+import { FlowNodeTypeEnum } from '@/packages/global/core/module/node/constant';
+import { FlowModuleTemplateType } from '@/packages/global/core/module/type';
+import { ModuleTemplateTypeEnum } from '@/packages/global/core/module/constants';
+import { GET } from '@/packages/service/common/api/plusRequest';
+import type { PluginTemplateType } from '@/packages/global/core/plugin/type.d';
+import { FastGPTProUrl } from '@/packages/service/common/system/constants';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

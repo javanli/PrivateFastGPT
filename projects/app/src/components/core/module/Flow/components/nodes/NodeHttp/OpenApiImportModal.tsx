@@ -3,9 +3,9 @@ import MyModal from '@/components/MyModal';
 import { ModalBody, Button, ModalFooter, useDisclosure, Textarea, Box } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { onChangeNode } from '../../../FlowProvider';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { FlowNodeInputItemType } from '@fastgpt/global/core/module/node/type';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
+import { FlowNodeInputItemType } from '@/packages/global/core/module/node/type';
+import { useToast } from '@/packages/web/hooks/useToast';
 import yaml from 'js-yaml';
 import { useForm } from 'react-hook-form';
 

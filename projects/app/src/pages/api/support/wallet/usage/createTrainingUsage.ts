@@ -1,11 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { UsageSourceEnum } from '@fastgpt/global/support/wallet/usage/constants';
-import { CreateTrainingUsageProps } from '@fastgpt/global/support/wallet/usage/api.d';
-import { getLLMModel, getVectorModel } from '@fastgpt/service/core/ai/model';
-import { createTrainingUsage } from '@fastgpt/service/support/wallet/usage/controller';
-import { authDataset } from '@fastgpt/service/support/permission/auth/dataset';
+import { UsageSourceEnum } from '@/packages/global/support/wallet/usage/constants';
+import { CreateTrainingUsageProps } from '@/packages/global/support/wallet/usage/api.d';
+import { getLLMModel, getVectorModel } from '@/packages/service/core/ai/model';
+import { createTrainingUsage } from '@/packages/service/support/wallet/usage/controller';
+import { authDataset } from '@/packages/service/support/permission/auth/dataset';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

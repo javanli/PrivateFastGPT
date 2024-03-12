@@ -17,11 +17,11 @@ import {
 import { useDatasetStore } from '@/web/core/dataset/store/dataset';
 import { useSearchTestStore, SearchTestStoreItemType } from '@/web/core/dataset/store/searchTest';
 import { postSearchText } from '@/web/core/dataset/api';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import { formatTimeToChatTime } from '@/utils/tools';
-import { getErrText } from '@fastgpt/global/common/error/utils';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { getErrText } from '@/packages/global/common/error/utils';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { customAlphabet } from 'nanoid';
 import MyTooltip from '@/components/MyTooltip';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
@@ -30,16 +30,16 @@ import { SearchTestResponse } from '@/global/core/dataset/api';
 import {
   DatasetSearchModeEnum,
   DatasetSearchModeMap
-} from '@fastgpt/global/core/dataset/constants';
+} from '@/packages/global/core/dataset/constants';
 import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import MySelect from '@/components/Select';
 import { useSelectFile } from '@/web/common/file/hooks/useSelectFile';
 import { fileDownload } from '@/web/common/file/utils';
-import { readCsvContent } from '@fastgpt/web/common/file/read/csv';
-import { delay } from '@fastgpt/global/common/system/utils';
+import { readCsvContent } from '@/packages/web/common/file/read/csv';
+import { delay } from '@/packages/global/common/system/utils';
 import QuoteItem from '@/components/core/dataset/QuoteItem';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import SearchParamsTip from '@/components/core/dataset/SearchParamsTip';
 

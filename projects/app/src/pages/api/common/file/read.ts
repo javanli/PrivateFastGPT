@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { authFileToken } from '@fastgpt/service/support/permission/controller';
+import { authFileToken } from '@/packages/service/support/permission/controller';
 import { detect } from 'jschardet';
-import { getDownloadStream, getFileById } from '@fastgpt/service/common/file/gridfs/controller';
-import { CommonErrEnum } from '@fastgpt/global/common/error/code/common';
+import { getDownloadStream, getFileById } from '@/packages/service/common/file/gridfs/controller';
+import { CommonErrEnum } from '@/packages/global/common/error/code/common';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {

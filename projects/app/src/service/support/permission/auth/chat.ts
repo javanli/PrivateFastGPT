@@ -1,11 +1,11 @@
-import { ChatSchema } from '@fastgpt/global/core/chat/type';
-import { MongoChat } from '@fastgpt/service/core/chat/chatSchema';
-import { AuthModeType } from '@fastgpt/service/support/permission/type';
+import { ChatSchema } from '@/packages/global/core/chat/type';
+import { MongoChat } from '@/packages/service/core/chat/chatSchema';
+import { AuthModeType } from '@/packages/service/support/permission/type';
 import { authOutLink } from './outLink';
-import { ChatErrEnum } from '@fastgpt/global/common/error/code/chat';
-import { authUserRole } from '@fastgpt/service/support/permission/auth/user';
-import { TeamMemberRoleEnum } from '@fastgpt/global/support/user/team/constant';
-import { AuthResponseType } from '@fastgpt/global/support/permission/type';
+import { ChatErrEnum } from '@/packages/global/common/error/code/chat';
+import { authUserRole } from '@/packages/service/support/permission/auth/user';
+import { TeamMemberRoleEnum } from '@/packages/global/support/user/team/constant';
+import { AuthResponseType } from '@/packages/global/support/permission/type';
 /* 
   outLink: Must be the owner
   token: team owner and chat owner have all permissions

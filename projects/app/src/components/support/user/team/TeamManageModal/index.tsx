@@ -28,7 +28,7 @@ import {
   useDisclosure,
   MenuButton
 } from '@chakra-ui/react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import Avatar from '@/components/Avatar';
 import { useUserStore } from '@/web/support/user/useUserStore';
 import {
@@ -36,7 +36,7 @@ import {
   TeamMemberRoleMap,
   TeamMemberStatusEnum,
   TeamMemberStatusMap
-} from '@fastgpt/global/support/user/team/constant';
+} from '@/packages/global/support/user/team/constant';
 import dynamic from 'next/dynamic';
 import { useRequest } from '@/web/common/hooks/useRequest';
 import { setToken } from '@/web/support/user/auth';
@@ -44,7 +44,7 @@ import { useLoading } from '@/web/common/hooks/useLoading';
 import { FormDataType, defaultForm } from './EditModal';
 import MyMenu from '@/components/MyMenu';
 import { useConfirm } from '@/web/common/hooks/useConfirm';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 
 const EditModal = dynamic(() => import('./EditModal'));

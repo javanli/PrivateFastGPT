@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
-import { MongoApp } from '@fastgpt/service/core/app/schema';
-import type { AppUpdateParams } from '@fastgpt/global/core/app/api';
-import { authApp } from '@fastgpt/service/support/permission/auth/app';
-import { FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
-import { ModuleInputKeyEnum } from '@fastgpt/global/core/module/constants';
-import { getLLMModel } from '@fastgpt/service/core/ai/model';
+import { MongoApp } from '@/packages/service/core/app/schema';
+import type { AppUpdateParams } from '@/packages/global/core/app/api';
+import { authApp } from '@/packages/service/support/permission/auth/app';
+import { FlowNodeTypeEnum } from '@/packages/global/core/module/node/constant';
+import { ModuleInputKeyEnum } from '@/packages/global/core/module/constants';
+import { getLLMModel } from '@/packages/service/core/ai/model';
 
 /* 获取我的模型 */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {

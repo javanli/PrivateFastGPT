@@ -3,7 +3,7 @@ import { Box, Flex } from '@chakra-ui/react';
 import type {
   FlowModuleTemplateType,
   moduleTemplateListType
-} from '@fastgpt/global/core/module/type.d';
+} from '@/packages/global/core/module/type.d';
 import { useViewport, XYPosition } from 'reactflow';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import Avatar from '@/components/Avatar';
@@ -13,10 +13,10 @@ import { appModule2FlowNode } from '@/utils/adapt';
 import { useTranslation } from 'next-i18next';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 6);
 import EmptyTip from '@/components/EmptyTip';
-import { FlowNodeTypeEnum } from '@fastgpt/global/core/module/node/constant';
+import { FlowNodeTypeEnum } from '@/packages/global/core/module/node/constant';
 import { getPreviewPluginModule } from '@/web/core/plugin/api';
-import { useToast } from '@fastgpt/web/hooks/useToast';
-import { getErrText } from '@fastgpt/global/common/error/utils';
+import { useToast } from '@/packages/web/hooks/useToast';
+import { getErrText } from '@/packages/global/common/error/utils';
 import { moduleTemplatesList } from '@/web/core/modules/template/system';
 
 export type ModuleTemplateProps = {

@@ -1,44 +1,44 @@
-import { MongoDatasetData } from '@fastgpt/service/core/dataset/data/schema';
-import { Op } from '@fastgpt/service/common/mongo';
+import { MongoDatasetData } from '@/packages/service/core/dataset/data/schema';
+import { Op } from '@/packages/service/common/mongo';
 import {
   CreateDatasetDataProps,
   PatchIndexesProps,
   UpdateDatasetDataProps
-} from '@fastgpt/global/core/dataset/controller';
+} from '@/packages/global/core/dataset/controller';
 import {
   insertDatasetDataVector,
   recallFromVectorStore
-} from '@fastgpt/service/common/vectorStore/controller';
+} from '@/packages/service/common/vectorStore/controller';
 import {
   DatasetSearchModeEnum,
   DatasetSearchModeMap,
   SearchScoreTypeEnum
-} from '@fastgpt/global/core/dataset/constants';
-import { datasetSearchResultConcat } from '@fastgpt/global/core/dataset/search/utils';
-import { getDefaultIndex } from '@fastgpt/global/core/dataset/utils';
+} from '@/packages/global/core/dataset/constants';
+import { datasetSearchResultConcat } from '@/packages/global/core/dataset/search/utils';
+import { getDefaultIndex } from '@/packages/global/core/dataset/utils';
 import { jiebaSplit } from '@/service/common/string/jieba';
-import { deleteDatasetDataVector } from '@fastgpt/service/common/vectorStore/controller';
-import { getVectorsByText } from '@fastgpt/service/core/ai/embedding';
+import { deleteDatasetDataVector } from '@/packages/service/common/vectorStore/controller';
+import { getVectorsByText } from '@/packages/service/core/ai/embedding';
 import {
   DatasetColCollectionName,
   MongoDatasetCollection
-} from '@fastgpt/service/core/dataset/collection/schema';
+} from '@/packages/service/core/dataset/collection/schema';
 import {
   DatasetDataItemType,
   DatasetDataSchemaType,
   DatasetDataWithCollectionType,
   SearchDataResponseItemType
-} from '@fastgpt/global/core/dataset/type';
+} from '@/packages/global/core/dataset/type';
 import { reRankRecall } from '../../ai/rerank';
-import { countPromptTokens } from '@fastgpt/global/common/string/tiktoken';
-import { hashStr } from '@fastgpt/global/common/string/tools';
+import { countPromptTokens } from '@/packages/global/common/string/tiktoken';
+import { hashStr } from '@/packages/global/common/string/tools';
 import type {
   PushDatasetDataProps,
   PushDatasetDataResponse
-} from '@fastgpt/global/core/dataset/api.d';
-import { pushDataListToTrainingQueue } from '@fastgpt/service/core/dataset/training/controller';
-import { getVectorModel } from '@fastgpt/service/core/ai/model';
-import { mongoSessionRun } from '@fastgpt/service/common/mongo/sessionRun';
+} from '@/packages/global/core/dataset/api.d';
+import { pushDataListToTrainingQueue } from '@/packages/service/core/dataset/training/controller';
+import { getVectorModel } from '@/packages/service/core/ai/model';
+import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
 import { startQueue } from '@/service/utils/tools';
 
 export async function pushDataToTrainingQueue(

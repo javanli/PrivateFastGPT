@@ -1,14 +1,14 @@
 import { startQueue } from './utils/tools';
-import { PRICE_SCALE } from '@fastgpt/global/support/wallet/constants';
-import { MongoUser } from '@fastgpt/service/support/user/schema';
-import { connectMongo } from '@fastgpt/service/common/mongo/init';
-import { hashStr } from '@fastgpt/global/common/string/tools';
-import { createDefaultTeam } from '@fastgpt/service/support/user/team/controller';
+import { PRICE_SCALE } from '@/packages/global/support/wallet/constants';
+import { MongoUser } from '@/packages/service/support/user/schema';
+import { connectMongo } from '@/packages/service/common/mongo/init';
+import { hashStr } from '@/packages/global/common/string/tools';
+import { createDefaultTeam } from '@/packages/service/support/user/team/controller';
 import { exit } from 'process';
-import { initVectorStore } from '@fastgpt/service/common/vectorStore/controller';
+import { initVectorStore } from '@/packages/service/common/vectorStore/controller';
 import { getInitConfig } from '@/pages/api/common/system/getInitData';
 import { startCron } from './common/system/cron';
-import { mongoSessionRun } from '@fastgpt/service/common/mongo/sessionRun';
+import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
 
 /**
  * connect MongoDB and init data

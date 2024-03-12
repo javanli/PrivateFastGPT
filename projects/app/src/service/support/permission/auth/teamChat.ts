@@ -1,9 +1,9 @@
-import { POST } from '@fastgpt/service/common/api/plusRequest';
-import type { AuthOutLinkChatProps } from '@fastgpt/global/support/outLink/api.d';
-import type { chatAppListSchema } from '@fastgpt/global/core/chat/type.d';
+import { POST } from '@/packages/service/common/api/plusRequest';
+import type { AuthOutLinkChatProps } from '@/packages/global/support/outLink/api.d';
+import type { chatAppListSchema } from '@/packages/global/core/chat/type.d';
 import { getUserChatInfoAndAuthTeamPoints } from './team';
-import { MongoTeam } from '@fastgpt/service/support/user/team/teamSchema';
-import { MongoTeamMember } from '@fastgpt/service/support/user/team/teamMemberSchema';
+import { MongoTeam } from '@/packages/service/support/user/team/teamSchema';
+import { MongoTeamMember } from '@/packages/service/support/user/team/teamMemberSchema';
 
 export function authChatTeamInfo(data: { shareTeamId: string; authToken: string }) {
   return POST<chatAppListSchema>('/core/chat/init', data);

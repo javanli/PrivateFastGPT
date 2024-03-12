@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MyModal from '@/components/MyModal';
 import { ModalBody, ModalFooter, Button } from '@chakra-ui/react';
 import { useTranslation } from 'next-i18next';
-import LeftRadio from '@fastgpt/web/components/common/Radio/LeftRadio';
+import LeftRadio from '@/packages/web/components/common/Radio/LeftRadio';
 import { ImportDataSourceEnum } from '..';
 import { useRouter } from 'next/router';
 import { TabEnum } from '../../..';

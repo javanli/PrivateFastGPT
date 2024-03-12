@@ -1,5 +1,5 @@
-import type { ChatItemType } from '@fastgpt/global/core/chat/type.d';
-import { DYNAMIC_INPUT_KEY, ModuleIOValueTypeEnum } from '@fastgpt/global/core/module/constants';
+import type { ChatItemType } from '@/packages/global/core/chat/type.d';
+import { DYNAMIC_INPUT_KEY, ModuleIOValueTypeEnum } from '@/packages/global/core/module/constants';
 
 export const getHistories = (history?: ChatItemType[] | number, histories: ChatItemType[] = []) => {
   if (!history) return [];

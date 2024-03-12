@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import { Flex, useTheme, Box } from '@chakra-ui/react';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import Tag from '@/components/Tag';
 import Avatar from '@/components/Avatar';
 import ToolMenu from './ToolMenu';
-import type { ChatItemType } from '@fastgpt/global/core/chat/type';
+import type { ChatItemType } from '@/packages/global/core/chat/type';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { chatContentReplaceBlock } from '@fastgpt/global/core/chat/utils';
+import { chatContentReplaceBlock } from '@/packages/global/core/chat/utils';
 
 const ChatHeader = ({
   history,

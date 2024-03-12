@@ -1,9 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { Box, Flex } from '@chakra-ui/react';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useTranslation } from 'next-i18next';
 
-import RowTabs from '@fastgpt/web/components/common/Tabs/RowTabs';
+import RowTabs from '@/packages/web/components/common/Tabs/RowTabs';
 import { ImportSourceItemType } from '@/web/core/dataset/type';
 
 enum PreviewListEnum {

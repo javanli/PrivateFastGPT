@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import { request } from 'http';
-import { FastGPTProUrl } from '@fastgpt/service/common/system/constants';
+import { FastGPTProUrl } from '@/packages/service/common/system/constants';
 import url from 'url';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

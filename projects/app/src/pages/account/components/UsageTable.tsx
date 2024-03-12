@@ -11,13 +11,13 @@ import {
   Box,
   Button
 } from '@chakra-ui/react';
-import { UsageSourceEnum, UsageSourceMap } from '@fastgpt/global/support/wallet/usage/constants';
+import { UsageSourceEnum, UsageSourceMap } from '@/packages/global/support/wallet/usage/constants';
 import { getUserUsages } from '@/web/support/wallet/usage/api';
-import type { UsageItemType } from '@fastgpt/global/support/wallet/usage/type';
+import type { UsageItemType } from '@/packages/global/support/wallet/usage/type';
 import { usePagination } from '@/web/common/hooks/usePagination';
 import { useLoading } from '@/web/common/hooks/useLoading';
 import dayjs from 'dayjs';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import DateRangePicker, { type DateRangeType } from '@/components/DateRangePicker';
 import { addDays } from 'date-fns';
 import dynamic from 'next/dynamic';
@@ -28,7 +28,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useUserStore } from '@/web/support/user/useUserStore';
 import { getTeamMembers } from '@/web/support/user/team/api';
 import Avatar from '@/components/Avatar';
-import { formatNumber } from '../../../../../../packages/global/common/math/tools';
+import { formatNumber } from '@/packages/global/common/math/tools';
 const UsageDetail = dynamic(() => import('./UsageDetail'));
 
 const UsageTable = () => {

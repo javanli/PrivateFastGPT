@@ -1,6 +1,6 @@
 import { GET, POST, PUT, DELETE } from '@/web/common/api/request';
-import type { ParentTreePathItemType } from '@fastgpt/global/common/parentFolder/type.d';
-import type { DatasetItemType, DatasetListItemType } from '@fastgpt/global/core/dataset/type.d';
+import type { ParentTreePathItemType } from '@/packages/global/common/parentFolder/type.d';
+import type { DatasetItemType, DatasetListItemType } from '@/packages/global/core/dataset/type.d';
 import type {
   GetDatasetCollectionsProps,
   GetDatasetDataListProps,
@@ -11,7 +11,7 @@ import type {
   DatasetUpdateBody,
   LinkCreateDatasetCollectionParams,
   PostWebsiteSyncParams
-} from '@fastgpt/global/core/dataset/api.d';
+} from '@/packages/global/core/dataset/api.d';
 import type {
   GetTrainingQueueProps,
   GetTrainingQueueResponse,
@@ -26,13 +26,13 @@ import type {
 import type {
   PushDatasetDataProps,
   PushDatasetDataResponse
-} from '@fastgpt/global/core/dataset/api.d';
-import type { DatasetCollectionItemType } from '@fastgpt/global/core/dataset/type';
+} from '@/packages/global/core/dataset/api.d';
+import type { DatasetCollectionItemType } from '@/packages/global/core/dataset/type';
 import {
   DatasetCollectionSyncResultEnum,
   DatasetTypeEnum
-} from '@fastgpt/global/core/dataset/constants';
-import type { DatasetDataItemType } from '@fastgpt/global/core/dataset/type';
+} from '@/packages/global/core/dataset/constants';
+import type { DatasetDataItemType } from '@/packages/global/core/dataset/type';
 import type { DatasetCollectionsListItemType } from '@/global/core/dataset/type.d';
 import { PagingData } from '@/types';
 

@@ -1,5 +1,5 @@
 import { GET, POST, DELETE } from '@/web/common/api/request';
-import type { OutLinkEditType, OutLinkSchema } from '@fastgpt/global/support/outLink/type.d';
+import type { OutLinkEditType, OutLinkSchema } from '@/packages/global/support/outLink/type.d';
 
 /**
  * create a shareChat

@@ -1,19 +1,19 @@
-import type { FastGPTFeConfigsType } from '@fastgpt/global/common/system/types/index.d';
+import type { FastGPTFeConfigsType } from '@/packages/global/common/system/types/index.d';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { jsonRes } from '@fastgpt/service/common/response';
+import { jsonRes } from '@/packages/service/common/response';
 import { readFileSync, readdirSync } from 'fs';
 import type { InitDateResponse } from '@/global/common/api/systemRes';
-import type { FastGPTConfigFileType } from '@fastgpt/global/common/system/types/index.d';
-import { getTikTokenEnc } from '@fastgpt/global/common/string/tiktoken';
-import { initHttpAgent } from '@fastgpt/service/common/middle/httpAgent';
-import { PluginSourceEnum } from '@fastgpt/global/core/plugin/constants';
-import { getFastGPTConfigFromDB } from '@fastgpt/service/common/system/config/controller';
+import type { FastGPTConfigFileType } from '@/packages/global/common/system/types/index.d';
+import { getTikTokenEnc } from '@/packages/global/common/string/tiktoken';
+import { initHttpAgent } from '@/packages/service/common/middle/httpAgent';
+import { PluginSourceEnum } from '@/packages/global/core/plugin/constants';
+import { getFastGPTConfigFromDB } from '@/packages/service/common/system/config/controller';
 import { connectToDatabase } from '@/service/mongo';
-import { PluginTemplateType } from '@fastgpt/global/core/plugin/type';
+import { PluginTemplateType } from '@/packages/global/core/plugin/type';
 import { readConfigData } from '@/service/common/system';
 import { exit } from 'process';
-import { FastGPTProUrl } from '@fastgpt/service/common/system/constants';
-import { initFastGPTConfig } from '@fastgpt/service/common/system/tools';
+import { FastGPTProUrl } from '@/packages/service/common/system/constants';
+import { initFastGPTConfig } from '@/packages/service/common/system/tools';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await getInitConfig();

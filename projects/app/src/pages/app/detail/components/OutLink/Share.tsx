@@ -21,7 +21,7 @@ import {
   Link
 } from '@chakra-ui/react';
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { useLoading } from '@/web/common/hooks/useLoading';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -34,11 +34,11 @@ import { formatTimeToChatTime } from '@/utils/tools';
 import { useCopyData } from '@/web/common/hooks/useCopyData';
 import { useForm } from 'react-hook-form';
 import { defaultOutLinkForm } from '@/constants/app';
-import type { OutLinkEditType, OutLinkSchema } from '@fastgpt/global/support/outLink/type.d';
+import type { OutLinkEditType, OutLinkSchema } from '@/packages/global/support/outLink/type.d';
 import { useRequest } from '@/web/common/hooks/useRequest';
-import { OutLinkTypeEnum } from '@fastgpt/global/support/outLink/constant';
+import { OutLinkTypeEnum } from '@/packages/global/support/outLink/constant';
 import { useTranslation } from 'next-i18next';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
 import MyTooltip from '@/components/MyTooltip';
 import MyModal from '@/components/MyModal';

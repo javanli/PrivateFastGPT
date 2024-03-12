@@ -13,16 +13,16 @@ import {
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { PageTypeEnum } from '@/constants/user';
-import { OAuthEnum } from '@fastgpt/global/support/user/constant';
+import { OAuthEnum } from '@/packages/global/support/user/constant';
 import { postLogin } from '@/web/support/user/api';
 import type { ResLogin } from '@/global/support/api/userRes';
-import { useToast } from '@fastgpt/web/hooks/useToast';
+import { useToast } from '@/packages/web/hooks/useToast';
 import { useSystemStore } from '@/web/common/system/useSystemStore';
-import MyIcon from '@fastgpt/web/components/common/Icon';
+import MyIcon from '@/packages/web/components/common/Icon';
 import { customAlphabet } from 'nanoid';
 import { getDocPath } from '@/web/common/system/doc';
 import Avatar from '@/components/Avatar';
-import { LOGO_ICON } from '@fastgpt/global/common/system/constants';
+import { LOGO_ICON } from '@/packages/global/common/system/constants';
 import { useTranslation } from 'next-i18next';
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz1234567890', 8);
 
