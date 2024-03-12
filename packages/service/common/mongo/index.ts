@@ -1,4 +1,3 @@
-import { IndexDirection, IndexOptions, Types, Schema as mongooseSchema } from 'mongoose';
 import {
   ModelCtor,
   Sequelize,
@@ -16,7 +15,18 @@ import { MakeNullishOptional } from 'sequelize/types/utils';
 
 export const sequelize = new Sequelize('sqlite::memory:');
 export const connectionMongo = sequelize;
-
+type IndexDirection =
+  | 1
+  | -1
+  | '2d'
+  | '2dsphere'
+  | 'geoHaystack'
+  | 'hashed'
+  | 'text'
+  | 'ascending'
+  | 'asc'
+  | 'descending'
+  | 'desc';
 declare type SchemaType =
   | StringConstructor
   | BufferConstructor
@@ -50,7 +60,7 @@ export class Schema<T> {
   constructor(config: SchemaAttributes<T>) {
     this.config = config;
   }
-  index(config: Record<string, IndexDirection>, options?: IndexOptions) {}
+  index(config: Record<string, IndexDirection>, options?: any) {}
 }
 export class Model<T extends {}> {
   sqliteModel: ModelCtor<SeqModel<T>>;

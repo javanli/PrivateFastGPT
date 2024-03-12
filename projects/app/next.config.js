@@ -45,7 +45,7 @@ const nextConfig = {
   },
   transpilePackages: ['@fastgpt/*'],
   experimental: {
-    serverComponentsExternalPackages: ['mongoose', 'pg', 'sequelize', 'pg-hstore'],
+    serverComponentsExternalPackages: [],
     outputFileTracingRoot: path.join(__dirname, '../../')
   }
 };
