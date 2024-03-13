@@ -14,7 +14,6 @@ import { Prompt_CQJson } from '@/global/core/prompt/agent';
 import { LLMModelItemType } from '@/packages/global/core/ai/model';
 import { ModelTypeEnum, getLLMModel } from '@/packages/service/core/ai/model';
 import { getHistories } from '../utils';
-import { formatModelChars2Points } from '@/service/support/wallet/usage/utils';
 
 type Props = ModuleDispatchProps<{
   [ModuleInputKeyEnum.aiModel]: string;
@@ -63,11 +62,10 @@ export const dispatchClassifyQuestion = async (props: Props): Promise<CQResponse
 
   const result = agents.find((item) => item.key === arg?.type) || agents[agents.length - 1];
 
-  const { totalPoints, modelName } = formatModelChars2Points({
-    model: cqModel.model,
-    charsLength,
-    modelType: ModelTypeEnum.llm
-  });
+  const { totalPoints, modelName } = {
+    totalPoints: 99999999,
+    modelName: cqModel.name
+  };
 
   return {
     [result.key]: true,

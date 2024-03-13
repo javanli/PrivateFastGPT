@@ -6,6 +6,7 @@ import { delDatasetRelevantData } from '@/packages/service/core/dataset/controll
 import { findDatasetAndAllChildren } from '@/packages/service/core/dataset/controller';
 import { MongoDataset } from '@/packages/service/core/dataset/schema';
 import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
+import { Op } from 'sequelize';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
@@ -38,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await delDatasetRelevantData({ datasets, session });
       await MongoDataset.deleteMany(
         {
-          _id: { $in: datasets.map((d) => d._id) }
+          _id: { [Op.in]: datasets.map((d) => d._id) }
         },
         { session }
       );

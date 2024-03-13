@@ -1,7 +1,7 @@
 import { UploadImgProps } from '@/packages/global/common/file/api';
 import { imageBaseUrl } from '@/packages/global/common/file/image/constants';
 import { MongoImage } from './schema';
-import { ClientSession } from '../../mongo';
+import { ClientSession, Op } from '../../mongo';
 
 export function getMongoImgUrl(id: string) {
   return `${imageBaseUrl}${id}`;
@@ -61,7 +61,7 @@ export async function delImgByRelatedId({
   return MongoImage.deleteMany(
     {
       teamId,
-      'metadata.relatedId': { $in: relateIds.map((id) => String(id)) }
+      'metadata.relatedId': { [Op.in]: relateIds.map((id) => String(id)) }
     },
     { session }
   );

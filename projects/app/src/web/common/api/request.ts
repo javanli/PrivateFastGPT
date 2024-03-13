@@ -100,12 +100,6 @@ function responseError(err: any) {
   if (err?.code in TOKEN_ERROR_CODE) {
     clearToken();
 
-    if (window.location.pathname !== '/chat/share') {
-      window.location.replace(
-        `/login?lastRoute=${encodeURIComponent(location.pathname + location.search)}`
-      );
-    }
-
     return Promise.reject({ message: '无权操作' });
   }
   if (err?.response?.data) {

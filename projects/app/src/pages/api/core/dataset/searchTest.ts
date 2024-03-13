@@ -4,9 +4,7 @@ import { withNextCors } from '@/packages/service/common/middle/cors';
 import type { SearchTestProps, SearchTestResponse } from '@/global/core/dataset/api.d';
 import { connectToDatabase } from '@/service/mongo';
 import { authDataset } from '@/packages/service/support/permission/auth/dataset';
-import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { searchDatasetData } from '@/service/core/dataset/data/controller';
-import { updateApiKeyUsage } from '@/packages/service/support/openapi/tools';
 import { UsageSourceEnum } from '@/packages/global/support/wallet/usage/constants';
 import { getLLMModel } from '@/packages/service/core/ai/model';
 import { datasetSearchQueryExtension } from '@/packages/service/core/dataset/search/utils';
@@ -69,27 +67,6 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
       searchMode,
       usingReRank: usingReRank && (await checkTeamReRankPermission(teamId))
     });
-
-    // push bill
-    const { totalPoints } = pushGenerateVectorUsage({
-      teamId,
-      tmbId,
-      charsLength,
-      model: dataset.vectorModel,
-      source: apikey ? UsageSourceEnum.api : UsageSourceEnum.fastgpt,
-
-      ...(aiExtensionResult &&
-        extensionModel && {
-          extensionModel: extensionModel.name,
-          extensionCharsLength: aiExtensionResult.charsLength
-        })
-    });
-    if (apikey) {
-      updateApiKeyUsage({
-        apikey,
-        totalPoints: totalPoints
-      });
-    }
 
     jsonRes<SearchTestResponse>(res, {
       data: {

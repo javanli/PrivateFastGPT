@@ -4,7 +4,6 @@ import { connectToDatabase } from '@/service/mongo';
 import { authCert } from '@/packages/service/support/permission/auth/common';
 import type { AdminUpdateFeedbackParams } from '@/global/core/chat/api.d';
 import { MongoChatItem } from '@/packages/service/core/chat/chatItemSchema';
-import { autChatCrud } from '@/service/support/permission/auth/chat';
 
 /* 初始化我的聊天框，需要身份验证 */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -16,15 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!chatItemId || !datasetId || !dataId || !q) {
       throw new Error('missing parameter');
     }
-
-    await autChatCrud({
-      req,
-      authToken: true,
-      appId,
-      chatId,
-      per: 'r'
-    });
-
     await MongoChatItem.update(
       {
         appId,

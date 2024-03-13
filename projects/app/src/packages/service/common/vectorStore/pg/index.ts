@@ -142,7 +142,7 @@ class PgClass {
     const results = await this.all<{ count: number }>(
       `select count(*) as count from ${PgDatasetTableName} where team_id=${teamId}`
     );
-    return results[0].count;
+    return results && results.length > 0 ? results[0].count : 0;
   }
   async queryBetweenTime(start: Date, end: Date) {
     const results = await this.all<{ rowid: number; team_id: string; dataset_id: string }>(

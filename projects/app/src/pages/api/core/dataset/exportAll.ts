@@ -15,6 +15,7 @@ import {
   updateExportDatasetLimit
 } from '@/packages/service/support/user/utils';
 import { sseResponseEventEnum } from '@/packages/service/common/response/constant';
+import { Op } from 'sequelize';
 
 export default withNextCors(async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
@@ -48,7 +49,7 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
       await MongoDatasetData.sqliteModel.findAll({
         where: {
           teamId,
-          datasetId: { $in: datasets.map((d) => d._id) }
+          datasetId: { [Op.in]: datasets.map((d) => d._id) }
         },
         limit: 5000
       })

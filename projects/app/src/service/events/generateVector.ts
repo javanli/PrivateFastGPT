@@ -1,7 +1,6 @@
 import { insertData2Dataset } from '@/service/core/dataset/data/controller';
 import { MongoDatasetTraining } from '@/packages/service/core/dataset/training/schema';
 import { TrainingModeEnum } from '@/packages/global/core/dataset/constants';
-import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { checkInvalidChunkAndLock, checkTeamAiPointsAndLock } from './utils';
 import { delay } from '@/packages/global/common/system/utils';
 import { Op } from '@/packages/service/common/mongo';
@@ -98,15 +97,6 @@ export async function generateVector(): Promise<any> {
       chunkIndex: data.chunkIndex,
       indexes: dataItem.indexes,
       model: data.model
-    });
-
-    // push usage
-    pushGenerateVectorUsage({
-      teamId: data.teamId,
-      tmbId: data.tmbId,
-      charsLength,
-      model: data.model,
-      billId: data.billId
     });
 
     // delete data from training

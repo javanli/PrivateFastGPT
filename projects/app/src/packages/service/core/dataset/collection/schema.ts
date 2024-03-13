@@ -34,11 +34,10 @@ const DatasetCollectionSchema = new Schema({
     ref: TeamMemberCollectionName,
     required: true
   },
-  // datasetId: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: DatasetCollectionName,
-  //   required: true
-  // },
+  datasetId: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
   type: {
     type: String,
     enum: Object.keys(DatasetCollectionTypeMap),

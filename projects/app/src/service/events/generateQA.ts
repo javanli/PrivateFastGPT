@@ -1,5 +1,4 @@
 import { MongoDatasetTraining } from '@/packages/service/core/dataset/training/schema';
-import { pushQAUsage } from '@/service/support/wallet/usage/push';
 import { TrainingModeEnum } from '@/packages/global/core/dataset/constants';
 import { getAIApi } from '@/packages/service/core/ai/config';
 import type { ChatMessageItemType } from '@/packages/global/core/ai/type.d';
@@ -126,19 +125,6 @@ ${replaceVariable(Prompt_AgentQA.fixedText, { text })}`;
 
     // delete data from training
     await MongoDatasetTraining.findByIdAndDelete(data._id);
-
-    // add bill
-    if (insertLen > 0) {
-      pushQAUsage({
-        teamId: data.teamId,
-        tmbId: data.tmbId,
-        charsLength: countGptMessagesChars(messages).length,
-        billId: data.billId,
-        model
-      });
-    } else {
-      addLog.info(`QA result 0:`, { answer });
-    }
 
     reduceQueue();
     generateQA();

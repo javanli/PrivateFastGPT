@@ -5,7 +5,6 @@ import type {
 } from '@/packages/global/core/module/type.d';
 import { ModuleInputKeyEnum, ModuleOutputKeyEnum } from '@/packages/global/core/module/constants';
 import { ModelTypeEnum, getLLMModel } from '@/packages/service/core/ai/model';
-import { formatModelChars2Points } from '@/service/support/wallet/usage/utils';
 import { queryExtension } from '@/packages/service/core/ai/functions/queryExtension';
 import { getHistories } from '../utils';
 import { hashStr } from '@/packages/global/common/string/tools';
@@ -41,11 +40,10 @@ export const dispatchQueryExtension = async ({
 
   extensionQueries.unshift(userChatInput);
 
-  const { totalPoints, modelName } = formatModelChars2Points({
-    model: queryExtensionModel.model,
-    charsLength,
-    modelType: ModelTypeEnum.llm
-  });
+  const { totalPoints, modelName } = {
+    totalPoints: 99999999,
+    modelName: queryExtensionModel.name
+  };
 
   const set = new Set<string>();
   const filterSameQueries = extensionQueries.filter((item) => {

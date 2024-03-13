@@ -2,10 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { jsonRes } from '@/packages/service/common/response';
 import { authCert } from '@/packages/service/support/permission/auth/common';
 import { withNextCors } from '@/packages/service/common/middle/cors';
-import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { connectToDatabase } from '@/service/mongo';
 import { getVectorsByText } from '@/packages/service/core/ai/embedding';
-import { updateApiKeyUsage } from '@/packages/service/support/openapi/tools';
 import { getUsageSourceByAuthType } from '@/packages/global/support/wallet/usage/tools';
 import { getVectorModel } from '@/packages/service/core/ai/model';
 import { checkTeamAIPoints } from '@/packages/service/support/permission/teamLimit';
@@ -54,22 +52,6 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
         total_tokens: charsLength
       }
     });
-
-    const { totalPoints } = pushGenerateVectorUsage({
-      teamId,
-      tmbId,
-      charsLength,
-      model,
-      billId,
-      source: getUsageSourceByAuthType({ authType })
-    });
-
-    if (apikey) {
-      updateApiKeyUsage({
-        apikey,
-        totalPoints: totalPoints
-      });
-    }
   } catch (err) {
     console.log(err);
     jsonRes(res, {

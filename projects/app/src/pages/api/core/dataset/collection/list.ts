@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     const match = {
       teamId: teamId,
       datasetId: datasetId,
-      parentId: parentId ? parentId : undefined,
+      ...(parentId ? { parentId } : {}),
       ...(selectFolder ? { type: DatasetCollectionTypeEnum.folder } : {}),
       ...(searchText
         ? {

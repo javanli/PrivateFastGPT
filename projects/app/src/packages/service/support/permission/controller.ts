@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import { NextApiResponse } from 'next';
 import type { AuthModeType, ReqHeaderAuthType } from './type';
 import { AuthUserTypeEnum } from '@/packages/global/support/permission/constant';
-import { authOpenApiKey } from '../openapi/auth';
 import { FileTokenQuery } from '@/packages/global/common/file/type';
 import { getDefaultTeamMember } from '../user/team/controller';
 

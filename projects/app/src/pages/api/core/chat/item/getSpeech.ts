@@ -3,9 +3,7 @@ import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import { GetChatSpeechProps } from '@/global/core/chat/api.d';
 import { text2Speech } from '@/packages/service/core/ai/audio/speech';
-import { pushAudioSpeechUsage } from '@/service/support/wallet/usage/push';
 import { authCertOrShareId } from '@/packages/service/support/permission/auth/common';
-import { authType2UsageSource } from '@/service/support/wallet/usage/utils';
 import { getAudioSpeechModel } from '@/packages/service/core/ai/model';
 import { MongoTTSBuffer } from '@/packages/service/common/buffer/tts/schema';
 
@@ -56,14 +54,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       speed: ttsConfig.speed,
       onSuccess: async ({ model, buffer }) => {
         try {
-          pushAudioSpeechUsage({
-            model: model,
-            charsLength: input.length,
-            tmbId,
-            teamId,
-            source: authType2UsageSource({ authType })
-          });
-
           await MongoTTSBuffer.create({
             bufferId: voiceData.bufferId,
             text: JSON.stringify({ text: input, speed: ttsConfig.speed }),

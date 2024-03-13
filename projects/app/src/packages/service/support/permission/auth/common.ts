@@ -1,7 +1,6 @@
 import { AuthUserTypeEnum } from '@/packages/global/support/permission/constant';
 import { parseHeaderCert } from '../controller';
 import { AuthModeType } from '../type';
-import { authOutLinkValid } from './outLink';
 import { SERVICE_LOCAL_HOST } from '../../../common/system/tools';
 
 export const authCert = async (props: AuthModeType) => {
@@ -17,20 +16,7 @@ export async function authCertOrShareId({
   shareId,
   ...props
 }: AuthModeType & { shareId?: string }) {
-  if (!shareId) {
-    return authCert(props);
-  }
-
-  const { shareChat } = await authOutLinkValid({ shareId });
-
-  return {
-    teamId: String(shareChat.teamId),
-    tmbId: String(shareChat.tmbId),
-    authType: AuthUserTypeEnum.outLink,
-    apikey: '',
-    isOwner: false,
-    canWrite: false
-  };
+  return authCert(props);
 }
 
 /* auth the request from local service */

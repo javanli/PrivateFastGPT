@@ -1,5 +1,4 @@
 import type { moduleDispatchResType } from '@/packages/global/core/chat/type.d';
-import { formatModelChars2Points } from '@/service/support/wallet/usage/utils';
 import type { SelectedDatasetType } from '@/packages/global/core/module/api.d';
 import type { SearchDataResponseItemType } from '@/packages/global/core/dataset/type';
 import type {
@@ -102,11 +101,10 @@ export async function dispatchDatasetSearch(
 
   // count bill results
   // vector
-  const { totalPoints, modelName } = formatModelChars2Points({
-    model: vectorModel.model,
-    charsLength,
-    modelType: ModelTypeEnum.vector
-  });
+  const { totalPoints, modelName } = {
+    totalPoints: 99999999,
+    modelName: getLLMModel(vectorModel.model).name
+  };
   const responseData: moduleDispatchResType & { totalPoints: number } = {
     totalPoints,
     query: concatQueries.join('\n'),
@@ -127,11 +125,10 @@ export async function dispatchDatasetSearch(
   ];
 
   if (aiExtensionResult) {
-    const { totalPoints, modelName } = formatModelChars2Points({
-      model: aiExtensionResult.model,
-      charsLength: aiExtensionResult.charsLength,
-      modelType: ModelTypeEnum.llm
-    });
+    const { totalPoints, modelName } = {
+      totalPoints: 99999999,
+      modelName: getLLMModel(aiExtensionResult.model).name
+    };
 
     responseData.totalPoints += totalPoints;
     responseData.charsLength = aiExtensionResult.charsLength;

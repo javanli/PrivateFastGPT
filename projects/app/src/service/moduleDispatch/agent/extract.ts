@@ -14,7 +14,6 @@ import { replaceVariable } from '@/packages/global/common/string/tools';
 import { LLMModelItemType } from '@/packages/global/core/ai/model';
 import { getHistories } from '../utils';
 import { ModelTypeEnum, getLLMModel } from '@/packages/service/core/ai/model';
-import { formatModelChars2Points } from '@/service/support/wallet/usage/utils';
 
 type Props = ModuleDispatchProps<{
   [ModuleInputKeyEnum.history]?: ChatItemType[];
@@ -83,11 +82,10 @@ export async function dispatchContentExtract(props: Props): Promise<Response> {
     }
   }
 
-  const { totalPoints, modelName } = formatModelChars2Points({
-    model: extractModel.model,
-    charsLength,
-    modelType: ModelTypeEnum.llm
-  });
+  const { totalPoints, modelName } = {
+    totalPoints: 99999999,
+    modelName: extractModel.name
+  };
 
   return {
     [ModuleOutputKeyEnum.success]: success ? true : undefined,

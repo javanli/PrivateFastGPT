@@ -6,7 +6,6 @@ import { getUploadModel } from '@/packages/service/common/file/multer';
 import { removeFilesByPaths } from '@/packages/service/common/file/utils';
 import fs from 'fs';
 import { getAIApi } from '@/packages/service/core/ai/config';
-import { pushWhisperUsage } from '@/service/support/wallet/usage/push';
 
 const upload = getUploadModel({
   maxSize: 2
@@ -38,12 +37,6 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
     const result = await ai.audio.transcriptions.create({
       file: fs.createReadStream(file.path),
       model: global.whisperModel.model
-    });
-
-    pushWhisperUsage({
-      teamId,
-      tmbId,
-      duration
     });
 
     jsonRes(res, {

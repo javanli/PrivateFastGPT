@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import type { CreateQuestionGuideParams } from '@/global/core/ai/api.d';
-import { pushQuestionGuideUsage } from '@/service/support/wallet/usage/push';
 import { createQuestionGuide } from '@/packages/service/core/ai/functions/createQuestionGuide';
 import { authCertOrShareId } from '@/packages/service/support/permission/auth/common';
 
@@ -26,12 +25,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     jsonRes(res, {
       data: result
-    });
-
-    pushQuestionGuideUsage({
-      charsLength,
-      teamId,
-      tmbId
     });
   } catch (err) {
     jsonRes(res, {

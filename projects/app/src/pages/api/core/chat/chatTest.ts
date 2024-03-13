@@ -4,7 +4,6 @@ import { sseErrRes } from '@/packages/service/common/response';
 import { sseResponseEventEnum } from '@/packages/service/common/response/constant';
 import { responseWrite } from '@/packages/service/common/response';
 import type { ModuleItemType } from '@/packages/global/core/module/type.d';
-import { pushChatUsage } from '@/service/support/wallet/usage/push';
 import { UsageSourceEnum } from '@/packages/global/support/wallet/usage/constants';
 import type { ChatItemType } from '@/packages/global/core/chat/type';
 import { authApp } from '@/packages/service/support/permission/auth/app';
@@ -81,15 +80,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       data: JSON.stringify(responseData)
     });
     res.end();
-
-    pushChatUsage({
-      appName,
-      appId,
-      teamId,
-      tmbId,
-      source: UsageSourceEnum.fastgpt,
-      moduleDispatchBills
-    });
   } catch (err: any) {
     res.status(500);
     sseErrRes(res, err);

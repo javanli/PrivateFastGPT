@@ -4,7 +4,6 @@ import { withNextCors } from '@/packages/service/common/middle/cors';
 import { connectToDatabase } from '@/service/mongo';
 import { updateData2Dataset } from '@/service/core/dataset/data/controller';
 import { authDatasetData } from '@/service/support/permission/auth/dataset';
-import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { UpdateDatasetDataProps } from '@/global/core/dataset/api';
 import { checkDatasetLimit } from '@/packages/service/support/permission/teamLimit';
 
@@ -41,14 +40,6 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
       indexes,
       model: vectorModel
     });
-
-    pushGenerateVectorUsage({
-      teamId,
-      tmbId,
-      charsLength,
-      model: vectorModel
-    });
-
     jsonRes(res);
   } catch (err) {
     jsonRes(res, {

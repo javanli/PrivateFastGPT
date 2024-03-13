@@ -5,7 +5,6 @@ import { MongoChat } from '@/packages/service/core/chat/chatSchema';
 import type { ChatHistoryItemType } from '@/packages/global/core/chat/type.d';
 import { ChatSourceEnum } from '@/packages/global/core/chat/constants';
 import { getHistoriesProps } from '@/global/core/chat/api';
-import { authOutLink } from '@/service/support/permission/auth/outLink';
 import { authCert } from '@/packages/service/support/permission/auth/common';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -16,25 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const limit = shareId && outLinkUid ? 20 : 30;
 
     const match = await (async () => {
-      if (shareId && outLinkUid) {
-        const { uid } = await authOutLink({ shareId, outLinkUid });
-
-        return {
-          shareId,
-          outLinkUid: uid,
-          source: ChatSourceEnum.share,
-          updateTime: {
-            $gte: new Date(new Date().setDate(new Date().getDate() - 30))
-          }
-        };
-      }
-      if (appId && outLinkUid) {
-        return {
-          shareId,
-          outLinkUid: outLinkUid,
-          source: ChatSourceEnum.team
-        };
-      }
       if (appId) {
         const { tmbId } = await authCert({ req, authToken: true });
         return {

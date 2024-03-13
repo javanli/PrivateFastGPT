@@ -4,7 +4,6 @@ import { connectToDatabase } from '@/service/mongo';
 import { MongoChat } from '@/packages/service/core/chat/chatSchema';
 import { MongoChatItem } from '@/packages/service/core/chat/chatItemSchema';
 import { DelHistoryProps } from '@/global/core/chat/api';
-import { autChatCrud } from '@/service/support/permission/auth/chat';
 import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
 
 /* clear chat history */
@@ -12,16 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await connectToDatabase();
     const { appId, chatId, shareId, outLinkUid } = req.query as DelHistoryProps;
-
-    await autChatCrud({
-      req,
-      authToken: true,
-      appId,
-      chatId,
-      shareId,
-      outLinkUid,
-      per: 'w'
-    });
 
     await mongoSessionRun(async (session) => {
       await MongoChatItem.deleteMany(

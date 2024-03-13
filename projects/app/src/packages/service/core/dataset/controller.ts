@@ -2,7 +2,7 @@ import { CollectionWithDatasetType, DatasetSchemaType } from '@/packages/global/
 import { MongoDatasetCollection } from './collection/schema';
 import { DatasetCollectionName, MongoDataset } from './schema';
 import { delCollectionAndRelatedSources } from './collection/controller';
-import { ClientSession } from '../../common/mongo';
+import { ClientSession, Op } from '../../common/mongo';
 
 /* ============= dataset ========== */
 /* find all datasetId by top datasetId */
@@ -77,7 +77,7 @@ export async function delDatasetRelevantData({
   const collections = await MongoDatasetCollection.find(
     {
       teamId,
-      datasetId: { $in: datasetIds }
+      datasetId: { [Op.in]: datasetIds }
     },
     '_id teamId fileId metadata'
   );

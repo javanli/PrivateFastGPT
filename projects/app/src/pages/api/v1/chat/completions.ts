@@ -13,19 +13,14 @@ import { gptMessage2ChatType, textAdaptGptResponse } from '@/utils/adapt';
 import { getChatItems } from '@/packages/service/core/chat/controller';
 import { saveChat } from '@/service/utils/chat/saveChat';
 import { responseWrite } from '@/packages/service/common/response';
-import { pushChatUsage } from '@/service/support/wallet/usage/push';
-import { authOutLinkChatStart } from '@/service/support/permission/auth/outLink';
-import { pushResult2Remote, addOutLinkUsage } from '@/packages/service/support/outLink/tools';
 import requestIp from 'request-ip';
 import { getUsageSourceByAuthType } from '@/packages/global/support/wallet/usage/tools';
 import { authTeamShareChatStart } from '@/service/support/permission/auth/teamChat';
 import { selectShareResponse } from '@/utils/service/core/chat';
-import { updateApiKeyUsage } from '@/packages/service/support/openapi/tools';
 import { connectToDatabase } from '@/service/mongo';
 import { getUserChatInfoAndAuthTeamPoints } from '@/service/support/permission/auth/team';
 import { AuthUserTypeEnum } from '@/packages/global/support/permission/constant';
 import { MongoApp } from '@/packages/service/core/app/schema';
-import { autChatCrud } from '@/service/support/permission/auth/chat';
 
 type FastGptWebChatProps = {
   chatId?: string; // undefined: nonuse history, '': new chat, 'xxxxx': use history
@@ -101,60 +96,8 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
       throw new Error('Question is empty');
     }
     /* auth app permission */
-    const { teamId, tmbId, user, app, responseDetail, authType, apikey, canWrite, outLinkUserId } =
+    const { teamId, tmbId, user, app, responseDetail, authType, apikey, canWrite } =
       await (async () => {
-        if (shareId && outLinkUid) {
-          const { teamId, tmbId, user, appId, authType, responseDetail, uid } =
-            await authOutLinkChatStart({
-              shareId,
-              ip: originIp,
-              outLinkUid,
-              question: question.value
-            });
-          const app = await MongoApp.findById(appId);
-
-          if (!app) {
-            return Promise.reject('app is empty');
-          }
-
-          return {
-            teamId,
-            tmbId,
-            user,
-            app,
-            responseDetail,
-            apikey: '',
-            authType,
-            canWrite: false,
-            outLinkUserId: uid
-          };
-        }
-        // team Apps share
-        if (shareTeamId && appId && outLinkUid) {
-          const { user, uid, tmbId } = await authTeamShareChatStart({
-            teamId: shareTeamId,
-            ip: originIp,
-            outLinkUid,
-            question: question.value
-          });
-          const app = await MongoApp.findById(appId);
-          if (!app) {
-            return Promise.reject('app is empty');
-          }
-
-          return {
-            teamId: shareTeamId,
-            tmbId,
-            user,
-            app,
-            responseDetail: detail,
-            authType: AuthUserTypeEnum.token,
-            apikey: '',
-            canWrite: false,
-            outLinkUserId: uid
-          };
-        }
-
         const {
           appId: apiKeyAppId,
           teamId,
@@ -217,19 +160,6 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
         };
       })();
 
-    // auth chat permission
-    await autChatCrud({
-      req,
-      authToken: true,
-      authApiKey: true,
-      appId: app._id,
-      chatId,
-      shareId,
-      shareTeamId,
-      outLinkUid,
-      per: 'w'
-    });
-
     // get and concat history
     const { history } = await getChatItems({
       appId: app._id,
@@ -271,7 +201,6 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
         variables,
         updateUseTime: !shareId && String(tmbId) === String(app.tmbId), // owner update use time
         shareId,
-        outLinkUid: outLinkUserId,
         source: (() => {
           if (shareId) {
             return ChatSourceEnum.share;
@@ -338,30 +267,6 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
             index: 0
           }
         ]
-      });
-    }
-
-    // add record
-    const { totalPoints } = pushChatUsage({
-      appName: app.name,
-      appId: app._id,
-      teamId,
-      tmbId: tmbId,
-      source: getUsageSourceByAuthType({ shareId, authType }),
-      moduleDispatchBills
-    });
-
-    if (shareId) {
-      pushResult2Remote({ outLinkUid, shareId, appName: app.name, responseData });
-      addOutLinkUsage({
-        shareId,
-        totalPoints
-      });
-    }
-    if (apikey) {
-      updateApiKeyUsage({
-        apikey,
-        totalPoints
       });
     }
   } catch (err) {

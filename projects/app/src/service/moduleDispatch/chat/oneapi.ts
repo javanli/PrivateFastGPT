@@ -6,7 +6,6 @@ import { sseResponseEventEnum } from '@/packages/service/common/response/constan
 import { textAdaptGptResponse } from '@/utils/adapt';
 import { getAIApi } from '@/packages/service/core/ai/config';
 import type { ChatCompletion, StreamChatType } from '@/packages/global/core/ai/type.d';
-import { formatModelChars2Points } from '@/service/support/wallet/usage/utils';
 import type { LLMModelItemType } from '@/packages/global/core/ai/model';
 import { postTextCensor } from '@/service/common/censor';
 import { ChatCompletionRequestMessageRoleEnum } from '@/packages/global/core/ai/constant';
@@ -190,11 +189,10 @@ export const dispatchChatCompletion = async (props: ChatProps): Promise<ChatResp
   })();
 
   const charsLength = countMessagesChars(completeMessages);
-  const { totalPoints, modelName } = formatModelChars2Points({
-    model,
-    charsLength,
-    modelType: ModelTypeEnum.llm
-  });
+  const { totalPoints, modelName } = {
+    totalPoints: 99999999,
+    modelName: modelConstantsData.name
+  };
 
   return {
     answerText,

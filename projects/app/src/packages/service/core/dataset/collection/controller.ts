@@ -15,7 +15,7 @@ import { delImgByRelatedId } from '../../../common/file/image/controller';
 import { deleteDatasetDataVector } from '../../../common/vectorStore/controller';
 import { delFileByFileIdList } from '../../../common/file/gridfs/controller';
 import { BucketNameEnum } from '@/packages/global/common/file/constants';
-import { ClientSession } from '../../../common/mongo';
+import { ClientSession, Op } from '../../../common/mongo';
 
 export async function createOneCollection({
   teamId,
@@ -100,19 +100,17 @@ export function createDefaultCollection({
   session?: ClientSession;
 }) {
   return MongoDatasetCollection.create(
-    [
-      {
-        name,
-        teamId,
-        tmbId,
-        datasetId,
-        parentId,
-        type: DatasetCollectionTypeEnum.virtual,
-        trainingType: TrainingModeEnum.chunk,
-        chunkSize: 0,
-        updateTime: new Date('2099')
-      }
-    ],
+    {
+      name,
+      teamId,
+      tmbId,
+      datasetId,
+      parentId,
+      type: DatasetCollectionTypeEnum.virtual,
+      trainingType: TrainingModeEnum.chunk,
+      chunkSize: 0,
+      updateTime: new Date('2099')
+    },
     { session }
   );
 }
@@ -142,11 +140,14 @@ export async function delCollectionAndRelatedSources({
   // delete training data
   await MongoDatasetTraining.deleteMany({
     teamId,
-    collectionId: { $in: collectionIds }
+    collectionId: { [Op.in]: collectionIds }
   });
 
   // delete dataset.datas
-  await MongoDatasetData.deleteMany({ teamId, collectionId: { $in: collectionIds } }, { session });
+  await MongoDatasetData.deleteMany(
+    { teamId, collectionId: { [Op.in]: collectionIds } },
+    { session }
+  );
   // delete imgs
   await delImgByRelatedId({
     teamId,
@@ -156,7 +157,7 @@ export async function delCollectionAndRelatedSources({
   // delete collections
   await MongoDatasetCollection.deleteMany(
     {
-      _id: { $in: collectionIds }
+      _id: { [Op.in]: collectionIds }
     },
     { session }
   );

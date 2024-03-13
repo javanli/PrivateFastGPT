@@ -1,4 +1,6 @@
-export const getLLMModel = (model?: string) => {
+import { LLMModelItemType, VectorModelItemType } from '@/packages/global/core/ai/model';
+
+export const getLLMModel = (model?: string): LLMModelItemType => {
   return global.llmModels.find((item) => item.model === model) ?? global.llmModels[0];
 };
 export const getDatasetModel = (model?: string) => {
@@ -8,7 +10,7 @@ export const getDatasetModel = (model?: string) => {
   );
 };
 
-export const getVectorModel = (model?: string) => {
+export const getVectorModel = (model?: string): VectorModelItemType => {
   return global.vectorModels.find((item) => item.model === model) || global.vectorModels[0];
 };
 

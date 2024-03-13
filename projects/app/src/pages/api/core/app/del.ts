@@ -3,7 +3,6 @@ import { jsonRes } from '@/packages/service/common/response';
 import { connectToDatabase } from '@/service/mongo';
 import { MongoChat } from '@/packages/service/core/chat/chatSchema';
 import { MongoApp } from '@/packages/service/core/app/schema';
-import { MongoOutLink } from '@/packages/service/support/outLink/schema';
 import { authApp } from '@/packages/service/support/permission/auth/app';
 import { MongoChatItem } from '@/packages/service/core/chat/chatItemSchema';
 import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
@@ -29,13 +28,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         { session }
       );
       await MongoChat.deleteMany(
-        {
-          appId
-        },
-        { session }
-      );
-      // 删除分享链接
-      await MongoOutLink.deleteMany(
         {
           appId
         },

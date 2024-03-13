@@ -13,7 +13,7 @@ import {
 export { Op } from 'sequelize';
 import { MakeNullishOptional } from 'sequelize/types/utils';
 
-export const sequelize = new Sequelize('sqlite::memory:');
+export const sequelize = global.mongodb || new Sequelize('sqlite::memory:');
 export const connectionMongo = sequelize;
 type IndexDirection =
   | 1
@@ -98,8 +98,10 @@ export class Model<T extends {}> {
   async findByIdAndDelete(id: string, writeOption?: WriteOption) {
     await this.destroy({ _id: id }, writeOption);
   }
-  async create(values: any, writeOption?: WriteOption) {
-    const result = await this.sqliteModel.create(values, { transaction: writeOption?.session });
+  async create(values: Record<string, any>, writeOption?: WriteOption) {
+    const result = await this.sqliteModel.create(values as any, {
+      transaction: writeOption?.session
+    });
     return result.dataValues;
   }
   async destroy(options: WhereOptions, writeOption?: WriteOption) {
@@ -166,6 +168,11 @@ function convertType(type?: SchemaType) {
 }
 export function model<M extends {}, T>(name: string, schema?: Schema<T>): Model<M> {
   let attributes: Record<string, ModelAttributeColumnOptions> = {};
+  attributes['_id'] = {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true
+  };
   for (const key in schema?.config) {
     if (Object.prototype.hasOwnProperty.call(schema?.config, key)) {
       const element = schema?.config[key] ?? {};

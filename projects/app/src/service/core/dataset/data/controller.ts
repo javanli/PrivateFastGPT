@@ -373,7 +373,7 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
       await MongoDatasetData.sqliteModel.findAll({
         where: {
           teamId,
-          datasetId: { $in: datasetIds },
+          datasetId: { [Op.in]: datasetIds },
           'indexes.dataId': results.map((item) => item.id?.trim())
         },
         include: DatasetColCollectionName
@@ -482,7 +482,7 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
 
     const collections = await MongoDatasetCollection.find(
       {
-        _id: { $in: searchResults.map((item) => item.collectionId) }
+        _id: { [Op.in]: searchResults.map((item) => item.collectionId) }
       },
       '_id name fileId rawLink'
     );

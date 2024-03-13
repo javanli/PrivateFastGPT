@@ -12,7 +12,6 @@ import { hasSameValue } from '@/service/core/dataset/data/utils';
 import { insertData2Dataset } from '@/service/core/dataset/data/controller';
 import { authDatasetCollection } from '@/packages/service/support/permission/auth/dataset';
 import { getCollectionWithDataset } from '@/packages/service/core/dataset/controller';
-import { pushGenerateVectorUsage } from '@/service/support/wallet/usage/push';
 import { InsertOneDatasetDataProps } from '@/global/core/dataset/api';
 import { simpleText } from '@/packages/global/common/string/tools';
 import { checkDatasetLimit } from '@/packages/service/support/permission/teamLimit';
@@ -85,13 +84,6 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
       chunkIndex: 0,
       model: vectorModelData.model,
       indexes: formatIndexes
-    });
-
-    pushGenerateVectorUsage({
-      teamId,
-      tmbId,
-      charsLength,
-      model: vectorModelData.model
     });
 
     jsonRes<string>(res, {

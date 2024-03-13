@@ -5,8 +5,8 @@ import { authCert } from '@/packages/service/support/permission/auth/common';
 import { MongoChat } from '@/packages/service/core/chat/chatSchema';
 import { MongoChatItem } from '@/packages/service/core/chat/chatItemSchema';
 import { ClearHistoriesProps } from '@/global/core/chat/api';
-import { authOutLink } from '@/service/support/permission/auth/outLink';
 import { ChatSourceEnum } from '@/packages/global/core/chat/constants';
+import { Op } from 'sequelize';
 
 /* clear chat history */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -17,15 +17,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let chatAppId = appId;
 
     const match = await (async () => {
-      if (shareId && outLinkUid) {
-        const { appId, uid } = await authOutLink({ shareId, outLinkUid });
-
-        chatAppId = appId;
-        return {
-          shareId,
-          outLinkUid: uid
-        };
-      }
       if (appId) {
         const { tmbId } = await authCert({ req, authToken: true });
 
@@ -45,11 +36,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     await MongoChatItem.deleteMany({
       appId: chatAppId,
-      chatId: { $in: idList }
+      chatId: { [Op.in]: idList }
     });
     await MongoChat.deleteMany({
       appId: chatAppId,
-      chatId: { $in: idList }
+      chatId: { [Op.in]: idList }
     });
 
     jsonRes(res);
