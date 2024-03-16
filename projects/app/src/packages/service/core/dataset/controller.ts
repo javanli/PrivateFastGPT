@@ -47,8 +47,9 @@ export async function findDatasetAndAllChildren({
 
 export async function getCollectionWithDataset(collectionId: string) {
   const data = (await MongoDatasetCollection.sqliteModel.findByPk(collectionId, {
-    include: DatasetCollectionName
+    include: MongoDataset.sqliteModel
   }))!.dataValues as unknown as CollectionWithDatasetType;
+  // console.log(`getCollectionWithDataset:${JSON.stringify(data)}`)
   if (!data) {
     return Promise.reject('Collection is not exist');
   }

@@ -28,14 +28,14 @@ export function getDefaultTeamInfo() {
 export function getDefaultTeamMember() {
   const teamInfo = getDefaultTeamInfo();
   return {
-    _id: '0',
+    _id: '1',
     userId: String(0),
     teamId: String(teamInfo._id),
     teamName: teamInfo.name,
     memberName: '',
     avatar: teamInfo.avatar,
     balance: teamInfo.balance,
-    tmbId: '0',
+    tmbId: '1',
     role: TeamMemberRoleEnum.admin,
     status: TeamMemberStatusEnum.active,
     defaultTeam: true,

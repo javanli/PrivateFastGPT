@@ -127,7 +127,7 @@ const DataCard = () => {
     if (!collection) return [];
 
     const webSelector =
-      collection?.datasetId?.websiteConfig?.selector || collection?.metadata?.webPageSelector;
+      collection?.dataset?.websiteConfig?.selector || collection?.metadata?.webPageSelector;
 
     return [
       {

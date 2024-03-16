@@ -16,6 +16,7 @@ import {
 export default withNextCors(async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
     await connectToDatabase();
+    // console.log('search test 1');
     const {
       datasetId,
       text,
@@ -42,9 +43,11 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
       datasetId,
       per: 'r'
     });
+    // console.log('search test 2');
     // auth balance
     await checkTeamAIPoints(teamId);
 
+    // console.log('search test 3');
     // query extension
     const extensionModel =
       datasetSearchUsingExtensionQuery && datasetSearchExtensionModel
@@ -56,6 +59,7 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
       extensionBg: datasetSearchExtensionBg
     });
 
+    // console.log('search test 4');
     const { searchRes, charsLength, ...result } = await searchDatasetData({
       teamId,
       reRankQuery: rewriteQuery,
@@ -67,7 +71,7 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
       searchMode,
       usingReRank: usingReRank && (await checkTeamReRankPermission(teamId))
     });
-
+    // console.log('search test 5');
     jsonRes<SearchTestResponse>(res, {
       data: {
         list: searchRes,

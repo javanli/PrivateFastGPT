@@ -40,6 +40,8 @@ import { pushDataListToTrainingQueue } from '@/packages/service/core/dataset/tra
 import { getVectorModel } from '@/packages/service/core/ai/model';
 import { mongoSessionRun } from '@/packages/service/common/mongo/sessionRun';
 import { startQueue } from '@/service/utils/tools';
+import { MongoDataset } from '@/packages/service/core/dataset/schema';
+import { PgClient } from '@/packages/service/common/vectorStore/pg';
 
 export async function pushDataToTrainingQueue(
   props: {
@@ -81,7 +83,7 @@ export async function insertData2Dataset({
     return Promise.reject('q, datasetId, collectionId, model is required');
   }
   if (String(teamId) === String(tmbId)) {
-    return Promise.reject("teamId and tmbId can't be the same");
+    return Promise.reject(`teamId(${teamId}) and tmbId(${tmbId}) can't be the same`);
   }
 
   const qaStr = getDefaultIndex({ q, a }).text;
@@ -102,19 +104,6 @@ export async function insertData2Dataset({
 
   indexes = indexes.slice(0, 6);
 
-  // insert to vector store
-  const result = await Promise.all(
-    indexes.map((item) =>
-      insertDatasetDataVector({
-        query: item.text,
-        model: getVectorModel(model),
-        teamId,
-        datasetId,
-        collectionId
-      })
-    )
-  );
-
   // create mongo data
   const { _id } = await MongoDatasetData.create({
     teamId,
@@ -124,12 +113,23 @@ export async function insertData2Dataset({
     q,
     a,
     fullTextToken: jiebaSplit({ text: qaStr }),
-    chunkIndex,
-    indexes: indexes?.map((item, i) => ({
-      ...item,
-      dataId: result[i].insertId
-    }))
+    chunkIndex
   });
+  // insert to vector store
+  const result = await Promise.all(
+    indexes.map((item) =>
+      insertDatasetDataVector({
+        query: item.text,
+        model: getVectorModel(model),
+        teamId,
+        datasetId,
+        collectionId,
+        dataId: _id,
+        text: item.text,
+        default_index: item.defaultIndex
+      })
+    )
+  );
 
   return {
     insertId: _id,
@@ -167,8 +167,9 @@ export async function updateData2Dataset({
     text: index.text.trim(),
     defaultIndex: index.text.trim() === qaStr
   }));
+  const dataIndexes = await PgClient.queryWithDataId(dataId);
   if (!formatIndexes.find((index) => index.defaultIndex)) {
-    const defaultIndex = mongoData.indexes.find((index) => index.defaultIndex);
+    const defaultIndex = dataIndexes.find((index) => index.defaultIndex);
     formatIndexes.unshift(defaultIndex ? defaultIndex : getDefaultIndex({ q, a }));
   }
   formatIndexes = formatIndexes.slice(0, 6);
@@ -177,7 +178,7 @@ export async function updateData2Dataset({
   const patchResult: PatchIndexesProps[] = [];
 
   // find database indexes in new Indexes, if have not,  delete it
-  for (const item of mongoData.indexes) {
+  for (const item of dataIndexes) {
     const index = formatIndexes.find((index) => index.dataId === item.dataId);
     if (!index) {
       patchResult.push({
@@ -187,7 +188,7 @@ export async function updateData2Dataset({
     }
   }
   for (const item of formatIndexes) {
-    const index = mongoData.indexes.find((index) => index.dataId === item.dataId);
+    const index = dataIndexes.find((index) => index.dataId === item.dataId);
     // in database, update
     if (index) {
       // default index update
@@ -242,7 +243,10 @@ export async function updateData2Dataset({
           model: getVectorModel(model),
           teamId: mongoData.teamId,
           datasetId: mongoData.datasetId,
-          collectionId: mongoData.collectionId
+          collectionId: mongoData.collectionId,
+          dataId,
+          text: item.index.text,
+          default_index: item.index.defaultIndex
         });
         item.index.dataId = result.insertId;
         return result;
@@ -264,7 +268,7 @@ export async function updateData2Dataset({
     mongoData.a = a ?? mongoData.a;
     mongoData.fullTextToken = jiebaSplit({ text: mongoData.q + mongoData.a });
     // @ts-ignore
-    mongoData.indexes = newIndexes;
+    // mongoData.indexes = newIndexes;
     await MongoDatasetData.sqliteModel.update(mongoData, {
       where: {
         _id: dataId
@@ -356,49 +360,59 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
     };
   };
   const embeddingRecall = async ({ query, limit }: { query: string; limit: number }) => {
+    // console.log(`embeddingRecall query:${query} limit:${limit}`);
     const { vectors, charsLength } = await getVectorsByText({
       model: getVectorModel(model),
       input: query
     });
-
+    // console.log(`embeddingRecall vectors-length:${vectors?.length} charsLength:${charsLength}`);
     const { results } = await recallFromVectorStore({
       vectors,
       limit,
       datasetIds,
       efSearch: global.systemEnv?.pgHNSWEfSearch
     });
+    // console.log(`embeddingRecall results:${results?.length}`);
 
     // get q and a
+    const collectionIds = results.map((item) => item.collectionId) ?? [];
     const dataList = (
       await MongoDatasetData.sqliteModel.findAll({
         where: {
           teamId,
           datasetId: { [Op.in]: datasetIds },
-          'indexes.dataId': results.map((item) => item.id?.trim())
+          collectionId: { [Op.in]: collectionIds }
         },
-        include: DatasetColCollectionName
+        include: {
+          model: MongoDatasetCollection.sqliteModel,
+          as: 'collection'
+        }
       })
     ).map((item) => item.dataValues) as unknown as DatasetDataWithCollectionType[];
+    // console.log(`embeddingRecall dataList:${dataList}`);
 
     // add score to data(It's already sorted. The first one is the one with the most points)
-    const concatResults = dataList.map((data) => {
-      const dataIdList = data.indexes.map((item) => item.dataId);
+    const concatResults = await Promise.all(
+      dataList.map(async (data) => {
+        const dataIdList = (await PgClient.queryWithDataId(data._id)).map((item) => item.id);
+        // const dataIdList = data.indexes.map((item) => item.dataId);
 
-      const maxScoreResult = results.find((item) => {
-        return dataIdList.includes(item.id);
-      });
+        const maxScoreResult = results.find((item) => {
+          return dataIdList.includes(item.id);
+        });
 
-      return {
-        ...data,
-        score: maxScoreResult?.score || 0
-      };
-    });
+        return {
+          ...data,
+          score: maxScoreResult?.score || 0
+        };
+      })
+    );
 
     concatResults.sort((a, b) => b.score - a.score);
 
     const formatResult = concatResults
       .map((data, index) => {
-        if (!data.collectionId) {
+        if (!data.collection) {
           console.log('Collection is not found', data);
         }
 
@@ -408,16 +422,16 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
           a: data.a,
           chunkIndex: data.chunkIndex,
           datasetId: String(data.datasetId),
-          collectionId: String(data.collectionId?._id),
-          sourceName: data.collectionId?.name || '',
-          sourceId: data.collectionId?.fileId || data.collectionId?.rawLink,
+          collectionId: String(data.collection?._id),
+          sourceName: data.collection?.name || '',
+          sourceId: data.collection?.fileId || data.collection?.rawLink,
           score: [{ type: SearchScoreTypeEnum.embedding, value: data.score, index }]
         };
 
         return result;
       })
       .filter((item) => item !== null) as SearchDataResponseItemType[];
-
+    // console.log(`embeddingRecall end`);
     return {
       embeddingRecallResults: formatResult,
       charsLength
@@ -433,78 +447,83 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
     fullTextRecallResults: SearchDataResponseItemType[];
     tokenLen: number;
   }> => {
-    if (limit === 0) {
-      return {
-        fullTextRecallResults: [],
-        tokenLen: 0
-      };
-    }
-
-    // TODO: support fulltext search
-    let searchResults = (
-      await Promise.all(
-        datasetIds.map((id) =>
-          MongoDatasetData.sqliteModel
-            .findAll({
-              where: {
-                teamId,
-                datasetId: id,
-                fullTextToken: { [Op.like]: jiebaSplit({ text: query }) }
-              }
-            })
-            .then((items) => items.map((item) => item.dataValues))
-        )
-        // MongoDatasetData.find(
-        //   {
-        //     teamId,
-        //     datasetId: id,
-        //     $text: { $search: jiebaSplit({ text: query }) }
-        //   },
-        //   {
-        //     score: { $meta: 'textScore' },
-        //     _id: 1,
-        //     datasetId: 1,
-        //     collectionId: 1,
-        //     q: 1,
-        //     a: 1,
-        //     chunkIndex: 1
-        //   }
-        // )
-        //   .sort({ score: { $meta: 'textScore' } })
-        //   .limit(limit)
-        // )
-      )
-    ).flat() as (DatasetDataSchemaType & { score: number })[];
-
-    // resort
-    searchResults.sort((a, b) => b.score - a.score);
-    searchResults.slice(0, limit);
-
-    const collections = await MongoDatasetCollection.find(
-      {
-        _id: { [Op.in]: searchResults.map((item) => item.collectionId) }
-      },
-      '_id name fileId rawLink'
-    );
-
+    console.log(`not support fullTextRecall`);
     return {
-      fullTextRecallResults: searchResults.map((item, index) => {
-        const collection = collections.find((col) => String(col._id) === String(item.collectionId));
-        return {
-          id: String(item._id),
-          datasetId: String(item.datasetId),
-          collectionId: String(item.collectionId),
-          sourceName: collection?.name || '',
-          sourceId: collection?.fileId || collection?.rawLink,
-          q: item.q,
-          a: item.a,
-          chunkIndex: item.chunkIndex,
-          indexes: item.indexes,
-          score: [{ type: SearchScoreTypeEnum.fullText, value: item.score, index }]
-        };
-      }),
+      fullTextRecallResults: [],
       tokenLen: 0
     };
+    // if (limit === 0) {
+    //   return {
+    //     fullTextRecallResults: [],
+    //     tokenLen: 0
+    //   };
+    // }
+
+    // // TODO: support fulltext search
+    // let searchResults = (
+    //   await Promise.all(
+    //     datasetIds.map((id) =>
+    //       MongoDatasetData.sqliteModel
+    //         .findAll({
+    //           where: {
+    //             teamId,
+    //             datasetId: id,
+    //             fullTextToken: { [Op.like]: jiebaSplit({ text: query }) }
+    //           }
+    //         })
+    //         .then((items) => items.map((item) => item.dataValues))
+    //     )
+    //     // MongoDatasetData.find(
+    //     //   {
+    //     //     teamId,
+    //     //     datasetId: id,
+    //     //     $text: { $search: jiebaSplit({ text: query }) }
+    //     //   },
+    //     //   {
+    //     //     score: { $meta: 'textScore' },
+    //     //     _id: 1,
+    //     //     datasetId: 1,
+    //     //     collectionId: 1,
+    //     //     q: 1,
+    //     //     a: 1,
+    //     //     chunkIndex: 1
+    //     //   }
+    //     // )
+    //     //   .sort({ score: { $meta: 'textScore' } })
+    //     //   .limit(limit)
+    //     // )
+    //   )
+    // ).flat() as (DatasetDataSchemaType & { score: number })[];
+
+    // // resort
+    // searchResults.sort((a, b) => b.score - a.score);
+    // searchResults.slice(0, limit);
+
+    // const collections = await MongoDatasetCollection.find(
+    //   {
+    //     _id: { [Op.in]: searchResults.map((item) => item.collectionId) }
+    //   },
+    //   '_id name fileId rawLink'
+    // );
+    // console.log(`fulltext Recall end`);
+    // return {
+    //   fullTextRecallResults: searchResults.map((item, index) => {
+    //     const collection = collections.find((col) => String(col._id) === String(item.collectionId));
+    //     return {
+    //       id: String(item._id),
+    //       datasetId: String(item.datasetId),
+    //       collectionId: String(item.collectionId),
+    //       sourceName: collection?.name || '',
+    //       sourceId: collection?.fileId || collection?.rawLink,
+    //       q: item.q,
+    //       a: item.a,
+    //       chunkIndex: item.chunkIndex,
+    //       indexes: item.indexes,
+    //       score: [{ type: SearchScoreTypeEnum.fullText, value: item.score, index }]
+    //     };
+    //   }),
+    //   tokenLen: 0
+    // };
   };
   const reRankSearchResult = async ({
     data,
@@ -614,15 +633,18 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
 
   /* main step */
   // count limit
+  // console.log(`searchDatasetData 0`);
   const { embeddingLimit, fullTextLimit } = countRecallLimit();
 
   // recall
+  // console.log(`searchDatasetData 1`);
   const { embeddingRecallResults, fullTextRecallResults, charsLength } = await multiQueryRecall({
     embeddingLimit,
     fullTextLimit
   });
 
   // ReRank results
+  // console.log(`searchDatasetData 2`);
   const reRankResults = await (async () => {
     if (!usingReRank) return [];
 
@@ -647,6 +669,7 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
   })();
 
   // embedding recall and fullText recall rrf concat
+  // console.log(`searchDatasetData 3`);
   const rrfConcatResults = datasetSearchResultConcat([
     { k: 60, list: embeddingRecallResults },
     { k: 64, list: fullTextRecallResults },
@@ -654,6 +677,7 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
   ]);
 
   // remove same q and a data
+  // console.log(`searchDatasetData 4`);
   set = new Set<string>();
   const filterSameDataResults = rrfConcatResults.filter((item) => {
     // 删除所有的标点符号与空格等，只对文本进行比较
@@ -664,6 +688,7 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
   });
 
   // score filter
+  // console.log(`searchDatasetData 5`);
   const scoreFilter = (() => {
     if (usingReRank) {
       usingSimilarityFilter = true;

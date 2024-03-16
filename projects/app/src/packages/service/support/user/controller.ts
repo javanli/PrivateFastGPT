@@ -7,6 +7,7 @@ import {
 } from './team/controller';
 import { ERROR_ENUM } from '@/packages/global/common/error/errorCode';
 import { UserStatusEnum } from '@/packages/global/support/user/constant';
+import { openaiBaseUrl, systemAIChatKey } from '../../core/ai/config';
 
 export function getDefaultUser() {
   const defaultUser = {
@@ -23,8 +24,8 @@ export function getDefaultUser() {
     status: UserStatusEnum.active,
     lastLoginTmbId: '0',
     openaiAccount: {
-      key: '0',
-      baseUrl: 'testtest'
+      key: systemAIChatKey,
+      baseUrl: openaiBaseUrl
     }
   };
   return defaultUser;

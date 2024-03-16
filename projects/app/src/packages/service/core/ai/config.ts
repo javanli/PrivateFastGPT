@@ -1,10 +1,11 @@
 import type { UserModelSchema } from '@/packages/global/support/user/type';
 import OpenAI from '@/packages/global/core/ai';
 
-export const openaiBaseUrl = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1';
+export const openaiBaseUrl = process.env.OPENAI_BASE_URL || 'https://apic.ohmygpt.com/v1';
 export const baseUrl = process.env.ONEAPI_URL || openaiBaseUrl;
 
-export const systemAIChatKey = process.env.CHAT_API_KEY || '';
+export const systemAIChatKey =
+  process.env.CHAT_API_KEY || 'sk-H7AGcTCdf4B0148ee666T3BlBkFJ7B2274A961D3450eb8dd';
 
 export const getAIApi = (props?: {
   userKey?: UserModelSchema['openaiAccount'];

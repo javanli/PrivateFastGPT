@@ -13,7 +13,7 @@ import {
 } from '@/packages/global/core/dataset/type';
 import { getFileById } from '../../../common/file/gridfs/controller';
 import { BucketNameEnum } from '@/packages/global/common/file/constants';
-import { getTmbInfoByTmbId } from '../../user/team/controller';
+import { getDefaultTeamInfo, getTmbInfoByTmbId } from '../../user/team/controller';
 import { CommonErrEnum } from '@/packages/global/common/error/code/common';
 import { MongoDatasetCollection } from '../../../core/dataset/collection/schema';
 
@@ -121,10 +121,10 @@ export async function authDatasetCollection({
     const canWrite =
       isOwner ||
       (role !== TeamMemberRoleEnum.visitor &&
-        collection.datasetId.permission === PermissionTypeEnum.public);
+        collection.dataset.permission === PermissionTypeEnum.public);
 
     if (per === 'r') {
-      if (!isOwner && collection.datasetId.permission !== PermissionTypeEnum.public) {
+      if (!isOwner && collection.dataset.permission !== PermissionTypeEnum.public) {
         return Promise.reject(DatasetErrEnum.unAuthDatasetCollection);
       }
     }

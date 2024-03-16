@@ -23,11 +23,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       collectionId,
       per: 'w'
     });
+    console.log(`delete collection: ${collection}`);
 
     // find all delete id
     const collections = await findCollectionAndChild({
       teamId,
-      datasetId: collection.datasetId._id,
+      datasetId: collection.dataset._id,
       collectionId,
       fields: '_id teamId fileId metadata'
     });

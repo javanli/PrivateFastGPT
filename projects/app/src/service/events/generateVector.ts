@@ -13,6 +13,9 @@ const reduceQueue = () => {
 
 /* 索引生成队列。每导入一次，就是一个单独的线程 */
 export async function generateVector(): Promise<any> {
+  console.log(
+    `generate vector, currentTaskCnt:${global.vectorQueueLen} maxCnt:${global.systemEnv.vectorMaxProcess}`
+  );
   if (global.vectorQueueLen >= global.systemEnv.vectorMaxProcess) return;
   global.vectorQueueLen++;
   const start = Date.now();
@@ -27,7 +30,7 @@ export async function generateVector(): Promise<any> {
     try {
       const model = await MongoDatasetTraining.sqliteModel.findOne({
         where: {
-          lockTime: { [Op.gt]: new Date(Date.now() - 1 * 60 * 1000) },
+          lockTime: { [Op.lte]: new Date(Date.now() - 1 * 60 * 1000) },
           mode: TrainingModeEnum.chunk
         },
         order: [['weight', 'DESC']]

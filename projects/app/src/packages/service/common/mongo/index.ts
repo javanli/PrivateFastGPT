@@ -1,3 +1,4 @@
+import path from 'path';
 import {
   ModelCtor,
   Sequelize,
@@ -13,7 +14,17 @@ import {
 export { Op } from 'sequelize';
 import { MakeNullishOptional } from 'sequelize/types/utils';
 
-export const sequelize = global.mongodb || new Sequelize('sqlite::memory:');
+const sqlitePath =
+  process.env.NODE_ENV === 'production'
+    ? '/app/tmp/database.sqlite'
+    : path.join(process.cwd(), 'tmp/database.sqlite');
+console.log(`sqlite path:${sqlitePath}`);
+export const sequelize =
+  global.mongodb ||
+  new Sequelize({
+    dialect: 'sqlite',
+    storage: sqlitePath
+  });
 export const connectionMongo = sequelize;
 type IndexDirection =
   | 1
@@ -67,7 +78,9 @@ export class Model<T extends {}> {
   constructor(sqliteModel: ModelCtor<SeqModel<T>>) {
     this.sqliteModel = sqliteModel;
   }
-  syncIndexes() {}
+  syncIndexes() {
+    this.sqliteModel.sync();
+  }
   async findOne(options: WhereOptions, filter?: any) {
     const result = await this.sqliteModel.findOne({
       where: options
@@ -84,16 +97,25 @@ export class Model<T extends {}> {
     return this.findOne({ _id: id });
   }
   async findByIdAndUpdate(id: string, updateData: any, writeOption?: WriteOption) {
-    const model = await this.sqliteModel.findByPk(id, {
+    await this.sqliteModel.update(updateData, {
+      where: {
+        _id: id
+      } as any,
+      returning: true,
+      limit: 1,
       transaction: writeOption?.session
     });
-    if (model) {
-      const values = { ...(model!.dataValues ?? {}), ...updateData };
-      model!.dataValues = values;
-      await model!.save({
-        transaction: writeOption?.session
-      });
-    }
+    // const model = await this.sqliteModel.findByPk(id, {
+    //   transaction: writeOption?.session
+    // });
+    // console.log(`findByIdAndUpdate: current:${model?.dataValues}`)
+    // if (model) {
+    //   const values = { ...(model!.dataValues ?? {}), ...updateData };
+    //   model!.dataValues = values;
+    //   await model!.save({
+    //     transaction: writeOption?.session
+    //   });
+    // }
   }
   async findByIdAndDelete(id: string, writeOption?: WriteOption) {
     await this.destroy({ _id: id }, writeOption);
@@ -204,7 +226,6 @@ export function model<M extends {}, T>(name: string, schema?: Schema<T>): Model<
     }
   }
   const modelCtor = sequelize.define(name, attributes);
-  modelCtor.sync();
   const wrapper = new Model(modelCtor);
   console.log(`define table: ${name}`);
   return wrapper;

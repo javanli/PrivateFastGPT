@@ -10,7 +10,7 @@ import {
 } from '@/packages/global/core/dataset/constants';
 import { hashStr } from '@/packages/global/common/string/tools';
 import { ClientSession } from '../../../common/mongo';
-import { DatasetCollectionName } from '../schema';
+import { DatasetCollectionName, MongoDataset } from '../schema';
 
 /**
  * get all collection by top collectionId
@@ -96,7 +96,7 @@ export const getCollectionAndRawText = async ({
     if (collection) return collection;
     if (collectionId) {
       return (await MongoDatasetCollection.sqliteModel.findByPk(collectionId, {
-        include: DatasetCollectionName
+        include: MongoDataset.sqliteModel
       }))!.dataValues as unknown as CollectionWithDatasetType;
     }
 
@@ -118,7 +118,7 @@ export const getCollectionAndRawText = async ({
       // crawl new data
       const result = await urlsFetch({
         urlList: [col.rawLink],
-        selector: col.datasetId?.websiteConfig?.selector || col?.metadata?.webPageSelector
+        selector: col.dataset?.websiteConfig?.selector || col?.metadata?.webPageSelector
       });
 
       return {
@@ -180,8 +180,8 @@ export const reloadCollectionChunks = async ({
 
   // insert to training queue
   const model = await (() => {
-    if (col.trainingType === TrainingModeEnum.chunk) return col.datasetId.vectorModel;
-    if (col.trainingType === TrainingModeEnum.qa) return col.datasetId.agentModel;
+    if (col.trainingType === TrainingModeEnum.chunk) return col.dataset.vectorModel;
+    if (col.trainingType === TrainingModeEnum.qa) return col.dataset.agentModel;
     return Promise.reject('Training model error');
   })();
 
@@ -189,7 +189,7 @@ export const reloadCollectionChunks = async ({
     chunks.map((item, i) => ({
       teamId: col.teamId,
       tmbId,
-      datasetId: col.datasetId._id,
+      datasetId: col.dataset._id,
       collectionId: col._id,
       billId,
       mode: col.trainingType,

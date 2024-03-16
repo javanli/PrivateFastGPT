@@ -51,8 +51,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     /* Not the same original text, create and reload */
 
-    const vectorModelData = getVectorModel(collection.datasetId.vectorModel);
-    const agentModelData = getLLMModel(collection.datasetId.agentModel);
+    const vectorModelData = getVectorModel(collection.dataset.vectorModel);
+    const agentModelData = getLLMModel(collection.dataset.agentModel);
 
     await mongoSessionRun(async (session) => {
       // create training bill
@@ -71,7 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         teamId: collection.teamId,
         tmbId: collection.tmbId,
         parentId: collection.parentId,
-        datasetId: collection.datasetId._id,
+        datasetId: collection.dataset._id,
         name: title || collection.name,
         type: collection.type,
         trainingType: collection.trainingType,
@@ -87,7 +87,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await reloadCollectionChunks({
         collection: {
           ...newCol,
-          datasetId: collection.datasetId
+          dataset: collection.dataset
         },
         tmbId,
         billId,

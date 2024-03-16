@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       await MongoDataset.sqliteModel.findAll({
         where: {
           ...mongoRPermission({ teamId, tmbId, role }),
-          ...(parentId !== undefined ? { parentId: parentId } : {}),
+          ...(parentId && parentId.length > 0 ? { parentId } : {}),
           ...(type && { type })
         },
         order: [['updateTime', 'DESC']]

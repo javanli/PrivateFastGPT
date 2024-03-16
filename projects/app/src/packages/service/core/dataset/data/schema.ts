@@ -5,7 +5,7 @@ import {
   TeamCollectionName,
   TeamMemberCollectionName
 } from '@/packages/global/support/user/team/constant';
-import { DatasetCollectionName } from '../schema';
+import { DatasetCollectionName, MongoDataset } from '../schema';
 import { DatasetColCollectionName, MongoDatasetCollection } from '../collection/schema';
 
 export const DatasetDataCollectionName = 'dataset.datas';
@@ -26,11 +26,11 @@ const DatasetDataSchema = new Schema({
     ref: DatasetCollectionName,
     required: true
   },
-  // collectionId: {
-  //   type: Schema.Types.ObjectId,
-  //   ref: DatasetColCollectionName,
-  //   required: true
-  // },
+  collectionId: {
+    type: Schema.Types.ObjectId,
+    // ref: DatasetColCollectionName,
+    required: true
+  },
   q: {
     type: String,
     required: true
@@ -43,25 +43,25 @@ const DatasetDataSchema = new Schema({
     type: String,
     default: ''
   },
-  indexes: {
-    type: [
-      {
-        defaultIndex: {
-          type: Boolean,
-          default: false
-        },
-        dataId: {
-          type: String,
-          required: true
-        },
-        text: {
-          type: String,
-          required: true
-        }
-      }
-    ],
-    default: []
-  },
+  // indexes: {
+  //   type: [
+  //     {
+  //       defaultIndex: {
+  //         type: Boolean,
+  //         default: false
+  //       },
+  //       dataId: {
+  //         type: String,
+  //         required: true
+  //       },
+  //       text: {
+  //         type: String,
+  //         required: true
+  //       }
+  //     }
+  //   ],
+  //   default: []
+  // },
 
   updateTime: {
     type: Date,
@@ -94,6 +94,10 @@ try {
 }
 
 const _model: Model<DatasetDataSchemaType> = model(DatasetDataCollectionName, DatasetDataSchema);
-_model.sqliteModel.belongsTo(MongoDatasetCollection.sqliteModel, { foreignKey: 'collectionId' });
+_model.sqliteModel.belongsTo(MongoDatasetCollection.sqliteModel, {
+  foreignKey: 'collectionId',
+  as: 'collection'
+});
+_model.sqliteModel.belongsTo(MongoDataset.sqliteModel, { foreignKey: 'datasetId' });
 _model.syncIndexes();
 export const MongoDatasetData: Model<DatasetDataSchemaType> = _model;

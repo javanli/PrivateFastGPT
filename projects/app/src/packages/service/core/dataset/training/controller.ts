@@ -44,7 +44,7 @@ export async function pushDataListToTrainingQueue({
   datasetModelList: LLMModelItemType[];
 } & PushDatasetDataProps): Promise<PushDatasetDataResponse> {
   const {
-    datasetId: { _id: datasetId, vectorModel, agentModel }
+    dataset: { _id: datasetId, vectorModel, agentModel }
   } = await getCollectionWithDataset(collectionId);
 
   const checkModelValid = async () => {

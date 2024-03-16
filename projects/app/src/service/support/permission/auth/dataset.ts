@@ -1,4 +1,5 @@
 import { DatasetDataItemType } from '@/packages/global/core/dataset/type';
+import { PgClient } from '@/packages/service/common/vectorStore/pg';
 import { MongoDatasetData } from '@/packages/service/core/dataset/data/schema';
 import { authDatasetCollection } from '@/packages/service/support/permission/auth/dataset';
 import { AuthModeType } from '@/packages/service/support/permission/type';
@@ -21,14 +22,14 @@ export async function authDatasetData({
     ...props,
     collectionId: datasetData.collectionId
   });
-
+  const indexes = await PgClient.queryWithDataId(datasetData._id);
   const data: DatasetDataItemType = {
     id: String(datasetData._id),
     teamId: datasetData.teamId,
     q: datasetData.q,
     a: datasetData.a,
     chunkIndex: datasetData.chunkIndex,
-    indexes: datasetData.indexes,
+    indexes: indexes,
     datasetId: String(datasetData.datasetId),
     collectionId: String(datasetData.collectionId),
     sourceName: result.collection.name || '',

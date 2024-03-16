@@ -46,7 +46,7 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
     // auth collection and get dataset
     const [
       {
-        datasetId: { _id: datasetId, vectorModel }
+        dataset: { _id: datasetId, vectorModel }
       }
     ] = await Promise.all([getCollectionWithDataset(collectionId)]);
 

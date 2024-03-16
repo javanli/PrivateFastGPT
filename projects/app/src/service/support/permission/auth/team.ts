@@ -7,28 +7,29 @@ import {
   getDefaultTeamInfo,
   getDefaultTeamMember
 } from '@/packages/service/support/user/team/controller';
+import { getDefaultUser } from '@/packages/service/support/user/controller';
 
-function getDefaultUser() {
-  const user: UserModelSchema = {
-    _id: '0',
-    username: '0',
-    password: '0',
-    avatar: '0',
-    balance: 0.7,
-    promotionRate: 1.0,
-    inviterId: '0',
-    openaiKey: '0',
-    createTime: 0,
-    timezone: '0',
-    status: 'active',
-    lastLoginTmbId: '0',
-    openaiAccount: {
-      key: '0',
-      baseUrl: '0'
-    }
-  };
-  return user;
-}
+// function getDefaultUser() {
+//   const user: UserModelSchema = {
+//     _id: '0',
+//     username: '0',
+//     password: '0',
+//     avatar: '0',
+//     balance: 0.7,
+//     promotionRate: 1.0,
+//     inviterId: '0',
+//     openaiKey: '0',
+//     createTime: 0,
+//     timezone: '0',
+//     status: 'active',
+//     lastLoginTmbId: '0',
+//     openaiAccount: {
+//       key: '0',
+//       baseUrl: '0'
+//     }
+//   };
+//   return user;
+// }
 export async function getUserChatInfoAndAuthTeamPoints(tmbId: string) {
   const member = getDefaultTeamMember();
   if (!member) return Promise.reject(UserErrEnum.unAuthUser);

@@ -1,7 +1,7 @@
-import type { Pool } from 'pg';
+import * as sqlite3 from 'sqlite3';
 
 declare global {
-  var pgClient: Pool | null;
+  var pgClient: sqlite3.Database | null;
 }
 
 export type EmbeddingRecallItemType = {

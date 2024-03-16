@@ -73,13 +73,12 @@ export type DatasetDataSchemaType = {
   datasetId: string;
   collectionId: string;
   datasetId: string;
-  collectionId: string;
   chunkIndex: number;
   updateTime: Date;
   q: string; // large chunks or question
   a: string; // answer or custom content
   fullTextToken: string;
-  indexes: DatasetDataIndexItemType[];
+  // indexes: DatasetDataIndexItemType[];
 };
 
 export type DatasetTrainingSchemaType = {
@@ -103,10 +102,10 @@ export type DatasetTrainingSchemaType = {
 };
 
 export type CollectionWithDatasetType = Omit<DatasetCollectionSchemaType, 'datasetId'> & {
-  datasetId: DatasetSchemaType;
+  dataset: DatasetSchemaType;
 };
 export type DatasetDataWithCollectionType = Omit<DatasetDataSchemaType, 'collectionId'> & {
-  collectionId: DatasetCollectionSchemaType;
+  collection: DatasetCollectionSchemaType;
 };
 
 /* ================= dataset ===================== */

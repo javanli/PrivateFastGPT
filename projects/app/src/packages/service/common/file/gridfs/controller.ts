@@ -5,8 +5,10 @@ import os from 'os';
 import pathUtil from 'path';
 import { getNanoid } from '@/packages/global/common/string/tools';
 import { FileInfoTable } from './schema';
+import path from 'path';
 
-const gptPath = pathUtil.join(os.homedir(), '.gpt');
+const gptPath =
+  process.env.NODE_ENV === 'production' ? '/app/tmp' : path.join(process.cwd(), 'tmp');
 /* crud  file */
 export async function uploadFile({
   bucketName,

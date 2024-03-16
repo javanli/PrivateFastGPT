@@ -86,7 +86,7 @@ export const sseErrRes = (res: NextApiResponse, error: any) => {
     msg = `${error?.error?.code} ${error?.error?.message}`;
   }
 
-  addLog.error(`sse error: ${msg}`, error);
+  addLog.error(`sse error: ${msg}`, JSON.stringify(error ?? ''));
 
   responseWrite({
     res,

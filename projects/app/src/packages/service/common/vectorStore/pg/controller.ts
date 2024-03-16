@@ -22,14 +22,26 @@ export const insertDatasetDataVector = async (
     retry?: number;
   }
 ): Promise<{ insertId: string }> => {
-  const { teamId, datasetId, collectionId, vectors, retry = 3 } = props;
+  const {
+    teamId,
+    datasetId,
+    collectionId,
+    vectors,
+    retry = 3,
+    dataId,
+    text,
+    default_index
+  } = props;
 
   try {
     const result = await PgClient.insert({
       vectors: vectors[0],
       teamId,
       datasetId,
-      collectionId
+      collectionId,
+      dataId,
+      text,
+      default_index
     });
 
     return {
@@ -58,11 +70,11 @@ export const deleteDatasetDataVector = async (
     if (id) {
       await PgClient.deleteWithId(id);
     } else if (datasetIds) {
-      await pgClient.deleteWithDatasetIds(teamId, datasetIds);
+      await PgClient.deleteWithDatasetIds(teamId, datasetIds);
     } else if (collectionIds) {
-      await pgClient.deleteWithCollectionIds(teamId, collectionIds);
+      await PgClient.deleteWithCollectionIds(teamId, collectionIds);
     } else if (idList) {
-      await pgClient.deleteWithIds(idList);
+      await PgClient.deleteWithIds(idList);
     }
   } catch (error) {
     if (retry <= 0) {
@@ -86,7 +98,9 @@ export const embeddingRecall = async (
   results: EmbeddingRecallItemType[];
 }> => {
   const { datasetIds, vectors, limit, similarity = 0, retry = 2, efSearch = 100 } = props;
-
+  console.log(
+    `embeddingRecall: datasetIds:${datasetIds} vectors.length=${vectors.length} retry:${retry}`
+  );
   try {
     const rows = await PgClient.embeddingRecall(vectors[0], datasetIds, limit);
 
@@ -101,7 +115,7 @@ export const embeddingRecall = async (
     if (retry <= 0) {
       return Promise.reject(error);
     }
-    return embeddingRecall(props);
+    return embeddingRecall({ ...props, retry: retry - 1 });
   }
 };
 

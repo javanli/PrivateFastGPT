@@ -12,7 +12,6 @@ import {
 import { defaultDatasetDetail } from '@/constants/dataset';
 import type { DatasetUpdateBody } from '@/packages/global/core/dataset/api.d';
 import { DatasetStatusEnum } from '@/packages/global/core/dataset/constants';
-import { postCreateTrainingUsage } from '@/web/support/wallet/usage/api';
 import { checkTeamWebSyncLimit } from '@/web/support/user/team/api';
 
 type State = {
@@ -89,10 +88,7 @@ export const useDatasetStore = create<State>()(
         async startWebsiteSync() {
           await checkTeamWebSyncLimit();
 
-          const billId = await postCreateTrainingUsage({
-            name: 'core.dataset.training.Website Sync',
-            datasetId: get().datasetDetail._id
-          });
+          const billId = '0';
 
           return postWebsiteSync({ datasetId: get().datasetDetail._id, billId }).then(() => {
             get().updateDataset({

@@ -15,7 +15,7 @@ export default withNextCors(async function handler(req: NextApiRequest, res: Nex
     // auth data permission
     const {
       collection: {
-        datasetId: { vectorModel }
+        dataset: { vectorModel }
       },
       teamId,
       tmbId

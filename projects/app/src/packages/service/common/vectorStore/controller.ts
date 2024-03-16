@@ -12,6 +12,9 @@ export type InsertVectorProps = {
   teamId: string;
   datasetId: string;
   collectionId: string;
+  dataId: string;
+  text: string;
+  default_index: boolean;
 };
 
 export type EmbeddingRecallProps = {

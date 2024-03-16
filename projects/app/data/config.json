@@ -1,14 +1,32 @@
 {
   "systemEnv": {
     "openapiPrefix": "fastgpt",
-    "vectorMaxProcess": 15,
-    "qaMaxProcess": 15,
+    "vectorMaxProcess": 3,
+    "qaMaxProcess": 1,
     "pgHNSWEfSearch": 100
   },
   "llmModels": [
     {
-      "model": "gpt-3.5-turbo-1106",
+      "model": "gpt-3.5-turbo",
       "name": "gpt-3.5-turbo",
+      "maxContext": 16000,
+      "maxResponse": 4000,
+      "quoteMaxToken": 13000,
+      "maxTemperature": 1.2,
+      "charsPointsPrice": 0,
+      "censor": false,
+      "vision": false,
+      "datasetProcess": false,
+      "toolChoice": true,
+      "functionCall": false,
+      "customCQPrompt": "",
+      "customExtractPrompt": "",
+      "defaultSystemChatPrompt": "",
+      "defaultConfig": {}
+    },
+    {
+      "model": "gpt-3.5-turbo-1106",
+      "name": "gpt-3.5-turbo-1106",
       "maxContext": 16000,
       "maxResponse": 4000,
       "quoteMaxToken": 13000,

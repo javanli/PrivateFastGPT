@@ -29,9 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       ...(name && { name, updateTime: getCollectionUpdateTime({ name }) })
     };
 
-    await MongoDatasetCollection.findByIdAndUpdate(id, {
-      $set: updateFields
-    });
+    await MongoDatasetCollection.findByIdAndUpdate(id, updateFields);
 
     jsonRes(res);
   } catch (err) {

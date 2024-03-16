@@ -6,6 +6,7 @@ import type { GetDatasetDataListProps } from '@/global/core/api/datasetReq';
 import { authDatasetCollection } from '@/packages/service/support/permission/auth/dataset';
 import { MongoDatasetData } from '@/packages/service/core/dataset/data/schema';
 import { PagingData } from '@/types';
+import { PgClient } from '@/packages/service/common/vectorStore/pg';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   try {
@@ -32,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     const match = {
       teamId,
-      datasetId: collection.datasetId._id,
+      datasetId: collection.dataset._id,
       collectionId,
       ...(searchText
         ? {
@@ -40,17 +41,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
           }
         : {})
     };
-    const data = (
+    const data: DatasetDataListItemType[] = (
       await MongoDatasetData.sqliteModel.findAll({
         where: match,
         order: [
-          ['chunkIndex', 'ASEC'],
+          ['chunkIndex', 'ASC'],
           ['updateTime', 'DESC']
         ],
         offset: (pageNum - 1) * pageSize,
         limit: pageSize
       })
     ).map((item) => item.dataValues);
+    for (const item of data) {
+      const indexes = await PgClient.queryWithDataId(item._id);
+      item.indexes = indexes;
+    }
+
     const total = await MongoDatasetData.countDocuments(match);
 
     jsonRes<PagingData<DatasetDataListItemType>>(res, {
