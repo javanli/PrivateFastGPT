@@ -1,7 +1,7 @@
 {
   "systemEnv": {
     "openapiPrefix": "fastgpt",
-    "vectorMaxProcess": 3,
+    "vectorMaxProcess": 1,
     "qaMaxProcess": 1,
     "pgHNSWEfSearch": 100
   },

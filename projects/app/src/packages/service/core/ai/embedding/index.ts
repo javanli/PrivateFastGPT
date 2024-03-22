@@ -1,7 +1,9 @@
 import { getAIApi } from '../config';
 import { replaceValidChars } from '../../chat/utils';
 import { VectorModelItemType } from '../../../../global/core/ai/model';
+import { pipeline } from '@xenova/transformers';
 
+export const modelOutputLen = 384;
 type GetVectorProps = {
   model: VectorModelItemType;
   input: string;
@@ -17,32 +19,18 @@ export async function getVectorsByText({ model, input }: GetVectorProps) {
   }
 
   try {
-    const ai = getAIApi();
-
-    // input text to vector
-    const result = await ai.embeddings
-      .create({
-        ...model.defaultConfig,
-        model: model.model,
-        input: [input]
-      })
-      .then(async (res: { data: { embedding: any }[] }) => {
-        if (!res.data) {
-          return Promise.reject('Embedding API 404');
-        }
-        if (!res?.data?.[0]?.embedding) {
-          console.log(res);
-          // @ts-ignore
-          return Promise.reject(res.data?.err?.message || 'Embedding API Error');
-        }
-
-        return {
-          charsLength: replaceValidChars(input).length,
-          vectors: await Promise.all(res.data.map((item) => unityDimensional(item.embedding)))
-        };
-      });
-
-    return result;
+    const extractor = await pipeline('feature-extraction', 'andersonbcdefg/bge-small-4096', {
+      quantized: true //使用压缩过的模型
+    });
+    extractor.tokenizer.model_max_length = 4096;
+    const output = await extractor(input, {
+      pooling: 'mean',
+      normalize: true
+    });
+    return {
+      charsLength: replaceValidChars(input).length,
+      vectors: [unityDimensional(output.tolist()[0])]
+    };
   } catch (error) {
     console.log(`Embedding Error`, error);
 
@@ -51,16 +39,16 @@ export async function getVectorsByText({ model, input }: GetVectorProps) {
 }
 
 function unityDimensional(vector: number[]) {
-  if (vector.length > 1536) {
+  if (vector.length > modelOutputLen) {
     console.log(
       `The current vector dimension is ${vector.length}, and the vector dimension cannot exceed 1536. The first 1536 dimensions are automatically captured`
     );
-    return vector.slice(0, 1536);
+    return vector.slice(0, modelOutputLen);
   }
   let resultVector = vector;
   const vectorLen = vector.length;
 
-  const zeroVector = new Array(1536 - vectorLen).fill(0);
+  const zeroVector = new Array(modelOutputLen - vectorLen).fill(0);
 
   return resultVector.concat(zeroVector);
 }

@@ -3,6 +3,7 @@ import * as sqlite_vss from 'sqlite-vss';
 import { PgDatasetTableName } from '../../../../../packages/global/common/vectorStore/constants';
 import { EmbeddingRecallItemType } from '../type';
 import path from 'path';
+import { modelOutputLen } from '@/packages/service/core/ai/embedding';
 const sqlitePath =
   process.env.NODE_ENV === 'production'
     ? '/app/tmp/vector.sqlite'
@@ -16,17 +17,16 @@ const databaseWrapper = {
 };
 sqlite_vss.load(databaseWrapper);
 
+function VSSTableName(datasetId: string) {
+  return `vss_${PgDatasetTableName}_${datasetId}`;
+}
+
 export const connectPg = async (): Promise<sqlite3.Database> => {
   if (global.pgClient) {
     return global.pgClient;
   }
   global.pgClient = db;
 
-  await PgClient.run(`
-  CREATE VIRTUAL TABLE IF NOT EXISTS vss_${PgDatasetTableName} using vss0(
-      vector(1536)
-  );
-`);
   await PgClient.run(`
   CREATE TABLE IF NOT EXISTS ${PgDatasetTableName} (
       team_id VARCHAR(50) NOT NULL,
@@ -92,10 +92,17 @@ class PgClass {
           console.log(`pg all sql:${sql} error: ${error}`);
           reject(error);
         } else {
+          // console.log(`pg all sql:${sql} result: ${JSON.stringify(rows)}`);
           resolve(rows);
         }
       });
     });
+  }
+  async checkVSSTable(datasetId: string) {
+    await PgClient.run(`
+      CREATE VIRTUAL TABLE IF NOT EXISTS ${VSSTableName(datasetId)} using vss0(
+          vector(${modelOutputLen})
+      );`);
   }
   async insert(data: PGDataType) {
     const insertDataResult = await this.run(
@@ -110,59 +117,84 @@ class PgClass {
         data.default_index ? 1 : 0
       ]
     );
+    await this.checkVSSTable(data.datasetId);
     const vectorResult = await this.run(
-      `insert into vss_${PgDatasetTableName}(rowid,vector) VALUES(${insertDataResult.lastID},'${JSON.stringify(data.vectors)}')`
+      `insert into ${VSSTableName(data.datasetId)}(rowid,vector) VALUES(${insertDataResult.lastID},'${JSON.stringify(data.vectors)}')`
     );
     return vectorResult;
   }
   async deleteWithId(id: string) {
+    const dataSets = await this.all<{ dataset_id: string }>(
+      `select dataset_id from ${PgDatasetTableName} where rowid=${id}`
+    );
+    if (dataSets && dataSets.length > 0) {
+      const datasetId = dataSets[0].dataset_id;
+      await this.run(`delete from ${VSSTableName(datasetId)} where rowid=${id}`);
+    }
     await this.run(`delete from ${PgDatasetTableName} where rowid=${id}`);
-    const vectorResult = await this.run(`delete from vss_${PgDatasetTableName} where rowid=${id}`);
-    return vectorResult;
   }
   async deleteWithDatasetIds(teamId: string, datasetIds: string[]) {
-    const results = await this.all<{ rowid: number }>(
-      `select rowid from ${PgDatasetTableName} where team_id=${teamId} AND dataset_id IN (${datasetIds
-        .map((id) => `'${String(id)}'`)
-        .join(',')})`
-    );
-    const rowidCondition = results.map((row) => String(row.rowid)).join(',');
-    await this.run(`delete from ${PgDatasetTableName} where rowid IN (${rowidCondition})`);
-    await this.run(`delete from vss_${PgDatasetTableName} where rowid IN (${rowidCondition})`);
+    const datasetIdsStr = datasetIds.map((id) => `'${String(id)}'`).join(',');
+    await this.run(`delete from ${PgDatasetTableName} where dataset_id IN (${datasetIdsStr})`);
+    for (const datasetId of datasetIds) {
+      await this.run(`DROP TABLE IF EXISTS ${VSSTableName(datasetId)}`);
+    }
   }
   async deleteWithCollectionIds(teamId: string, collectionIds: string[]) {
-    const results = await this.all<{ rowid: number }>(
-      `select rowid from ${PgDatasetTableName} where team_id=${teamId} AND collection_id IN (${collectionIds
-        .map((id) => `'${String(id)}'`)
-        .join(',')})`
+    const collectionIdCondition = collectionIds.join(',');
+    const results = await this.all<{ rowid: number; dataset_id: string }>(
+      `select rowid,dataset_id from ${PgDatasetTableName} where collection_id IN (${collectionIdCondition})`
     );
-    const rowidCondition = results.map((row) => String(row.rowid)).join(',');
-    await this.run(`delete from ${PgDatasetTableName} where rowid IN (${rowidCondition})`);
-    await this.run(`delete from vss_${PgDatasetTableName} where rowid IN (${rowidCondition})`);
+    // 删除meta data
+    await this.run(
+      `delete from ${PgDatasetTableName} where collection_id IN (${collectionIdCondition})`
+    );
+
+    // 分dataset删除embeddings
+    const datasetMap = new Map<string, number[]>();
+    for (const row of results) {
+      let list = datasetMap.get(row.dataset_id) ?? [];
+      list.push(row.rowid);
+      datasetMap.set(row.dataset_id, list);
+    }
+    for (const [datasetId, list] of datasetMap) {
+      const rowidCondition = list.map((rowid) => String(rowid)).join(',');
+      await this.run(`delete from ${VSSTableName(datasetId)} where rowid IN (${rowidCondition})`);
+    }
   }
   async deleteWithIds(ids: string[]) {
-    const rowidCondition = ids.join(',');
-    await this.run(`delete from ${PgDatasetTableName} where rowid IN (${rowidCondition})`);
-    await this.run(`delete from vss_${PgDatasetTableName} where rowid IN (${rowidCondition})`);
+    for (const id of ids) {
+      await this.deleteWithId(id);
+    }
   }
   async embeddingRecall(
     vectors: number[],
     datasetIds: string[],
     limit: number
   ): Promise<EmbeddingRecallItemType[]> {
+    let results: { rowid: number; distance: number }[] = [];
+    for (const datasetId of datasetIds) {
+      const datasetResults = await this.all<{ rowid: number; distance: number }>(
+        `select rowid,distance from ${VSSTableName(datasetId)} where vss_search(vector, json('${JSON.stringify(vectors)}')) limit ${limit}`
+      );
+      // console.log(`datasetResults: ${JSON.stringify(datasetResults)}`)
+      results = results.concat(datasetResults);
+    }
+    // console.log(`recall vectors: ${JSON.stringify(results)}`)
+    results.sort((a, b) => a.distance - b.distance);
+    results = results.slice(0, limit);
+    // console.log(`recall vectors: ${JSON.stringify(results)}`)
+
     const rowIdResults = await this.all<{ rowid: number; collection_id: string }>(
-      `select rowid,collection_id from ${PgDatasetTableName} where dataset_id IN (${datasetIds
-        .map((id) => `'${String(id)}'`)
+      `select rowid,collection_id from ${PgDatasetTableName} where rowid IN (${results
+        .map((result) => `'${String(result.rowid)}'`)
         .join(',')})`
     );
+    // console.log(`recall match collection_id: ${JSON.stringify(results)}`)
     const map = new Map();
     for (const row of rowIdResults) {
       map.set(row.rowid, row.collection_id);
     }
-    const rowidCondition = rowIdResults.map((row) => String(row.rowid)).join(',');
-    const results = await this.all<{ rowid: number; distance: number }>(
-      `select rowid,distance from vss_${PgDatasetTableName} where rowid IN (${rowidCondition}) AND vss_search(vector, json('${JSON.stringify(vectors)}')) limit ${limit}`
-    );
     return results.map((item) => {
       return {
         id: String(item.rowid),

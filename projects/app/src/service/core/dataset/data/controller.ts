@@ -375,7 +375,7 @@ export async function searchDatasetData(props: SearchDatasetDataProps) {
     // console.log(`embeddingRecall results:${results?.length}`);
 
     // get q and a
-    const collectionIds = results.map((item) => item.collectionId) ?? [];
+    const collectionIds = Array.from(new Set(results.map((item) => item.collectionId)));
     const dataList = (
       await MongoDatasetData.sqliteModel.findAll({
         where: {
